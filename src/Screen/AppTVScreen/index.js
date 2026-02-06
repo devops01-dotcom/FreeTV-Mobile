@@ -211,7 +211,6 @@ const AppTVScreen = () => {
     }, [selectLanguage])
 
     const renderCinema = useCallback(({ item, index }) => {
-        console.log('object===== item===:', item.channel_image_url);
         return (
             <TouchableOpacity onPress={() => onMovieDetailHandler(item)} style={styles.movieDetailBox}>
                 <FastImage
