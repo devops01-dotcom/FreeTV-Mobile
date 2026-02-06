@@ -244,5 +244,9 @@ export default StyleSheet.create({
         width: '100%',
         // aspectRatio: 16/9
     },
+    zoomButton: {
+         height: '90%',
+        width: '95%',
+    },
 
 });
