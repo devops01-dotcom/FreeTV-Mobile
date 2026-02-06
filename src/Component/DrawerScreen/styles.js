@@ -18,10 +18,10 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
     logo: {
-         height: isTablet ? 70 : 40,
-         width: isTablet ? 180 : 120, 
-         marginLeft: isTablet ? 25 : 15,
-         marginBottom: isTablet ? 25 : 15
+        height: isTablet ? 70 : 40,
+        width: isTablet ? 180 : 120,
+        marginLeft: isTablet ? 25 : 15,
+        marginBottom: isTablet ? 25 : 15
     },
     drawerItemsContainer: {
         flex: 1,
@@ -69,5 +69,18 @@ export default StyleSheet.create({
         width: isTablet ? 45 : 30,
         marginHorizontal: isTablet ? 25 : 15,
         tintColor: COLORS.yellow
-    }
+    },
+    logoutBtn: {
+        position: 'absolute',
+        bottom: 100,
+        left: 0,
+        right: 0,
+        paddingVertical: 15,
+        paddingHorizontal: 5,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(255,255,255,0.15)',
+        alignItems: 'flex-start',
+        // activeOpacity: 0.7,
+    },
+
 });

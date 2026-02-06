@@ -16,6 +16,7 @@ export const COLORS = {
     lightActiveBox: 'rgba(254, 225, 146, 0.6)',
     yellow: '#FFEE00',
     lightBlue: '#9CCFFF',
-    lightPrimaryColor: '#D9D9D91A'
+    lightPrimaryColor: '#D9D9D91A',
+    // normalred:'#FB4141'
 
 }

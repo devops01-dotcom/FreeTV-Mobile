@@ -25,5 +25,8 @@ export const IMAGES = {
     fastForword: require('./images/FastForword.png'),
     forword: require('./images/forword.png'),
     backword: require('./images/backword.png'),
+    shareInActive: require('./images/shareInActive.png'),
+    profileInActive: require('./images/profileInActive.png'),
+    subscriptionInActive: require('./images/subscriptionInActive.png'),
 
 }
