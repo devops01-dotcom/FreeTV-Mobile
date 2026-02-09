@@ -12,19 +12,18 @@ import { AutoLoginData } from '../../redux/slice/onBoardingSlice';
 import { navigateTo, resetNavigation } from '../../utils/navigateTo';
 import styles from './styles';
 import Icon from '@react-native-vector-icons/ionicons'
-import { DrawerList } from '../DrawerScreen/drawer'
 import { COLORS } from '../../utils/color';
 import commonStyle from '../../utils/commonStyle';
 import { IMAGES } from '../../assets';
 import DeviceInfo from 'react-native-device-info';
+import { DrawerList } from '../../mockData/drawerName';
+import RNRestart from 'react-native-restart'; 
 
 const isTablet = DeviceInfo.isTablet();
 
 const CustomDrawerHeader = ({ toggleDrawer }) => {
   return (
     <View style={styles.headerContainer}>
-      {/* <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' /> */}
-
       <TouchableOpacity style={styles.button}
         onPress={() => toggleDrawer(false)}
       >
@@ -48,7 +47,8 @@ const CustomDrawerContent = (props) => {
           style: 'destructive',
           onPress: () => {
             dispatch(AutoLoginData());
-            setTimeout(() => resetNavigation('Login'), 100);
+            RNRestart.restart();
+            // setTimeout(() => resetNavigation('Login'), 100);
           },
         },
       ]
@@ -56,45 +56,9 @@ const CustomDrawerContent = (props) => {
   };
 
   const handlePress = (route) => {
-  navigateTo(route);
-};
-
-  const handlePress1 = (item) => {
-    switch (item) {
-      case 'LIVE TV':
-        // dispatch(setCustomDrawerItem(item));
-        // props.setShowDrawer(false);
-        // navigateTo('LiveTV');
-        navigateTo('LiveTV')
-        break;
-      // case 'SUBSCRIPTION':
-      //   // dispatch(setCustomDrawerItem(item));
-      //   // props.setShowDrawer(false);
-      //   navigateTo('Subscription');
-      //   break;
-      // case 'PRIVACY POLICY':
-      //   // dispatch(setCustomDrawerItem(item));
-      //   // props.setShowDrawer(false);
-      //   navigateTo('PrivacyPolicy'); 
-      //   break;
-      // case 'SHARE APP':
-      // dispatch(fetchPolicy())
-      // dispatch(setCustomDrawerItem(item));
-      // props.setShowDrawer(false);
-      // navigateTo('TermsScreen', { type: item });
-      // onShare()
-      // break;
-      // dispatch(AutoLoginData())
-      // setTimeout(() => {
-      //   resetNavigation('Login')
-      // }, 100)
-      default:
-        // dispatch(setCustomDrawerItem(item));
-        // props.setShowDrawer(false);
-        // navigateTo('RateApp', { name: item });
-        break;
-    }
+    navigateTo(route);
   };
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -116,7 +80,7 @@ const CustomDrawerContent = (props) => {
         <FlatList
           data={DrawerList}
           renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={isTablet ? true : false}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

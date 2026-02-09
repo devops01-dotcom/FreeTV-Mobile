@@ -107,7 +107,10 @@ const CustomTabBar = ({ state, descriptors, navigation, orientation }) => {
         };
 
         const getTextColor = () =>
-          isFocused ? COLORS.yellow : COLORS.white;
+          isFocused ? COLORS.yellow : COLORS.borderColor;
+
+        const getIconColor = () =>
+          isFocused ? COLORS.yellow : COLORS.borderColor;
 
         return (
           <TouchableOpacity
@@ -120,7 +123,7 @@ const CustomTabBar = ({ state, descriptors, navigation, orientation }) => {
           >
             <Image
               source={getIcon(label, isFocused)}  
-              style={[styles.iconStyle,
+              style={[styles.iconStyle,{ tintColor: getIconColor()}
               ]} />
             <Text
               style={[
@@ -140,7 +143,7 @@ const CustomTabBar = ({ state, descriptors, navigation, orientation }) => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: isTablet ? 80 : 55,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: COLORS.primary,
@@ -161,8 +164,9 @@ const styles = StyleSheet.create({
   tabLabel: {
     width: '100%',
     textAlign: 'center',
-    fontSize: FONTS.f12,
+    fontSize: FONTS.f16,
     fontFamily: APP_FONTS.PoppinsBold,
+    // fontWeight: '900'
   },
 });
 

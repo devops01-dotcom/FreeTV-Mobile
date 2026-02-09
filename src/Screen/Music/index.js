@@ -54,7 +54,7 @@ const MusicScreen = ({ navigation }) => {
 
 
     useEffect(() => {
-        if (search.length >= 2) {
+        if (search?.length >= 2) {
             const detail = {
                 name: search,
                 page: 1,
@@ -247,7 +247,7 @@ const MusicScreen = ({ navigation }) => {
                 placeholder='Search'
                 onChangeText={setSearch}
             />
-            {search.length >= 2 || keyboardVisible ?
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchMusicData}

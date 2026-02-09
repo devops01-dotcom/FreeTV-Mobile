@@ -106,11 +106,11 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const sections = [
-    { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'live' },
-    { title: 'Free TV Cinema', data: cinemaData || [], type: 'Cinema' },
-    { title: 'Free TV Music', data: musicFilterData || [], type: 'Music' },
-    { title: 'Devotional', data: devotional || [], type: 'Devotional' },
-    { title: 'Education', data: educational || [], type: 'Education' },
+    { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'LiveTVScreen' },
+    { title: 'FreeTV Cinema', data: cinemaData || [], type: 'CinemaScreen' },
+    { title: 'FreeTV Music', data: musicFilterData || [], type: 'MusicScreen' },
+    { title: 'Devotional', data: devotional || [], type: 'DevotionalScreen' },
+    { title: 'Education', data: educational || [], type: 'EducationScreen' },
   ];
 
   return (

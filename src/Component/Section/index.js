@@ -10,7 +10,7 @@ const Section = ({ title, onPress, children }) => {
       <View style={commonStyle.spaceRow}>
         <Text style={styles.categoriesText}>{title}</Text>
         <TouchableOpacity style={styles.liveTvIconBox} onPress={onPress}>
-          <Text style={styles.seeMoreText}>SEE MORE</Text>
+          <Text style={styles.seeMoreText}>See more</Text>
         </TouchableOpacity>
       </View>
       {children}

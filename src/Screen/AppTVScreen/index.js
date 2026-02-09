@@ -51,7 +51,7 @@ const AppTVScreen = () => {
     }, []);
 
     useEffect(() => {
-        if (search.length >= 3) {
+        if (search?.length >= 3) {
             const detail = {
                 name: searchQuery.trim(),
                 page: 1,
@@ -256,7 +256,7 @@ const AppTVScreen = () => {
                 placeholder='Search'
                 onChangeText={setSearch}
             />
-            {search.length >= 2 || keyboardVisible ?
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchAppTvData}

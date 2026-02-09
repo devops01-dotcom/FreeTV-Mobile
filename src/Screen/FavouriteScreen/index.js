@@ -146,7 +146,7 @@ const FavouriteScreen = ({ navigation }) => {
           <View style={commonStyle.spaceRow}>
             <Text style={styles.categoriesText}>Live TV</Text>
             <TouchableOpacity style={styles.liveTvIconBox} onPress={showMoreHandler}>
-              <Text style={styles.seeMoreText}>SEE MORE</Text>
+              <Text style={styles.seeMoreText}>See more</Text>
             </TouchableOpacity>
           </View>
           <FlatList
