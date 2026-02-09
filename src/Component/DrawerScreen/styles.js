@@ -61,7 +61,7 @@ export default StyleSheet.create({
     listText: {
         color: COLORS.white,
         fontSize: FONTS.f18,
-        fontFamily: APP_FONTS.PoppinsBlack,
+        fontFamily: APP_FONTS.PoppinsSemiBold,
         // fontWeight: '900'
     },
     itemIcon: {
