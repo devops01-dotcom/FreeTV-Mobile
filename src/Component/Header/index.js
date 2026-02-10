@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import styles from './styles';
-// import Icon from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 import { COLORS } from '../../utils/color';
 import DeviceInfo from 'react-native-device-info';

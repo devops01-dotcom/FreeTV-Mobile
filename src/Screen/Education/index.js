@@ -3,7 +3,6 @@ import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, T
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { clearSearchEducationData, EducationSelector, fetchEducationalCategories, fetchEducationalcontent, fetchEducationalSubCategories, fetchSearchEducational, resetEducationData } from '../../redux/slice/educationSlice';
 import styles from './styles';

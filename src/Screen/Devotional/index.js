@@ -4,7 +4,6 @@ import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { clearSearchDevotionalData, DevotionalSelector, fetchDevotionalCategories, fetchDevotionallivecontent, fetchDevotionalSubCategories, fetchSearchDevotional, resetDevotionalData } from '../../redux/slice/devotionalSlice';
 import BootupWithoutSkipAdds from '../../Component/bootupWithoutSkipAdds';

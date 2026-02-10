@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, BackHandler } from 'react-native';
 import { COLORS } from '../../utils/colors';
 import styles from './styles';
-import Icon from '@react-native-vector-icons/ionicons'
 import HTMLView from 'react-native-htmlview';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import WebView from 'react-native-webview';

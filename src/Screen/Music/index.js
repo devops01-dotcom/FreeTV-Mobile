@@ -4,7 +4,6 @@ import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { clearMusicData, clearSearchMusicData, fetchMusic, fetchMusicCategories, fetchMusicLanguage, fetchMusicLanguageFilterData, fetchSearchMusic, MusicSelector } from '../../redux/slice/musicSlice';
 import BackHeader from '../../Component/BackHeader';
 import { setSelectedMusicCategoriesId } from '../../redux/slice/commonAction';

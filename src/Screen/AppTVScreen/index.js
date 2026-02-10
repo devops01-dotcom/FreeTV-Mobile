@@ -4,7 +4,6 @@ import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 // import { clearCinemaData, clearSearchMoviesData, fetchCinema, fetchCinemaCategories, fetchGenreCategories, fetchSearchAppTv, MoviesSelector } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';

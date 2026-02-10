@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import { FlatList, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { AddlaunchSelector } from '../../redux/slice/addlaunch';
 import { useAppSelector } from '../../redux/hooks';
 import CarouselView from '../../Component/Carousel';
@@ -45,7 +44,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
                     resizeMode={FastImage.resizeMode.cover}
                 />
                 <TouchableOpacity onPress={onPlatVideo} style={styles.platButton}>
-                    <Icon name="play" size={100} color={COLORS.yellow} />
+                    {/* <Icon name="play" size={100} color={COLORS.yellow} /> */}
                 </TouchableOpacity>
             </View>
 

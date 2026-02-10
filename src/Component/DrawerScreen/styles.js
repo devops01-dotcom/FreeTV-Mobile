@@ -8,11 +8,11 @@ const isTablet = DeviceInfo.isTablet();
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         // backgroundColor: COLORS.lightTransparent,
         backgroundColor: COLORS.drawerblue,
         position: 'absolute',
-        height: HEIGHT.h100 *0.90,
+        height: HEIGHT.h100 * 0.84,
         width: WIDTH.w100 * 0.48,
         zIndex: 9,
         overflow: 'hidden',
@@ -25,6 +25,7 @@ export default StyleSheet.create({
     },
     drawerItemsContainer: {
         flex: 1,
+        marginBottom: 50
     },
     drawerItemText: {
         color: COLORS.white,
@@ -71,10 +72,10 @@ export default StyleSheet.create({
         tintColor: COLORS.yellow
     },
     logoutBtn: {
-        position: 'absolute',
-        bottom: 20,
-        left: 0,
-        right: 0,
+        // position: 'absolute',
+        // bottom: 20,
+        // left: 0,
+        // right: 0,
         paddingVertical: 15,
         paddingHorizontal: 5,
         borderTopWidth: 1,
@@ -82,5 +83,9 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         // activeOpacity: 0.7,
     },
+    closeIcon: {
+        height: 20,
+        width: 20
+    }
 
 });

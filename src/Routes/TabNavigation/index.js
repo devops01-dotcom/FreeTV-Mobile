@@ -43,7 +43,7 @@ const TabNavigation = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Subscription" component={SubscriptionScreen} />
+      <Tab.Screen name="Buy OTT" component={SubscriptionScreen} />
       <Tab.Screen name="ShareApp" component={EmptyScreen} />
     </Tab.Navigator>
   );
@@ -77,7 +77,7 @@ const CustomTabBar = ({ state, descriptors, navigation, orientation }) => {
         return focused ? IMAGES.activeHomeIcon : IMAGES.homeIcon;
       case 'Profile':
         return focused ? IMAGES.Profile : IMAGES.profileInActive;
-      case 'Subscription':
+      case 'Buy OTT':
         return focused ? IMAGES.subscription : IMAGES.subscriptionInActive;
       case 'ShareApp':
         return focused ? IMAGES.shareApp : IMAGES.shareInActive;
@@ -151,9 +151,10 @@ const styles = StyleSheet.create({
   tabItem: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: SPACING.sh4,
+    // paddingHorizontal: SPACING.sh4,
     minWidth: isTablet ? 150 : 83,
-    height: '120%',
+    // height: '10%',
+    // backgroundColor: 'red'
   },
   iconStyle: {
     color: 'red',

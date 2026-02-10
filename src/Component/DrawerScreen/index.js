@@ -11,13 +11,13 @@ import { useAppDispatch } from '../../redux/hooks';
 import { AutoLoginData } from '../../redux/slice/onBoardingSlice';
 import { navigateTo, resetNavigation } from '../../utils/navigateTo';
 import styles from './styles';
-import Icon from '@react-native-vector-icons/ionicons'
 import { COLORS } from '../../utils/color';
 import commonStyle from '../../utils/commonStyle';
 import { IMAGES } from '../../assets';
 import DeviceInfo from 'react-native-device-info';
 import { DrawerList } from '../../mockData/drawerName';
-import RNRestart from 'react-native-restart'; 
+import RNRestart from 'react-native-restart';
+import FastImage from 'react-native-fast-image';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -27,7 +27,10 @@ const CustomDrawerHeader = ({ toggleDrawer }) => {
       <TouchableOpacity style={styles.button}
         onPress={() => toggleDrawer(false)}
       >
-        <Icon name='close' size={isTablet ? 55 : 35} color={COLORS.white} />
+        <FastImage
+          source={IMAGES.close}
+          style={styles.closeIcon}
+          resizeMode={FastImage.resizeMode.contain} />
       </TouchableOpacity>
     </View>
   );
@@ -80,17 +83,18 @@ const CustomDrawerContent = (props) => {
         <FlatList
           data={DrawerList}
           renderItem={renderItem}
+          scrollEnabled
           showsVerticalScrollIndicator={isTablet ? true : false}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
       {/* Logout at Bottom */}
-      <TouchableOpacity style={styles.logoutBtn} onPress={onLogout}>
+      {/* <TouchableOpacity style={styles.logoutBtn} onPress={onLogout}>
         <View style={commonStyle.row}>
           <Image source={IMAGES.logout} style={styles.itemIcon} resizeMode='contain' />
           <Text style={styles.listText}>Logout</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
