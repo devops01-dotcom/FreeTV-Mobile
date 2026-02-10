@@ -4,7 +4,7 @@ export const COLORS = {
     lightTransparent: 'rgba(00, 00, 00, 0.7)',
     primary:  '#04366B',// '#450831',
     secondary:  '#FABB49',
-    // borderColor: '#0F015F',
+    borderColor: '#0F015F',
     inputBox: '#F7F7F7',
     lightCream: 'rgba(197, 229, 255, 0.45)',// '#EBCEED',
     white: '#fff',
@@ -16,6 +16,8 @@ export const COLORS = {
     lightActiveBox: 'rgba(254, 225, 146, 0.6)',
     yellow: '#FFEE00',
     lightBlue: '#9CCFFF',
-    lightPrimaryColor: '#D9D9D91A'
+    lightPrimaryColor: '#D9D9D91A',
+    drawerblue: '#1d4a79',
+    // normalred:'#FB4141'
 
 }

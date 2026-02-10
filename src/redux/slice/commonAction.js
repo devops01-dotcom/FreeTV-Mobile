@@ -8,6 +8,7 @@ const initialState = {
   searchQuery: '',
   modalVisible: false,
   selectedCategoriesId: '',
+  selectedCategoriesMoviesId: '',
   selectedDevotionalCategoriesId: '',
   selectedDevotionalSubCategoriesId: '',
   selectedEducationCategoriesId: '',
@@ -49,6 +50,9 @@ const CommonActionSlice = createSlice({
     },
     setSelectedCategoriesId: (state, action) => {
       state.selectedCategoriesId = action.payload;
+    },
+     setSelectedMoviesCategoriesId: (state, action) => {
+      state.selectedCategoriesMoviesId = action.payload;
     },
 
     setSelectedDevotionalCategoriesId: (state, action) => {
@@ -110,6 +114,7 @@ export const {
   setSearchQuery,
   setModalVisible,
   setSelectedCategoriesId,
+  setSelectedMoviesCategoriesId,
   setSelectedDevotionalCategoriesId,
   setSelectedDevotionalSubCategoriesId,
   setSelectedEducationCategoriesId,

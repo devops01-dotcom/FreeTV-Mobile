@@ -74,6 +74,10 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    menubar: {
+        height: '90%',
+        width: '80%'
+    },
     channelListView: {
         flex: 1,
         paddingBottom: 10,

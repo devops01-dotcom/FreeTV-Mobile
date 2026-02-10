@@ -41,7 +41,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     input : {
-        height:  isTablet ?  '83%' : '95%',
+        height:  isTablet ?  '83%' : '74%',
          width: '98%',
          borderRadius: 10,
          paddingHorizontal: 10,

@@ -11,8 +11,8 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        height: HEIGHT.h05,
-        backgroundColor: COLORS.lightCream,
+        // height: HEIGHT.h05,
+        backgroundColor: COLORS.drawerblue,
         width: '90%',
         alignSelf: 'center',
         marginVertical: 10,
@@ -20,7 +20,7 @@ export default StyleSheet.create({
         paddingHorizontal: 15
     },
     adBox: {
-        height: isTablet ? '40%' : '33%',
+        height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
     },
     videoBox: {
@@ -35,31 +35,24 @@ export default StyleSheet.create({
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
-        marginVertical: 10,
         height: '9%',
-        paddingHorizontal: 5,
         flexDirection: 'row',
         alignItems: 'center'
     },
-    gradientBorder: {
-        padding: 1, // stroke width
-        borderRadius: 9,
-        marginRight: 10,
-    },
     languageBoxView: {
-        backgroundColor: COLORS.lightPrimaryColor,
-        height: '98%',
+        backgroundColor: COLORS.drawerblue,
+        height: '85%',
         minWidth: isTablet ? 120 : 90,
         alignItems: 'center',
         justifyContent: 'center',
-        // marginRight: 10,
+        marginRight: 10,
         paddingHorizontal: 10,
         borderRadius: 8,
-        // shadowColor: COLORS.black,
-        // shadowOffset: { width: 0, height: 4 },
-        // shadowOpacity: 0.25, // 25% opacity
-        // shadowRadius: 4, // blur
-        // elevation: 1, // Required for Android shadow
+        shadowColor: COLORS.black,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25, // 25% opacity
+        shadowRadius: 4, // blur
+        elevation: 4, // Required for Android shadow
     },
     dropdownMenu: {
         height: HEIGHT.h07 - 10,
@@ -68,11 +61,16 @@ export default StyleSheet.create({
         marginRight: 15,
         paddingHorizontal: 15
     },
+    menubar: {
+        height: '90%',
+        width: '80%',
+    },
     dropdownCloseMenu: {
         height: HEIGHT.h07,
-        width: isTablet ? 100 : 70,
+        width: isTablet ? 100 : 45,
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     channelListView: {
         flex: 1,
@@ -82,7 +80,6 @@ export default StyleSheet.create({
     columnWrapper: {
         justifyContent: 'space-between', // Space between columns
         marginHorizontal: 10,
-        marginTop: 5
     },
     movieDetailBox: {
         height: isTablet ? 150 : HEIGHT.h13,
@@ -99,17 +96,17 @@ export default StyleSheet.create({
     },
     drawerMenu: {
         zIndex: 9,
-        backgroundColor: COLORS.lightCream,
-        borderRightWidth: 5,
+        backgroundColor: COLORS.primary,
+        borderRightWidth: 4,
         borderTopEndRadius: 15,
         borderBottomEndRadius: 15,
         borderRightColor: COLORS.borderColor,
-        width: isTablet ? '30%' : '45%',
+        width: isTablet ? '30%' : '40%',
         // height: isTablet ? HEIGHT.h100 * 0.46 : HEIGHT.h100 * 0.56,
         height: isTablet ? '85%' : '90%',
         position: 'absolute',
         top: 0,
-        paddingBottom: 8
+        paddingBottom: 4
     },
     categoriesBoxView: {
         backgroundColor: COLORS.black,
@@ -121,6 +118,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.25, // 25% opacity
         shadowRadius: 1, // blur
         elevation: 1,
+        marginBottom: 15
     },
     categoriesBoxListView: {
         backgroundColor: COLORS.lightBlue,
@@ -135,14 +133,16 @@ export default StyleSheet.create({
         elevation: 1,
     },
     categoriesName: {
-        fontSize: FONTS.f16,
+        fontSize: FONTS.f18,
         fontFamily: APP_FONTS.PoppinsBold,
-        color: COLORS.black
+        color: COLORS.black,
+        // fontWeight:'900'
     },
     channelName: {
         fontSize: FONTS.f18,
         fontFamily: APP_FONTS.PoppinsBold,
-        color: COLORS.white
+        color: COLORS.white,
+        // fontWeight:'900'
     },
     searchModal: {
         flex: 1,

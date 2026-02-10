@@ -22,6 +22,10 @@ export default StyleSheet.create({
         fontFamily: APP_FONTS.PoppinsMedium,
         // marginHorizontal: SPACING.sw05
     },
+    menubar: {
+       height: '90%',
+        width: '80%' 
+    },
  
     button: {
         height: HEIGHT.h100 * 0.05,

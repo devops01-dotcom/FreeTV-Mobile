@@ -3,7 +3,6 @@ import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, T
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { clearSearchEducationData, EducationSelector, fetchEducationalCategories, fetchEducationalcontent, fetchEducationalSubCategories, fetchSearchEducational, resetEducationData } from '../../redux/slice/educationSlice';
 import styles from './styles';
@@ -14,6 +13,7 @@ import { setSelectedEducationCategoriesId, setSelectedEducationSubCategoriesId, 
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
+import { IMAGES } from '../../assets';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -81,7 +81,7 @@ const EducationScreen = ({ route }) => {
     }, []) //bootupEducationData
 
     useEffect(() => {
-        if (search.length >= 3) {
+        if (search?.length >= 3) {
             const detail = {
                 cid: selectedEducationCategoriesId,
                 sid: selectedEducationSubCategoriesId,
@@ -238,7 +238,7 @@ const EducationScreen = ({ route }) => {
                 placeholder='Search'
                 onChangeText={setSearch}
             />
-            {search.length >= 2 || keyboardVisible ?
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={educationalSearchData}
@@ -260,7 +260,8 @@ const EducationScreen = ({ route }) => {
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={educational}
@@ -274,7 +275,8 @@ const EducationScreen = ({ route }) => {
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={educationalSubcategories}

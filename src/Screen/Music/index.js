@@ -4,13 +4,13 @@ import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { clearMusicData, clearSearchMusicData, fetchMusic, fetchMusicCategories, fetchMusicLanguage, fetchMusicLanguageFilterData, fetchSearchMusic, MusicSelector } from '../../redux/slice/musicSlice';
 import BackHeader from '../../Component/BackHeader';
 import { setSelectedMusicCategoriesId } from '../../redux/slice/commonAction';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
+import { IMAGES } from '../../assets';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -54,7 +54,7 @@ const MusicScreen = ({ navigation }) => {
 
 
     useEffect(() => {
-        if (search.length >= 2) {
+        if (search?.length >= 2) {
             const detail = {
                 name: search,
                 page: 1,
@@ -247,7 +247,7 @@ const MusicScreen = ({ navigation }) => {
                 placeholder='Search'
                 onChangeText={setSearch}
             />
-            {search.length >= 2 || keyboardVisible ?
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchMusicData}
@@ -278,7 +278,10 @@ const MusicScreen = ({ navigation }) => {
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
+                                {showCategories ?
+                                    <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
+                                    : null}
                             </TouchableOpacity>
                             <FlatList
                                 data={tvChannelLanguage}
@@ -291,7 +294,8 @@ const MusicScreen = ({ navigation }) => {
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={musicData}
@@ -315,7 +319,7 @@ const MusicScreen = ({ navigation }) => {
                                 onEndReached={loadMore}
                                 onEndReachedThreshold={0.5}
                                 ListFooterComponent={renderFooter}
-                                style={{marginBottom: isTablet ? 82 : 57}}
+                                style={{ marginBottom: isTablet ? 82 : 57 }}
                             />
                         </View>
                     </View>

@@ -15,7 +15,7 @@ import { AutoLoginData, fetchLogin, fetchLoginWithMacid, fetchOtp } from '../../
 import { COLORS } from '../../utils/color';
 import DeviceInfo from 'react-native-device-info';
 import { formatCountdownTime } from '../../utils/timeformat';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
+// import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 import Orientation from 'react-native-orientation-locker';
 import { useFocusEffect } from '@react-navigation/native';
@@ -265,7 +265,7 @@ const LoginScreen = () => {
               <Text style={styles.termsAndCondition}>
                 By proceeding, you confirm that you are at least 18 years old and{' '}
                 <View style={styles.inline}>
-                  <Ionicons name="checkbox" size={18} color={COLORS.white} />
+                  {/* <Ionicons name="checkbox" size={18} color={COLORS.white} /> */}
                 </View>{' '}agree
                 to our
                 <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Privacy Policy</Text> and

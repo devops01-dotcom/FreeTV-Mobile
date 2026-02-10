@@ -8,23 +8,24 @@ const isTablet = DeviceInfo.isTablet();
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         // backgroundColor: COLORS.lightTransparent,
-        backgroundColor: COLORS.lightCream,
+        backgroundColor: COLORS.drawerblue,
         position: 'absolute',
-        height: HEIGHT.h100,
-        width: WIDTH.w100 * 0.65,
+        height: HEIGHT.h100 * 0.84,
+        width: WIDTH.w100 * 0.48,
         zIndex: 9,
         overflow: 'hidden',
     },
     logo: {
-         height: isTablet ? 70 : 40,
-         width: isTablet ? 180 : 120, 
-         marginLeft: isTablet ? 25 : 15,
-         marginBottom: isTablet ? 25 : 15
+        height: isTablet ? 70 : 50,
+        width: isTablet ? 180 : 165,
+        marginLeft: isTablet ? 25 : 15,
+        marginBottom: isTablet ? 25 : 15
     },
     drawerItemsContainer: {
         flex: 1,
+        marginBottom: 50
     },
     drawerItemText: {
         color: COLORS.white,
@@ -42,7 +43,7 @@ export default StyleSheet.create({
     },
     headerContainer: {
         backgroundColor: COLORS.transparent,
-        height: HEIGHT.h08,
+        height: HEIGHT.h04,
         justifyContent: 'flex-end',
         alignItems: 'center',
         flexDirection: 'row',
@@ -61,13 +62,30 @@ export default StyleSheet.create({
     listText: {
         color: COLORS.white,
         fontSize: FONTS.f18,
-        fontFamily: APP_FONTS.PoppinsBold,
-
+        fontFamily: APP_FONTS.PoppinsSemiBold,
+        // fontWeight: '900'
     },
     itemIcon: {
         height: isTablet ? 45 : 30,
         width: isTablet ? 45 : 30,
         marginHorizontal: isTablet ? 25 : 15,
         tintColor: COLORS.yellow
+    },
+    logoutBtn: {
+        // position: 'absolute',
+        // bottom: 20,
+        // left: 0,
+        // right: 0,
+        paddingVertical: 15,
+        paddingHorizontal: 5,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(255,255,255,0.15)',
+        alignItems: 'flex-start',
+        // activeOpacity: 0.7,
+    },
+    closeIcon: {
+        height: 20,
+        width: 20
     }
+
 });

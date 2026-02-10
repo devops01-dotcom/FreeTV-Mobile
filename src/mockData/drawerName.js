@@ -1,49 +1,14 @@
 import { IMAGES } from "../assets";
 
-const DrawerList = [
-    {
-        id : 1,
-        name : "PROFILE",
-        img : IMAGES.Profile,
-        route:"ProfileScreen"
-    },
-    {
-        id : 2,
-        name : "SUBSCRIPTION",
-        img : IMAGES.subscription,
-        route:"SubscriptionScreen"
-    },
-    {
-        id : 3,
-        name : "PRIVACY POLICY",
-        img : IMAGES.privacyPolicy,
-        route:"PrivacyPolicy"
-    },
-    {
-        id : 4,
-        name : "SHARE APP",
-        img : IMAGES.shareApp,
-        route:"ShareProfile"
-    },
-    // {
-    //     id : 5,
-    //     name : "HELP and SUPPORT",
-    //     img : IMAGES.Help,
-    //     route:"ShareProfile"
-    // },
-    // {
-    //     id : 6,
-    //     name : "Activate TV",
-    //     img : IMAGES.TV,
-    //     route:"ShareProfile"
-    // },
-    {
-        id : 5,
-        name : "LOG OUT",
-        img : IMAGES.logout,
-        route:"Logout"
-    },
-   
-]
+export const DrawerList = [
+    { id: 1, name: 'Live Tv', img: IMAGES.liveTvIcon ,route: "LiveTVScreen"},
+    { id: 2, name: 'App Tv',  img: IMAGES.appTV ,route: 'AppTVScreen'},
+    { id: 3, name: 'Cinema', img: IMAGES.cinemaIcon ,route: 'CinemaScreen'},
+    { id: 4, name: 'Movies', img: IMAGES.movie ,route: 'MovieDetail'},
+    { id: 5, name: 'Music',  img: IMAGES.musicIcon ,route: 'MusicScreen'},
+    { id: 6, name: 'Devotional',  img: IMAGES.devotionalIcon ,route: 'DevotionalScreen'},
+    { id: 7, name: 'Education',  img: IMAGES.Book ,route: 'EducationScreen'},
+    { id: 8, name: 'Favourite',  img: IMAGES.favouriteIcon,route: 'FavouriteScreen' },
+    { id: 9, name: 'Setting', img: IMAGES.privacyPolicy,route: 'PrivacyPolicy' },
 
-export default DrawerList;
+]; 

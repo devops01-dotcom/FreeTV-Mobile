@@ -4,7 +4,6 @@ import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 import { clearCinemaData, clearSearchMoviesData, fetchCinema, fetchCinemaCategories, fetchGenreCategories, fetchGenreCinemaCategoriesData, fetchSearchCinema, MoviesSelector } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';
@@ -285,7 +284,7 @@ const CinemaScreen = () => {
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.primary : COLORS.white} />
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={combinegenreCategories}

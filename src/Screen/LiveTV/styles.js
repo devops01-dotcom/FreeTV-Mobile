@@ -1,10 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { COLORS } from '../../utils/color';
-import { FONTS, HEIGHT, WIDTH } from '../../utils/dimension';
+import { FONTS, HEIGHT } from '../../utils/dimension';
 import { APP_FONTS } from '../../utils/fontFamily';
 import DeviceInfo from 'react-native-device-info';
 
 const isTablet = DeviceInfo.isTablet();
+
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -172,7 +173,15 @@ export default StyleSheet.create({
         height: 20,
         width: 20
     },
-
+    zoomin: {
+        height: 40,
+        width: 40,
+    },
+    zoomout: {
+        height: 32,
+        width: 32,
+        marginLeft:3
+    },
     videoContainer: {
         // flex: 1,
         pointerEvents: 'box-none', // Ensures that the Video component doesn't block touch events
@@ -244,5 +253,8 @@ export default StyleSheet.create({
         width: '100%',
         // aspectRatio: 16/9
     },
-
-});
+    zoomButton: {
+        height: '90%',
+        width: '95%'
+    }
+})

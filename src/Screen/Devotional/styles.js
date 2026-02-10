@@ -19,7 +19,7 @@ export default StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 15
     },
-      adBox: {
+    adBox: {
         height: isTablet ? '40%' : '33%',
         justifyContent: 'center',
     },
@@ -31,7 +31,7 @@ export default StyleSheet.create({
         width: '100%',
         aspectRatio: 16 / 9
     },
-      mainBox: {
+    mainBox: {
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
@@ -67,6 +67,10 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginRight: 15,
         paddingHorizontal: 15
+    },
+    menubar: {
+        height: '90%',
+        width: '80%'
     },
     dropdownCloseMenu: {
         height: HEIGHT.h07,
@@ -104,7 +108,7 @@ export default StyleSheet.create({
         borderBottomEndRadius: 15,
         borderRightColor: COLORS.borderColor,
         width: isTablet ? '30%' : '45%',
-       height: isTablet ? '85%' : '90%',
+        height: isTablet ? '85%' : '90%',
         position: 'absolute',
         top: 0,
         paddingBottom: 8
