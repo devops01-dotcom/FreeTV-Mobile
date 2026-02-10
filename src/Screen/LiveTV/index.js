@@ -25,6 +25,7 @@ import { IMAGES } from '../../assets';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+// import {MaterialIcons} from '@react-native-vector-icons/codemod'
 // import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 
 import DeviceInfo from 'react-native-device-info';

@@ -285,7 +285,8 @@ const CinemaScreen = () => {
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.primary : COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.primary : COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={combinegenreCategories}
@@ -298,7 +299,8 @@ const CinemaScreen = () => {
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
                             </TouchableOpacity>
                             <FlatList
                                 data={cinemaCategoriesData}

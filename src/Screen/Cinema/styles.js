@@ -61,12 +61,16 @@ export default StyleSheet.create({
         marginRight: 15,
         paddingHorizontal: 15
     },
+    menubar: {
+        height: '90%',
+        width: '80%'
+    },
     dropdownCloseMenu: {
         height: HEIGHT.h07,
         width: isTablet ? 100 : 45,
         alignItems: 'center',
         justifyContent: 'center',
-        
+
     },
     channelListView: {
         flex: 1,
@@ -114,7 +118,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.25, // 25% opacity
         shadowRadius: 1, // blur
         elevation: 1,
-        marginBottom:15
+        marginBottom: 15
     },
     categoriesBoxListView: {
         backgroundColor: COLORS.lightBlue,

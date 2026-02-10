@@ -14,6 +14,7 @@ import { setSelectedDevotionalCategoriesId, setSelectedDevotionalSubCategoriesId
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
+import { IMAGES } from '../../assets';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -253,7 +254,8 @@ const DevotionalSceen = ({ route }) => {
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
                                 {/* {!showCategories ? <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> : null} */}
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={devotional}
@@ -267,7 +269,8 @@ const DevotionalSceen = ({ route }) => {
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={devotionalSubcategories}

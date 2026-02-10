@@ -28,5 +28,7 @@ export const IMAGES = {
     shareInActive: require('./images/shareInActive.png'),
     profileInActive: require('./images/profileInActive.png'),
     subscriptionInActive: require('./images/subscriptionInActive.png'),
+    close: require('./images/close.png'),
+    menu: require('./images/menu.png'),
 
 }
