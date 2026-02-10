@@ -228,9 +228,8 @@ const CinemaScreen = () => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
-
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
+                    {/* <SlidingText text={item.name} style={styles.categoriesName} /> */}
                 </View>
             </TouchableOpacity>
         )

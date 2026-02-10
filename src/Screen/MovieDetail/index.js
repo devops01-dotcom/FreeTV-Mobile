@@ -19,7 +19,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
     }, [])
 
     const onPlatVideo = useCallback(async () => {
-        const url = movieDetail.content_url;
+        const url = movieDetail?.content_url;
         const supported = await Linking.canOpenURL(url);
         if (supported) {
             await Linking.openURL(url);
@@ -40,7 +40,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
             />
             <View style={styles.videoBox}>
                 <FastImage
-                    source={{ uri: movieDetail.content_image || movieDetail.content_image_url }}
+                    source={{ uri: movieDetail?.content_image || movieDetail?.content_image_url }}
                     style={styles.backgroundImage}
                     resizeMode={FastImage.resizeMode.cover}
                 />
@@ -75,7 +75,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>{movieDetail?.language?.map((lang) => lang.name).join(', ')}</Text>
                         </View>
                     </View>}
-                    {movieDetail.director && <View style={styles.row}>
+                    {movieDetail?.director && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Director</Text>
                         </View>
@@ -86,7 +86,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>{movieDetail.director}</Text>
                         </View>
                     </View>}
-                    {movieDetail.cast && <View style={styles.row}>
+                    {movieDetail?.cast && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Stars</Text>
                         </View>
@@ -97,7 +97,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>{movieDetail.cast}</Text>
                         </View>
                     </View>}
-                    {movieDetail.rate && <View style={styles.row}>
+                    {movieDetail?.rate && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Rating</Text>
                         </View>

@@ -40,7 +40,7 @@ const RouteStack = () => {
                     name={'Home'}
                     component={TabNavigation}
                 />
-                <Stack.Screen name="MovieDetail" component={MovieDetailScreen} />
+                <Stack.Screen name="MovieDetailScreen" component={MovieDetailScreen} />
                 <Stack.Screen name="Video" component={VideoScreen} />
                 <Stack.Screen name="Profile" component={ProfileScreen} />
                 <Stack.Screen name="Subscription" component={SubscriptionScreen} />

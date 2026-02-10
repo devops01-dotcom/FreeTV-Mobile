@@ -11,7 +11,7 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        // height: HEIGHT.h05,
+        height: HEIGHT.h05,
         backgroundColor: COLORS.drawerblue,
         width: '90%',
         alignSelf: 'center',
@@ -20,7 +20,7 @@ export default StyleSheet.create({
         paddingHorizontal: 15
     },
     adBox: {
-        height: isTablet ? '40%' : '30%',
+        height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
     },
     videoBox: {

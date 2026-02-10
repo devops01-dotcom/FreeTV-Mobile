@@ -9,4 +9,5 @@ export const DrawerList = [
     { id: 6, name: 'Education', img: IMAGES.Book, route: 'EducationScreen' },
     { id: 7, name: 'Favourite', img: IMAGES.favouriteIcon, route: 'FavouriteScreen' },
     { id: 8, name: 'Privacy Policy', img: IMAGES.privacyPolicy, route: 'PrivacyPolicy' },
+    { id: 9, name: 'Movie', img: IMAGES.cinemaIcon, route: 'MovieDetailScreen' },
 ]; 
