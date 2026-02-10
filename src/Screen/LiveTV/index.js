@@ -24,7 +24,7 @@ import BackHeader from '../../Component/BackHeader';
 import { IMAGES } from '../../assets';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
 // import {MaterialIcons} from '@react-native-vector-icons/codemod'
 // import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 
@@ -33,6 +33,7 @@ import { useSharedValue, withTiming } from 'react-native-reanimated';
 import { ProfileSelector } from '../../redux/slice/profileSlice';
 import { fetchWatchVideoView } from '../../redux/slice/watchVideo';
 import BigList from "react-native-big-list";
+import { ResizeMode } from 'react-native-video';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -437,10 +438,13 @@ const LiveTVScreen = ({ route }) => {
                     {(orientation === 'landscape' && showZoom) && (
                         <View style={{ position: 'absolute', bottom: 60, left: 20 }}>
                             <TouchableOpacity onPress={zoomIn} style={styles.zoomButton}>
-                                <Icon name="zoom-in" size={isTablet ? 50 : 30} color="#fff" />
+                                {/* <Icon name="zoom-in" size={isTablet ? 50 : 30} color="#fff" /> */}
+                                <Image source={IMAGES.zoomin} style={{height: isTablet ? 50 : 30}} resizeMode={FastImage.resizeMode.contain} />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={zoomOut} style={styles.zoomButton}>
-                                <Icon name="zoom-out" size={isTablet ? 50 : 30} color="#fff" />
+                                {/* <Icon name="zoom-out" size={isTablet ? 50 : 30} color="#fff" /> */}
+                                <Image source={IMAGES.zoomout} style={{height: isTablet ? 50 : 30}} resizeMode={FastImage.resizeMode.contain} />
+
                             </TouchableOpacity>
                         </View>
                     )}

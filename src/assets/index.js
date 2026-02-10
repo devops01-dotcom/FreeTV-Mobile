@@ -30,5 +30,8 @@ export const IMAGES = {
     subscriptionInActive: require('./images/subscriptionInActive.png'),
     close: require('./images/close.png'),
     menu: require('./images/menu.png'),
+    zoomin: require('./images/zoomin.png'),
+    zoomout: require('./images/zoomout.png'),
+
 
 }
