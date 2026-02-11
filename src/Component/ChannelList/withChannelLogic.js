@@ -11,7 +11,6 @@ import { resetDevotionalData } from '../../redux/slice/devotionalSlice';
 export function withChannelLogic(Wrapped) {
   return function ChannelListHOC({ data = [], type, progressing, setShowAlert }) {
     const dispatch = useAppDispatch();
-
     // Preload images
     useEffect(() => {
       if (data.length) {
@@ -57,16 +56,16 @@ const onDevotionalHandler = useCallback(
         let onPressHandler = () => { };
 
         switch (type) {
-          case 'Education':
+          case 'EducationScreen':
             imageUri = item.background_image || item.logo || '';
             onPressHandler = () => onEducationHandler(item.id);
             break;
-          case 'Devotional':
+          case 'DevotionalScreen':
             imageUri = item.mobile_image || '';
             onPressHandler = () => onDevotionalHandler(item.id);
             break;
           default:
-            imageUri = item.content_image || item.content_image_url || '';
+            imageUri = item.content_image || item.content_image_url ;
             onPressHandler = () => onPlayVideo(item);
             break;
         }
@@ -83,6 +82,7 @@ const onDevotionalHandler = useCallback(
               style={styles.image}
               resizeMode={FastImage.resizeMode.cover}
             />
+            {/* <Text>{item.name}</Text> */}
           </TouchableOpacity>
         );
       },

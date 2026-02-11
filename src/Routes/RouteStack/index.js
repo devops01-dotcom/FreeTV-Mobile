@@ -13,6 +13,7 @@ import PrivacyPolicy from "../../Screen/PrivacyPolicyScreen";
 import LiveTVScreen from "../../Screen/LiveTV";
 import AppTVScreen from "../../Screen/AppTVScreen";
 import CinemaScreen from "../../Screen/Cinema";
+import MovieScreen from '../../Screen/Movies';
 import MusicScreen from "../../Screen/Music";
 import DevotionalScreen from "../../Screen/Devotional";
 import EducationScreen from "../../Screen/Education";
@@ -48,6 +49,7 @@ const RouteStack = () => {
                 <Stack.Screen name="LiveTVScreen" component={LiveTVScreen} />
                 <Stack.Screen name="AppTVScreen" component={AppTVScreen} />
                 <Stack.Screen name="CinemaScreen" component={CinemaScreen} />
+                <Stack.Screen name="MovieScreen" component={MovieScreen} />
                 <Stack.Screen name="MusicScreen" component={MusicScreen} />
                 <Stack.Screen name="DevotionalScreen" component={DevotionalScreen} />
                 <Stack.Screen name="EducationScreen" component={EducationScreen} />

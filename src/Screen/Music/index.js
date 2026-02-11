@@ -72,7 +72,8 @@ const MusicScreen = ({ navigation }) => {
     }, [showCategories])
 
     const onBackHandler = useCallback(() => {
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
+         navigation.goBack()
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
