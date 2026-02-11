@@ -9,6 +9,6 @@ export const DrawerList = [
     { id: 6, name: 'Devotional',  img: IMAGES.devotionalIcon ,route: 'DevotionalScreen'},
     { id: 7, name: 'Education',  img: IMAGES.Book ,route: 'EducationScreen'},
     { id: 8, name: 'Favourite',  img: IMAGES.favouriteIcon,route: 'FavouriteScreen' },
-    { id: 9, name: 'Setting', img: IMAGES.privacyPolicy,route: 'PrivacyPolicy' },
+    { id: 9, name: 'Setting', img: IMAGES.privacyPolicy,route: 'SettingScreen' },
 
 ]; 

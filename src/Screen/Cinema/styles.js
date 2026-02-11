@@ -11,7 +11,6 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        // height: HEIGHT.h05,
         backgroundColor: COLORS.drawerblue,
         width: '90%',
         alignSelf: 'center',

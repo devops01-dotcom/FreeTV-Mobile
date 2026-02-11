@@ -23,8 +23,8 @@ export default StyleSheet.create({
         // marginHorizontal: SPACING.sw05
     },
     menubar: {
-       height: '90%',
-        width: '80%' 
+       height: 35,
+        width: 35
     },
  
     button: {

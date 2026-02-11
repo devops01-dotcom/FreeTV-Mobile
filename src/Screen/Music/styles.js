@@ -12,7 +12,6 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        height: HEIGHT.h05,
         backgroundColor: COLORS.lightCream,
         width: '90%',
         alignSelf: 'center',
@@ -21,47 +20,39 @@ export default StyleSheet.create({
         paddingHorizontal: 15
     },
     adBox: {
-        height: isTablet ? '40%' : '33%',
+        height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
-    },
-    videoBox: {
-        aspectRatio: 16 / 9
+        marginBottom: 5,
     },
     backgroundImage: {
         height: '100%',
         width: '100%',
-        aspectRatio: 16 / 9
     },
     mainBox: {
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
-        marginVertical: 10,
-        height: '9%',
+        height: '10%',
         paddingHorizontal: 5,
         flexDirection: 'row',
         alignItems: 'center'
     },
-    gradientBorder: {
-        padding: 1, // stroke width
-        borderRadius: 9,
-        marginRight: 10,
-    },
-    languageBoxView: {
-        backgroundColor: COLORS.lightPrimaryColor,
-        height: '98%',
-        minWidth: isTablet ? 120 : 90,
-        alignItems: 'center',
-        justifyContent: 'center',
-        // marginRight: 10,
-        paddingHorizontal: 10,
-        borderRadius: 8,
-        // shadowColor: COLORS.black,
-        // shadowOffset: { width: 0, height: 4 },
-        // shadowOpacity: 0.25, // 25% opacity
-        // shadowRadius: 4, // blur
-        // elevation: 1, // Required for Android shadow
-    },
+   
+     languageBoxView: {
+            backgroundColor: COLORS.drawerblue,
+            height: '85%',
+            minWidth: isTablet ? 120 : 90,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: 10,
+            paddingHorizontal: 10,
+            borderRadius: 8,
+            shadowColor: COLORS.black,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.25, // 25% opacity
+            shadowRadius: 4, // blur
+            elevation: 4, // Required for Android shadow
+        }, 
     dropdownMenu: {
         height: HEIGHT.h07 - 10,
         alignItems: 'center',

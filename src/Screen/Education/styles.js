@@ -20,8 +20,9 @@ export default StyleSheet.create({
         paddingHorizontal: 15
     },
     adBox: {
-        height: isTablet ? '40%' : '33%',
+         height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
+        marginBottom: 5,
     },
     videoBox: {
         aspectRatio: 16 / 9

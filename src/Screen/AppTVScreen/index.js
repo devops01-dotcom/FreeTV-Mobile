@@ -268,12 +268,11 @@ const AppTVScreen = () => {
                 :
                 <>
                     <View style={styles.adBox}>
-                        <View style={styles.videoBox}>
                             <FastImage
                                 source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
                                 style={styles.backgroundImage}
+                                resizeMode={FastImage.resizeMode.cover}
                             />
-                        </View>
                     </View>
                     <View style={styles.mainBox}>
 

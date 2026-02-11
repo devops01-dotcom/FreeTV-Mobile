@@ -5,9 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
-import { clearMoviesData, clearSearchMoviesData, fetchMovies, fetchMoviesCategories, fetchGenreCategories, fetchGenreCategoriesData, fetchSearchMovies, MoviesSelector } from '../../redux/slice/moviesSlice';
+import { clearCinemaData, clearSearchMoviesData, fetchCinema, fetchCinemaCategories, fetchGenreCategories, fetchGenreCinemaCategoriesData, fetchSearchCinema, MoviesSelector } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';
-import { clearGenreDetail, setselectedMovieDetail } from '../../redux/slice/commonAction';
+import { clearGenreDetail, setSelectedCategoriesId } from '../../redux/slice/commonAction';
 import BackHeader from '../../Component/BackHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
@@ -15,7 +15,7 @@ import DeviceInfo from 'react-native-device-info';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const isTablet = DeviceInfo.isTablet();
-const MovieDetailScreen = () => {
+const HelpScreen = () => {
     const [search, setSearch] = useState('')
     const [keyboardVisible, setKeyboardVisible] = useState(false);
     const [selectLanguage, setSelectLanguage] = useState(0)
@@ -62,7 +62,7 @@ const MovieDetailScreen = () => {
                 cid: selectedCategoriesId,
                 gid: selectedGenreId ? selectedGenreId : 0
             }
-            dispatch(fetchSearchMovies(detail))
+            dispatch(fetchSearchCinema(detail))
         }
         else {
             dispatch(clearSearchMoviesData())
@@ -73,9 +73,10 @@ const MovieDetailScreen = () => {
         setShowCategories(!showCategories)
     }, [showCategories])
 
-    const onBackHandler = useCallback(() => {
-        navigation.navigate('Home');
-    }, [])
+      const onBackHandler = useCallback(() => {
+            navigation.goBack()
+        // navigation.navigate('Home');
+        }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
         navigation.navigate('MovieDetail', { item });
@@ -91,13 +92,13 @@ const MovieDetailScreen = () => {
         }
 
         if (selectCategoriesIndex !== index) {
-            dispatch(clearMoviesData());
-            dispatch(setselectedMovieDetail(id))
+            dispatch(clearCinemaData());
+            dispatch(setSelectedCategoriesId(id))
             const detail = {
                 id: id,
                 page: 1
             }
-            dispatch(fetchMovies(detail));
+            dispatch(fetchCinema(detail));
             setShowCategories(false)
         }
     }, [selectCategoriesIndex])
@@ -127,7 +128,7 @@ const MovieDetailScreen = () => {
     page: cinemaPage
   };
 
-  dispatch(fetchMovies(detail)).finally(() => {
+  dispatch(fetchCinema(detail)).finally(() => {
     setLoading(false);
     setHasScrolled(false); // ✅ Reset scroll trigger after API call
   });
@@ -140,7 +141,7 @@ const MovieDetailScreen = () => {
             cid: selectedCategoriesId,
             gid: selectedGenreId ? selectedGenreId : 0
         }
-        dispatch(fetchSearchMovies(detail)).finally(() => {
+        dispatch(fetchSearchCinema(detail)).finally(() => {
             setLoading(false);
         });
     }, [])
@@ -157,22 +158,22 @@ const MovieDetailScreen = () => {
     const onLanguageHandler = useCallback((item, index) => {
         setShowCategories(false)
         setSelectLanguage(index)
-        dispatch(clearMoviesData())
+        dispatch(clearCinemaData())
         if (item.name === 'All') {
             if (selectedCategoriesId) {
                 const detail = {
                     id: selectedCategoriesId,
                     page: 1
                 };
-                dispatch(fetchMovies(detail))
+                dispatch(fetchCinema(detail))
             }
             else {
-                dispatch(fetchMoviesCategories()).then((res) => {
+                dispatch(fetchCinemaCategories()).then((res) => {
                     const detail = {
                         id: res?.payload?.data?.results[0]?.id,
                         page: 1
                     };
-                    dispatch(fetchMovies(detail))
+                    dispatch(fetchCinema(detail))
                 })
             }
         }
@@ -182,15 +183,15 @@ const MovieDetailScreen = () => {
                     cid: selectedCategoriesId,
                     gid: item.id
                 };
-                dispatch(fetchGenreCategoriesData(detail))
+                dispatch(fetchGenreCinemaCategoriesData(detail))
             }
             else {
-                dispatch(fetchMoviesCategories()).then((res) => {
+                dispatch(fetchCinemaCategories()).then((res) => {
                     const detail = {
                         cid: res?.payload?.data?.results[0]?.id,
                         gid: item.id
                     };
-                    dispatch(fetchGenreCategoriesData(detail))
+                    dispatch(fetchGenreCinemaCategoriesData(detail))
                 })
             }
 
@@ -227,9 +228,7 @@ const MovieDetailScreen = () => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
-
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -294,7 +293,7 @@ const MovieDetailScreen = () => {
                             />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
-                            <TouchableOpacity style={styles.dropdownCloseMenu}
+                            <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
                                 <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
@@ -316,7 +315,7 @@ const MovieDetailScreen = () => {
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{ marginBottom: isTablet ? 82 : 57 }}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                                 ListFooterComponent={renderFooter}
                                 onScrollBeginDrag={() => setHasScrolled(true)} // Set true on user scroll
                                 onEndReached={loadMore}
@@ -331,5 +330,5 @@ const MovieDetailScreen = () => {
 };
 
 
-export default MovieDetailScreen;
+export default HelpScreen;
 

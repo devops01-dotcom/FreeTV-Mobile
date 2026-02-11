@@ -20,7 +20,6 @@ import Animated, { useAnimatedStyle, runOnJS } from 'react-native-reanimated';
 
 const isTablet = DeviceInfo.isTablet();
 
-
 const VideoPlayer = React.memo(
   ({
     isPlaying = false,
