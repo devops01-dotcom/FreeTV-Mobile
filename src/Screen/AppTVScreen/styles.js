@@ -52,14 +52,8 @@ export default StyleSheet.create({
         minWidth: isTablet ? 120 : 90,
         alignItems: 'center',
         justifyContent: 'center',
-        // marginRight: 10,
         paddingHorizontal: 10,
         borderRadius: 8,
-        // shadowColor: COLORS.black,
-        // shadowOffset: { width: 0, height: 4 },
-        // shadowOpacity: 0.25, // 25% opacity
-        // shadowRadius: 4, // blur
-        // elevation: 1, // Required for Android shadow
     },
     dropdownMenu: {
         height: HEIGHT.h07 - 10,
@@ -75,8 +69,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     menubar: {
-        height: '90%',
-        width: '80%'
+        height: 35,
+        width: 35
     },
     channelListView: {
         flex: 1,

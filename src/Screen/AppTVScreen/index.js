@@ -31,10 +31,6 @@ const AppTVScreen = () => {
     // const combinegenreCategories = [...languageData, ...genreCategories]
     const [hasScrolled, setHasScrolled] = useState(false);
 
-
-    console.log('object AppTvDataFilter, AppTvData,====:', AppTvDataFilter,'-----', AppTvData,);
-
-
     useEffect(() => {
         setHasScrolled(false);
     }, [selectLanguage, selectCategoriesIndex]);

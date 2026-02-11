@@ -22,22 +22,21 @@ export default StyleSheet.create({
     adBox: {
         height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
-    },
-    videoBox: {
-        aspectRatio: 16 / 9,
+        marginBottom: 5,
     },
     backgroundImage: {
         height: '100%',
         width: '100%',
-        aspectRatio: 16 / 9
+        // aspectRatio: 16 / 9
     },
     mainBox: {
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
-        height: '9%',
+        height: '10%',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     languageBoxView: {
         backgroundColor: COLORS.drawerblue,
@@ -59,18 +58,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 15,
-        paddingHorizontal: 15
+        width: 45,
+        paddingHorizontal: 30,
     },
     menubar: {
-        height: '90%',
-        width: '80%',
-    },
-    dropdownCloseMenu: {
-        height: HEIGHT.h07,
-        width: isTablet ? 100 : 45,
-        alignItems: 'center',
-        justifyContent: 'center',
-
+        height: 35,
+        width: 35
     },
     channelListView: {
         flex: 1,
@@ -136,6 +129,7 @@ export default StyleSheet.create({
         fontSize: FONTS.f18,
         fontFamily: APP_FONTS.PoppinsBold,
         color: COLORS.black,
+        lineHeight: 45
         // fontWeight:'900'
     },
     channelName: {

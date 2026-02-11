@@ -227,9 +227,7 @@ const CinemaScreen = () => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
-
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -272,12 +270,11 @@ const CinemaScreen = () => {
                 :
                 <>
                     <View style={styles.adBox}>
-                        <View style={styles.videoBox}>
                             <FastImage
                                 source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
                                 style={styles.backgroundImage}
+                                resizeMode={FastImage.resizeMode.cover}
                             />
-                        </View>
                     </View>
                     <View style={styles.mainBox}>
 
@@ -295,7 +292,7 @@ const CinemaScreen = () => {
                             />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
-                            <TouchableOpacity style={styles.dropdownCloseMenu}
+                            <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
                                 <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
@@ -317,7 +314,7 @@ const CinemaScreen = () => {
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{ marginBottom: isTablet ? 82 : 57 }}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                                 ListFooterComponent={renderFooter}
                                 onScrollBeginDrag={() => setHasScrolled(true)} // Set true on user scroll
                                 onEndReached={loadMore}

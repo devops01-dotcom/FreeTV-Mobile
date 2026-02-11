@@ -70,8 +70,8 @@ export default StyleSheet.create({
         paddingHorizontal: 15,
     },
     menubar: {
-        height: '50%',
-        width: '40%'
+        height: 35,
+        width: 35
     },
     dropdownCloseMenu: {
         height: HEIGHT.h07,

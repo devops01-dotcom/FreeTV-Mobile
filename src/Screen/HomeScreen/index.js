@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo, useEffect } from 'react';
-import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert, Text } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import CarouselView from '../../Component/Carousel';
 import FastImage from 'react-native-fast-image';
@@ -20,8 +20,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { BootupAdViewSelector } from '../../redux/slice/bootupadview';
 import { HEIGHT } from '../../utils/dimension';
 import CustomAlert from '../../Component/CustomAlert';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
-
 
 const HomeScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -116,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
 
       {showDrawer ? (
@@ -167,7 +167,7 @@ const HomeScreen = ({ navigation }) => {
         showAlert={showAlert}
         setShowAlert={setShowAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

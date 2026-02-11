@@ -12,7 +12,7 @@ export default StyleSheet.create({
         // backgroundColor: COLORS.lightTransparent,
         backgroundColor: COLORS.drawerblue,
         position: 'absolute',
-        height: HEIGHT.h100 * 0.84,
+        // height: HEIGHT.h100 * 0.84,
         width: WIDTH.w100 * 0.48,
         zIndex: 9,
         overflow: 'hidden',
