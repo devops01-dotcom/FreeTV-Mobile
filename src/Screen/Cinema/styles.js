@@ -59,18 +59,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 15,
-        paddingHorizontal: 15
+        width: 45,
+        paddingHorizontal: 30,
     },
     menubar: {
-        height: '90%',
-        width: '80%'
-    },
-    dropdownCloseMenu: {
-        height: HEIGHT.h07,
-        width: isTablet ? 100 : 45,
-        alignItems: 'center',
-        justifyContent: 'center',
-
+        height: 35,
+        width: 35
     },
     channelListView: {
         flex: 1,
@@ -136,6 +130,7 @@ export default StyleSheet.create({
         fontSize: FONTS.f18,
         fontFamily: APP_FONTS.PoppinsBold,
         color: COLORS.black,
+        lineHeight: 45
         // fontWeight:'900'
     },
     channelName: {

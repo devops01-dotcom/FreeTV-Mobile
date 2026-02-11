@@ -18,6 +18,7 @@ import DeviceInfo from 'react-native-device-info';
 import { DrawerList } from '../../mockData/drawerName';
 import RNRestart from 'react-native-restart';
 import FastImage from 'react-native-fast-image';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -76,7 +77,7 @@ const CustomDrawerContent = (props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CustomDrawerHeader toggleDrawer={props.setShowDrawer} />
       <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' />
       <View style={styles.drawerItemsContainer}>
@@ -95,7 +96,7 @@ const CustomDrawerContent = (props) => {
           <Text style={styles.listText}>Logout</Text>
         </View>
       </TouchableOpacity> */}
-    </View>
+    </SafeAreaView>
   );
 };
 

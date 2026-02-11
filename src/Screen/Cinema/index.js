@@ -296,7 +296,7 @@ const CinemaScreen = () => {
                             />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
-                            <TouchableOpacity style={styles.dropdownCloseMenu}
+                            <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
                                 <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}

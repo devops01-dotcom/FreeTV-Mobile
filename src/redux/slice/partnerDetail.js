@@ -6,6 +6,8 @@ const initialState = {
     helpVideos: null,
     partnerDetail: null,
     advertismentDetail: null,
+    buyOttQrCode: '',
+    providerDetail: [],
     loading: 'idle',
     error: null,
 };
@@ -32,6 +34,19 @@ export const fetchPartnerQr = createAsyncThunk(
             return thunkAPI.rejectWithValue('partner qr failed');
         }
     }
+);
+
+
+export const fetchBuyOTT = createAsyncThunk(
+    'buyottSlice', 
+    async (_, thunkAPI) => {
+    try {
+        const response = await Request.get(ApiConstant.buyOTT);
+        return { data: response };
+    } catch (error) {
+        return thunkAPI.rejectWithValue('partner qr failed');
+    }
+},
 );
 
 export const fetchadvertismentQr = createAsyncThunk(
@@ -78,6 +93,19 @@ export const onPartnerDetailSlice = createSlice({
                 state.partnerDetail = partnerInfo.results;
             })
             .addCase(fetchPartnerQr.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.error.message ?? 'Profile failed';
+            })
+
+            .addCase(fetchBuyOTT.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(fetchBuyOTT.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                const qrcode = action.payload?.data?.qrcode
+                state.buyOttQrCode = qrcode
+            })
+            .addCase(fetchBuyOTT.rejected, (state, action) => {
                 state.loading = 'failed';
                 state.error = action.error.message ?? 'Profile failed';
             })

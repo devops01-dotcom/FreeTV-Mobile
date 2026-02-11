@@ -55,6 +55,7 @@ const ApiConstant = {
   educationallivecontent: 'api/07890119/education/educationcontent/',
   helpVideos: 'api/07890119/settings/helpvideosview/',
   activatepartnerview: 'api/07890119/settings/activatepartnerview/',
+
   advertismentqrview: 'api/07890119/settings/advertismentqrview/',
   partnerchannellist: 'api/07890119/partner/partnerchannellist11/',
   LiveTVLanguage: 'api/07890119/livetv/channelslanguage/',
@@ -70,6 +71,7 @@ const ApiConstant = {
   addFavouriteAppTV: `api/07890119/partner/apptvfavouriteslist/`,
   AppTvFilter: `api/07890119/livetv/apptvcontent/`, // steging server
   SerachAppTv: `api/07890119/livetv/apptvtitlefilter2/`,
+  buyOTT: `api/07890119/auth/buyott/`
 };
 export const SUCCESS = "success";
 export const FAILURE = "failure";
