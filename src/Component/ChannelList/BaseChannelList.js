@@ -8,34 +8,34 @@ const ITEM_WIDTH = 120;
 
 
 const BaseChannelList = ({
-data,
-type,
-renderItem,
-keyExtractor: keyExtractorProp,
+    data,
+    type,
+    renderItem,
+    keyExtractor: keyExtractorProp,
 }) => {
-const getItemLayout = useCallback(
-(_, index) => ({ length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index }),
-[],
-);
+    const getItemLayout = useCallback(
+        (_, index) => ({ length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index }),
+        [],
+    );
 
 
-const keyExtractor = keyExtractorProp || ((_, index) => `${type}-${index}`);
+    const keyExtractor = keyExtractorProp || ((_, index) => `${type}-${index}`);
 
 
-return (
-<FlatList
-data={data}
-horizontal
-keyExtractor={keyExtractor}
-renderItem={renderItem}
-showsHorizontalScrollIndicator={false}
-initialNumToRender={8}
-maxToRenderPerBatch={10}
-windowSize={7}
-getItemLayout={getItemLayout}
-removeClippedSubviews={false}
-/>
-);
+    return (
+        <FlatList
+            data={data}
+            horizontal
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            showsHorizontalScrollIndicator={false}
+            initialNumToRender={8}
+            maxToRenderPerBatch={10}
+            windowSize={7}
+            getItemLayout={getItemLayout}
+            removeClippedSubviews={false}
+        />
+    );
 };
 
 

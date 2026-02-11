@@ -38,10 +38,20 @@ export const fetchPartnerQr = createAsyncThunk(
 
 
 export const fetchBuyOTT = createAsyncThunk(
-    'buyottSlice', 
+    'buyottSlice',
     async (_, thunkAPI) => {
+        try {
+            const response = await Request.get(ApiConstant.buyOTT);
+            return { data: response };
+        } catch (error) {
+            return thunkAPI.rejectWithValue('partner qr failed');
+        }
+    },
+);
+
+export const fetchOttProvider = createAsyncThunk('partnerottProviderSlice', async (detail, thunkAPI) => {
     try {
-        const response = await Request.get(ApiConstant.buyOTT);
+        const response = await Request.post(ApiConstant.getOTT_Token, detail);
         return { data: response };
     } catch (error) {
         return thunkAPI.rejectWithValue('partner qr failed');
@@ -106,6 +116,17 @@ export const onPartnerDetailSlice = createSlice({
                 state.buyOttQrCode = qrcode
             })
             .addCase(fetchBuyOTT.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.error.message ?? 'Profile failed';
+            })
+
+            .addCase(fetchOttProvider.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(fetchOttProvider.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+            })
+            .addCase(fetchOttProvider.rejected, (state, action) => {
                 state.loading = 'failed';
                 state.error = action.error.message ?? 'Profile failed';
             })

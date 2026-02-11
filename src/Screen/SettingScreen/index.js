@@ -1,9 +1,9 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Image, Text, TouchableOpacity, View ,Alert} from 'react-native';
+import { Image, Text, TouchableOpacity, View, Alert } from 'react-native';
 import styles from './styles';
 import BackHeader from '../../Component/BackHeader';
 import { ProfileSelector } from '../../redux/slice/profileSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { IMAGES } from '../../assets';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomDrawerContent from '../../Component/DrawerScreen';
@@ -21,25 +21,26 @@ const SettingScreen = ({ navigation }) => {
     const [progressing, setProgressing] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const appVersion = DeviceInfo.getVersion();
+    const dispatch = useAppDispatch();
 
     const onLogout = () => {
-    Alert.alert(
-      'Restart App',
-      'You will be logged out and the app will restart. Do you want to continue?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Logout',
-          style: 'destructive',
-          onPress: () => {
-            dispatch(AutoLoginData());
-            RNRestart.restart();
-            // setTimeout(() => resetNavigation('Login'), 100);
-          },
-        },
-      ]
-    );
-  };
+        Alert.alert(
+            'Restart App',
+            'You will be logged out and the app will restart. Do you want to continue?',
+            [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                    text: 'Logout',
+                    style: 'destructive',
+                    onPress: () => {
+                        dispatch(AutoLoginData());
+                        RNRestart.restart();
+                        // setTimeout(() => resetNavigation('Login'), 100);
+                    },
+                },
+            ]
+        );
+    };
 
     const onBackHandler = useCallback(() => {
         navigation.goBack()

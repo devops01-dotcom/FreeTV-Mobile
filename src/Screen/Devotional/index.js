@@ -77,7 +77,8 @@ const DevotionalSceen = ({ route }) => {
     }, [showCategories])
 
     const onBackHandler = useCallback(() => {
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
+         navigation.goBack()
     }, [])
     useEffect(() => {
         dispatch(fetchBootupDevotionalAdView())

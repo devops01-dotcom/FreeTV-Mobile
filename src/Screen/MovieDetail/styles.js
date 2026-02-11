@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../utils/color";
-import { FONTS, HEIGHT, WIDTH } from "../../utils/dimension";
+import { FONTS, HEIGHT, SPACING, WIDTH } from "../../utils/dimension";
 import { APP_FONTS } from "../../utils/fontFamily";
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo from "react-native-device-info";
 
 const isTablet = DeviceInfo.isTablet();
 export default StyleSheet.create({
@@ -11,134 +11,95 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        backgroundColor: COLORS.drawerblue,
+        height: HEIGHT.h05,
+        backgroundColor: COLORS.lightCream,
         width: '90%',
         alignSelf: 'center',
         marginVertical: 10,
         borderRadius: 10,
         paddingHorizontal: 15
     },
-    adBox: {
+    videoBox: {
         height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 5,
+        aspectRatio: 16 / 9,
+        backgroundColor: 'red'
     },
     backgroundImage: {
         height: '100%',
         width: '100%',
         // aspectRatio: 16 / 9
     },
-    mainBox: {
-        height: isTablet ? '60%' : '67%',
-    },
-    languageBox: {
-        height: '10%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    languageBoxView: {
-        backgroundColor: COLORS.drawerblue,
-        height: '85%',
-        minWidth: isTablet ? 120 : 90,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-        paddingHorizontal: 10,
-        borderRadius: 8,
-        shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25, // 25% opacity
-        shadowRadius: 4, // blur
-        elevation: 4, // Required for Android shadow
-    },
-    dropdownMenu: {
-        height: HEIGHT.h07 - 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 15,
-        width: 45,
-        paddingHorizontal: 30,
-    },
-    menubar: {
-        height: 35,
-        width: 35
-    },
-    channelListView: {
-        flex: 1,
-        paddingBottom: 10,
-        zIndex: 1
-    },
-    columnWrapper: {
-        justifyContent: 'space-between', // Space between columns
-        marginHorizontal: 10,
-    },
     movieDetailBox: {
-        height: isTablet ? 150 : HEIGHT.h13,
-        width: isTablet ? '32%' : '48%',
-        justifyContent: 'center',
+        marginVertical: SPACING.sh05,
+        height: HEIGHT.h100 * 0.33,
         alignItems: 'center',
-        // marginRight: 10
+        paddingVertical: 10,
+        paddingHorizontal: 25,
+        overflow: 'hidden'
     },
-    movieImage: {
-        height: '88%',
-        width: '88%',
-        aspectRatio: 16 / 9,
-        borderRadius: 10,
-    },
-    drawerMenu: {
-        zIndex: 9,
-        backgroundColor: COLORS.primary,
-        borderRightWidth: 4,
-        borderTopEndRadius: 15,
-        borderBottomEndRadius: 15,
-        borderRightColor: COLORS.borderColor,
-        width: isTablet ? '30%' : '40%',
-        // height: isTablet ? HEIGHT.h100 * 0.46 : HEIGHT.h100 * 0.56,
-        height: isTablet ? '85%' : '90%',
+    platButton: {
+        // backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        // height: 60,
+        // width: 60,
+        // justifyContent: 'center',
+        alignItems: 'center',
+        // borderRadius: 5,
         position: 'absolute',
-        top: 0,
-        paddingBottom: 4
+        top: '60%',
+        left: '60%',
+        transform: [{ translateX: -50 }, { translateY: -50 }],
+ 
     },
-    categoriesBoxView: {
-        backgroundColor: COLORS.black,
-        height: isTablet ? 70 : 47.5,
-        width: '100%',
-        justifyContent: 'center',
-        shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25, // 25% opacity
-        shadowRadius: 1, // blur
-        elevation: 1,
-        marginBottom: 15
+    addsBox: {
+        // height: HEIGHT.h23,
+        marginBottom: 10
     },
-    categoriesBoxListView: {
-        backgroundColor: COLORS.lightBlue,
-        height: '98%',
-        width: '100%',
-        justifyContent: 'center',
-        paddingHorizontal: 10,
-        shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25, // 25% opacity
-        shadowRadius: 1, // blur
-        elevation: 1,
+    movieName: {
+        fontSize: FONTS.f27,
+        color: COLORS.activeText,
+        fontFamily: APP_FONTS.PoppinsBold
     },
-    categoriesName: {
-        fontSize: FONTS.f18,
-        fontFamily: APP_FONTS.PoppinsBold,
-        color: COLORS.black,
-        lineHeight: 45
-        // fontWeight:'900'
-    },
-    channelName: {
-        fontSize: FONTS.f18,
-        fontFamily: APP_FONTS.PoppinsBold,
+    movieDescription: {
+        fontSize: FONTS.f14,
         color: COLORS.white,
-        // fontWeight:'900'
+        fontFamily: APP_FONTS.PoppinsRegular,
+        marginBottom: 20,
     },
-    searchModal: {
-        flex: 1,
+    movieDetail: {
+        fontSize: FONTS.f16,
+        color: COLORS.white,
+        fontFamily: APP_FONTS.PoppinsMedium,
+        width: '100%',
+    },
+    descriptionText: {
+        fontSize: FONTS.f14,
+        color: COLORS.white,
+        fontFamily: APP_FONTS.PoppinsRegular,
+        width: '100%',
+    },
+    movieHeadingBox: {
+        width: '30%',
+
+    },
+    movieDescriptionHeading: {
+        fontSize: FONTS.f16,
+        color: COLORS.white,
+        fontFamily: APP_FONTS.PoppinsMedium,
+    },
+    centerView: {
+        width: '5%',
+    },
+    movieTitleBox: {
+        width: '50%',
+        paddingLeft: 10,
+    },
+    row: {
+        flexDirection: 'row',
+        marginBottom: 5
     }
+
 
 })

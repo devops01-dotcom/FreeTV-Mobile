@@ -32,8 +32,7 @@ const HomeScreen = ({ navigation }) => {
   useHomeData();
   const { bootupData } = useAppSelector(BootupAdViewSelector);
   const { allChannelList } = useAppSelector(CategoriesSelector) || [];
-  const { cinemaData } = useAppSelector(MoviesSelector) || [];
-  const { movieData } = useAppSelector(MoviesSelector) || [];
+  const { cinemaData, movieData } = useAppSelector(MoviesSelector) || [];
   const { musicFilterData } = useAppSelector(MusicSelector) || [];
   const { devotional } = useAppSelector(DevotionalSelector) || [];
   const { educational } = useAppSelector(EducationSelector) || [];
@@ -109,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
   const sections = [
     { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'LiveTVScreen' },
     { title: 'FreeTV Cinema', data: cinemaData || [], type: 'CinemaScreen' },
-    { title: 'Movie', data: movieData || [], type: 'MovieDetailScreen' },
+    { title: 'FreeTV Movie', data: movieData || [], type: 'MovieScreen' },
     { title: 'FreeTV Music', data: musicFilterData || [], type: 'MusicScreen' },
     { title: 'Devotional', data: devotional || [], type: 'DevotionalScreen' },
     { title: 'Education', data: educational || [], type: 'EducationScreen' },
@@ -124,7 +123,8 @@ const HomeScreen = ({ navigation }) => {
       ) : (
         <SectionList
           sections={sections}
-          keyExtractor={(item, index) => item.id || index.toString()}
+          // keyExtractor={(item, index) => item.id || index.toString()}
+          keyExtractor={(item, index) => `section-item-${index}`}
           renderItem={() => null} // ignore vertical renderItem
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
@@ -142,13 +142,13 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.sectionContainer}>
               <Section
                 title={section.title}
-                onPress={() => navigateToScreen(section.type === 'live' ? 'LiveTV' : section.type)}
+                onPress={() => navigateToScreen(section.type)}
               />
               <FlatList
                 data={section.data}
                 horizontal
                 renderItem={({ item, index }) =>
-                  section.type === 'live' ? (
+                  section.type === 'LiveTVScreen' ? (
                     renderLiveTV({ item, index })
                   ) : (
                     <ChannelList data={[item]} type={section.type} progressing={progressing} setShowAlert={setShowAlert} />

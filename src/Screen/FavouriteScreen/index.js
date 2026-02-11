@@ -51,7 +51,8 @@ const FavouriteScreen = ({ navigation }) => {
   });
 
   const onBackHandler = useCallback(() => {
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
+     navigation.goBack()
   }, [])
 
 

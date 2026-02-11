@@ -1,16 +1,21 @@
 const ApiConstant = {
   //common api
-  Login: "api/07890119/auth/freetvlogin/",
-  LoginWithMacID: "api/07890119/auth/freetvautologin/",
-  otp: 'api/07890119/auth/freetvotplogin/',
+  // Login: "api/07890119/auth/freetvlogin/",
+  appUpdate: `api/07890119/auth/apkupdate/`,
+  Login: `api/07890119/auth/checklogin/`,
+  LoginWithPin: `api/07890119/auth/freetvlogin/`,
+  LoginWithMacID: `api/07890119/auth/freetvautologin/`,
+  otp: `api/07890119/auth/freetvotplogin1/`,
   hometabs: 'api/07890119/vods/hometabs/',
   // add's url
   bootupadview: 'api/07890119/advertisement/BootupView/',
+  // bootupadview: `api/07890119/advertisement/BootupadView/`,
   DevotionalView: 'api/07890119/advertisement/DevotionalView/',
   MusicViewAdView: 'api/07890119/advertisement/MusicView/?app_type=FREETVMOB&add_type=Music',
   EducationView: 'api/07890119/advertisement/EducationView/',
   LiveAddView: 'api/07890119/advertisement/LiveAddView/',
   HomeAddView: 'api/07890119/advertisement/HomeAddView/',
+  // HomeAddView: `api/07890119/advertisement/imagesadView/?app_type=FREETV`,
   LivePreviewAddView: 'api/07890119/advertisement/LivePreviewAddView/',
 
   categories: 'api/07890119/livetv/categories/',
@@ -18,18 +23,24 @@ const ApiConstant = {
   Ottapp: 'api/07890119/settings/ottapp/', //'api/07890119/settings/favouriteapp/',
   getContinueWatchView: 'api/07890119/livetv/getContinueWatchView/?user=', // all continue channel list
   ContinueWatchView: "api/07890119/livetv/newContinueWatchView2/",
+  // ContinueWatchView: `api/07890119/partner/continuelist/`, 
   Cimemacategories: 'api/07890119/vods/categories/',
-  SerachMovies: 'api/07890119/vods/moviescatgensearch/',  //  new search api
-  SerachCinema: 'api/07890119/vods/cinemacatgensearch/', //  new search api
+  // SerachMovies: 'api/07890119/vods/moviescatgensearch/',  //  new search api
+    SerachMovies: `api/07890119/vods/moviescatgensearchapi/`,
+  // SerachCinema: 'api/07890119/vods/cinemacatgensearch/', //  new search api
+   SerachCinema: `api/07890119/vods/cinemacatgensearchapi/`, 
   moviescategories: 'api/07890119/vods/moviescategories/',
-  MovieFilter: 'api/07890119/vods/moviesfilter/',  // 'api/07890119/vods/categoryfilter/',
-  CinemaFilter: 'api/07890119/vods/categoryfilter/',
+  MovieFilter: `api/07890119/vods/moviesfilter1/`,   // 'api/07890119/vods/categoryfilter/',
+  // CinemaFilter: 'api/07890119/vods/categoryfilter/',
+   CinemaFilter: `api/07890119/vods/getcinemadetails/`, 
   Music: 'api/07890119/radio/categories/',
   MusicFilter: 'api/07890119/radio/musiccontentfilter/',  //'api/07890119/radio/channels/', 
   SerachMusic: 'api/07890119/radio/musicsearchfilter/', //  new search api
   FreeTvSeries: 'api/07890119/tvserial/category/',
-  FreeTvSeriesFilter: 'api/07890119/tvserial/categoryfilter/',
-  SearchSeries: 'api/07890119/tvserial/serialtitlefilter/', //  new search api
+  // FreeTvSeriesFilter: 'api/07890119/tvserial/categoryfilter/',
+   FreeTvSeriesFilter: `api/07890119/tvserial/tvseriallist/`, 
+  // SearchSeries: 'api/07890119/tvserial/serialtitlefilter/', //  new search api
+   SearchSeries: `api/07890119/tvserial/tvserialserachlist/`,
   FreeTvSeriesEpisode: 'api/07890119/tvserial/episodelist/',
   AppTvCategories: 'api/07890119/livetv/apptvcategories/',
   addFavouriteAppTV: 'api/07890119/partner/apptvfavouriteslist/',
@@ -45,7 +56,8 @@ const ApiConstant = {
   devotionallivecontent: 'api/07890119/devotional/devotionalcontent/',
   devotionalSarchivecontent: 'api/07890119/devotional/devotionalarchivecontent/',
   searchDevotional: 'api/07890119/devotional/devotionaltitlefilter/',
-  genreCinema: 'api/07890119/vods/cinemagenrefilter1/',
+  // genreCinema: 'api/07890119/vods/cinemagenrefilter1/',
+  genreCinema: `api/07890119/vods/cinemagenreottfilter/`,
   genereFilter: 'api/07890119/vods/genrefilter/',
   generCinemaFilter: 'api/07890119/vods/cinemagenrefilter/',
   userProfile: 'api/07890119/auth/freetvprofileapi/',
@@ -65,13 +77,34 @@ const ApiConstant = {
   musicLanguageFilter: 'api/07890119/radio/languagesearch/',
   getfavouriteslist: 'api/07890119/partner/getfavouriteslist3/',
   usercacheclear: 'api/07890119/auth/usercacheclear/',
+  buyOTT: `api/07890119/auth/buyott/`,
 
-  
-  AppTvCategories: `api/07890119/livetv/apptvcategories/`,  // staging server
-  addFavouriteAppTV: `api/07890119/partner/apptvfavouriteslist/`,
-  AppTvFilter: `api/07890119/livetv/apptvcontent/`, // steging server
-  SerachAppTv: `api/07890119/livetv/apptvtitlefilter2/`,
-  buyOTT: `api/07890119/auth/buyott/`
+
+
+
+
+
+  // CategoriesAddS: `api/07890119/advertisement/NewAdvertisementView/`, //?app_type=FREETV&add_type=Education
+  // HomeAddView: `api/07890119/advertisement/imagesadView/?app_type=FREETV`,
+  // LivePreviewAddView: `api/07890119/advertisement/LivePreviewAddView/`,
+  // epgAd: `api/07890119/advertisement/EpgAddView/`,
+  // Ottapp: `api/07890119/partner/partnerallottlist/`, //api/07890119/partner/partnerottlist1/`,  //`api/07890119/settings/favouriteapp/`,
+  // partnerOttapp: `api/07890119/partner/partnerfavottlist1/`,// `api/07890119/partner/partnerfavottlist/`,
+
+  // getContinueWatchView: `api/07890119/partner/getcontinuelist/`,  //`api/07890119/livetv/newgetContinueWatchView2/`, //"api/07890119/livetv/newgetContinueWatchView/", //`api/07890119/livetv/getContinueWatchView/?user=`, // all continue channel list
+  // ContinueWatchView: `api/07890119/partner/continuelist/`, //"api/07890119/livetv/newContinueWatchView2/", //`api/07890119/livetv/ContinueWatchView/`, // 
+  // MovieFilter: `api/07890119/vods/moviesfilter/`,  // `api/07890119/vods/categoryfilter/`,
+  // devotionalarchivecontent: `api/07890119/devotional/devotionalarchivecontent/`,
+  genreMovie: `api/07890119/vods/moviegenreottfilter/`, //`api/07890119/vods/moviegenrefilter1/`,
+  getfavouritesAppTVlist: `api/07890119/partner/getapptvfavouriteslist4/`, // staging erver
+  getOTT_Token: `api/07890119/auth/getottoken/`,
+  getFavOTT_Token: `api/07890119/auth/getfavottoken/`,
+
+  governanceCategories: `api/07890119/egov/categories/`,
+  governanceSubCategories: `api/07890119/egov/subcategories/`,
+  searchGovernance: `api/07890119/egov/egovtitlefilter/`, //`api/07890119/education/educationtitlefilter/`,  api/07890119/egov/egovtitlefilter/2/2/?title=apply
+  governancelivecontent: `api/07890119/egov/egovcontent/`,
+
 };
 export const SUCCESS = "success";
 export const FAILURE = "failure";

@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
-// import { clearCinemaData, clearSearchMoviesData, fetchCinema, fetchCinemaCategories, fetchGenreCategories, fetchSearchAppTv, MoviesSelector } from '../../redux/slice/moviesSlice';
+import { clearMoviesData, clearSearchMoviesData, fetchMovies, fetchMoviesCategories, fetchGenreCategories, fetchGenreCategoriesData, fetchSearchMovies, MoviesSelector } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';
-import { clearGenreDetail, setSelectedCategoriesId } from '../../redux/slice/commonAction';
+import { clearGenreDetail, setselectedMovieDetail } from '../../redux/slice/commonAction';
 import BackHeader from '../../Component/BackHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
-import { AppTVSelector, clearAppTvData, clearSearchAppTvData, fetchAppTv, fetchSearchAppTv } from '../../redux/slice/appTvSlice';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const isTablet = DeviceInfo.isTablet();
-const AppTVScreen = () => {
+const MovieScreen = () => {
     const [search, setSearch] = useState('')
     const [keyboardVisible, setKeyboardVisible] = useState(false);
     const [selectLanguage, setSelectLanguage] = useState(0)
@@ -25,11 +25,20 @@ const AppTVScreen = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    const { AppTvDataFilter, AppTvData, searchAppTvData, appTvNextPage, appTvPage, appTvCount, searchAppTvPage, SearchAppTvCount, totalSearchAppTvCount, searchAppTvNextPage } = useAppSelector(AppTVSelector)
+    const { movieData, moviesCategoriesData, genreCategories, searchMovieData, movieNextPage, moviePage, movieCount, searchMoviePage } = useAppSelector(MoviesSelector)
     const { selectedCategoriesId, searchQuery, selectedGenreId } = useAppSelector((state) => state.commonReducer);
     const flatListRef = useRef(null);
     // const combinegenreCategories = [...languageData, ...genreCategories]
+    const combinegenreCategories = [...(languageData || []), ...(genreCategories || [])
+];
     const [hasScrolled, setHasScrolled] = useState(false);
+
+    // useEffect(() => {
+    //     dispatch(fetchCinemaCategories()).then((res) => {
+    //         const id = res.payload.data.results[0].id
+    //         dispatch(setSelectedCategoriesId(id))
+    //     })
+    // }, [])
 
     useEffect(() => {
         setHasScrolled(false);
@@ -48,14 +57,15 @@ const AppTVScreen = () => {
     useEffect(() => {
         if (search?.length >= 3) {
             const detail = {
-                name: searchQuery.trim(),
+                name: search,
                 page: 1,
-                id: selectedCategoriesId
+                cid: selectedCategoriesId,
+                gid: selectedGenreId ? selectedGenreId : 0
             }
-            dispatch(fetchSearchAppTv(detail))
+            dispatch(fetchSearchMovies(detail))
         }
         else {
-            dispatch(clearSearchAppTvData())
+            dispatch(clearSearchMoviesData())
         }
     }, [search])
 
@@ -65,7 +75,7 @@ const AppTVScreen = () => {
 
     const onBackHandler = useCallback(() => {
         // navigation.navigate('Home');
-        navigation.goBack()
+         navigation.goBack()
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
@@ -76,31 +86,31 @@ const AppTVScreen = () => {
         // dispatch(setSelectedCategoriesId(null))
         setSelectCategoriesIndex(index)
         setSelectLanguage(0)
-        // dispatch(clearGenreDetail())
+        dispatch(clearGenreDetail())
         if (flatListRef.current) {
             flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
         }
 
         if (selectCategoriesIndex !== index) {
-            dispatch(clearAppTvData());
-            dispatch(setSelectedCategoriesId(id))
+            dispatch(clearMoviesData());
+            dispatch(setselectedMovieDetail(id))
             const detail = {
                 id: id,
                 page: 1
             }
-            dispatch(fetchAppTv(detail));
+            dispatch(fetchMovies(detail));
             setShowCategories(false)
         }
     }, [selectCategoriesIndex])
 
     // const loadMore = () => {
-    //     if (loading || !appTvNextPage) return; // prevent multiple calls
+    //     if (loading || !movieNextPage) return; // prevent multiple calls
 
     //     setLoading(true);
 
     //     const detail = {
     //         id: selectedCategoriesId,
-    //         page: appTvPage
+    //         page: moviePage
     //     };
 
     //     dispatch(fetchCinema(detail)).finally(() => {
@@ -110,27 +120,28 @@ const AppTVScreen = () => {
     // };
 
 
-    const loadMore = useCallback(() => {
-        if (!hasScrolled || loading || !appTvNextPage) return;
-        setLoading(true);
-        const detail = {
-            id: selectedCategoriesId,
-            page: appTvPage
-        };
+   const loadMore = useCallback(() => {
+  if (!hasScrolled || loading || !movieNextPage) return;
+  setLoading(true);
+  const detail = {
+    id: selectedCategoriesId,
+    page: moviePage
+  };
 
-        dispatch(fetchAppTv(detail)).finally(() => {
-            setLoading(false);
-            setHasScrolled(false); // ✅ Reset scroll trigger after API call
-        });
-    }, [hasScrolled, loading, appTvNextPage, selectedCategoriesId, appTvPage]);
+  dispatch(fetchMovies(detail)).finally(() => {
+    setLoading(false);
+    setHasScrolled(false); // ✅ Reset scroll trigger after API call
+  });
+}, [hasScrolled, loading, movieNextPage, selectedCategoriesId, moviePage]);
 
     const loadSearchMore = useCallback(() => {
         const detail = {
-            name: searchQuery,
-            page: searchAppTvPage,
-            id: selectedCategoriesId
+            name: search,
+            page: searchMoviePage,
+            cid: selectedCategoriesId,
+            gid: selectedGenreId ? selectedGenreId : 0
         }
-        dispatch(fetchSearchAppTv(detail)).finally(() => {
+        dispatch(fetchSearchMovies(detail)).finally(() => {
             setLoading(false);
         });
     }, [])
@@ -144,65 +155,58 @@ const AppTVScreen = () => {
     };
 
 
-    // const onLanguageHandler = useCallback((item, index) => {
-    //     setShowCategories(false)
-    //     setSelectLanguage(index)
-    //     dispatch(clearCinemaData())
-    //     if (item.name === 'All') {
-    //         if (selectedCategoriesId) {
-    //             const detail = {
-    //                 id: selectedCategoriesId,
-    //                 page: 1
-    //             };
-    //             dispatch(fetchCinema(detail))
-    //         }
-    //         else {
-    //             dispatch(fetchCinemaCategories()).then((res) => {
-    //                 const detail = {
-    //                     id: res?.payload?.data?.results[0]?.id,
-    //                     page: 1
-    //                 };
-    //                 dispatch(fetchCinema(detail))
-    //             })
-    //         }
-    //     }
-    //     else {
-    //         if (selectedCategoriesId) {
-    //             const detail = {
-    //                 cid: selectedCategoriesId,
-    //                 gid: item.id
-    //             };
-    //             dispatch(fetchGenreAppTvData(detail))
-    //         }
-    //         else {
-    //             dispatch(fetchCinemaCategories()).then((res) => {
-    //                 const detail = {
-    //                     cid: res?.payload?.data?.results[0]?.id,
-    //                     gid: item.id
-    //                 };
-    //                 dispatch(fetchGenreAppTvData(detail))
-    //             })
-    //         }
+    const onLanguageHandler = useCallback((item, index) => {
+        setShowCategories(false)
+        setSelectLanguage(index)
+        dispatch(clearMoviesData())
+        if (item.name === 'All') {
+            if (selectedCategoriesId) {
+                const detail = {
+                    id: selectedCategoriesId,
+                    page: 1
+                };
+                dispatch(fetchMovies(detail))
+            }
+            else {
+                dispatch(fetchMoviesCategories()).then((res) => {
+                    const detail = {
+                        id: res?.payload?.data?.results[0]?.id,
+                        page: 1
+                    };
+                    dispatch(fetchMovies(detail))
+                })
+            }
+        }
+        else {
+            if (selectedCategoriesId) {
+                const detail = {
+                    cid: selectedCategoriesId,
+                    gid: item.id
+                };
+                dispatch(fetchGenreCategoriesData(detail))
+            }
+            else {
+                dispatch(fetchMoviesCategories()).then((res) => {
+                    const detail = {
+                        cid: res?.payload?.data?.results[0]?.id,
+                        gid: item.id
+                    };
+                    dispatch(fetchGenreCategoriesData(detail))
+                })
+            }
 
-    //     }
-    // }, [selectLanguage, selectedCategoriesId])
+        }
+    }, [selectLanguage, selectedCategoriesId])
 
 
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}
-            >
                 <TouchableOpacity
                     onPress={() => onLanguageHandler(item, index)}
                     style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                     <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
                 </TouchableOpacity>
-            </LinearGradient>
         )
     }, [selectLanguage])
 
@@ -210,9 +214,9 @@ const AppTVScreen = () => {
         return (
             <TouchableOpacity onPress={() => onMovieDetailHandler(item)} style={styles.movieDetailBox}>
                 <FastImage
-                    source={{ uri: item.channel_image_url || item.channel_image }}
+                    source={{ uri: item.content_image }}
                     style={styles.movieImage}
-                    resizeMode={FastImage.resizeMode.contain}
+                    resizeMode={FastImage.resizeMode.cover}
                 />
             </TouchableOpacity>
         )
@@ -255,8 +259,8 @@ const AppTVScreen = () => {
             {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
-                        data={searchAppTvData}
-                        keyExtractor={(item, index) => `apptvSearch-${index.toString()}`}
+                        data={searchMovieData}
+                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         columnWrapperStyle={styles.columnWrapper}
@@ -269,36 +273,37 @@ const AppTVScreen = () => {
                 :
                 <>
                     <View style={styles.adBox}>
+                        <View style={styles.videoBox}>
                             <FastImage
                                 source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
                                 style={styles.backgroundImage}
-                                resizeMode={FastImage.resizeMode.cover}
                             />
+                        </View>
                     </View>
                     <View style={styles.mainBox}>
 
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
-                            {/* <FlatList
+                            <FlatList
                                 data={combinegenreCategories}
                                 horizontal
                                 keyExtractor={(item, index) => `language-${index.toString()}`}
                                 renderItem={renderLanguage}
                                 showsHorizontalScrollIndicator={false}
-                            /> */}
+                            />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
                                 <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
                             </TouchableOpacity>
                             <FlatList
-                                data={AppTvData}
-                                keyExtractor={(item, index) => `apptvcat-${index.toString()}`}
+                                data={moviesCategoriesData}
+                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -307,13 +312,13 @@ const AppTVScreen = () => {
 
                             <FlatList
                                 ref={flatListRef}
-                                data={AppTvDataFilter}
-                                keyExtractor={(item, index) => `appTv-${index.toString()}`}
+                                data={movieData}
+                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
                                 renderItem={renderCinema}
-                                numColumns={isTablet ? 4 : 3}
+                                numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{ marginBottom: isTablet ? 82 : 57}}
+                                style={{ marginBottom: isTablet ? 82 : 57 }}
                                 ListFooterComponent={renderFooter}
                                 onScrollBeginDrag={() => setHasScrolled(true)} // Set true on user scroll
                                 onEndReached={loadMore}
@@ -328,5 +333,5 @@ const AppTVScreen = () => {
 };
 
 
-export default AppTVScreen;
+export default MovieScreen;
 
