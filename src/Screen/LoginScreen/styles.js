@@ -58,7 +58,8 @@ export default StyleSheet.create({
         borderBottomRightRadius: 20
     },
     button: {
-        width: 200,
+        // width: 200,
+        paddingHorizontal:15,
         height: HEIGHT.h05,
         alignItems: 'center',
         justifyContent: 'center',
@@ -131,7 +132,7 @@ export default StyleSheet.create({
     },
 
     textContainer: {
-        padding: 16,
+        padding: 25,
     },
     termsAndCondition: {
         fontSize: FONTS.f14,

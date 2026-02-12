@@ -74,8 +74,8 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     DeviceInfo.getUniqueId().then((uniqueId) => {
-      setDeviceId('75fc1fc55e397a1a')
-      // setDeviceId(uniqueId);
+      // setDeviceId('75fc1fc55e397a1a')
+      setDeviceId(uniqueId);
     });
   }, [])
   useEffect(() => {
@@ -86,6 +86,8 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    console.log("sec-------", secondsRemaining);
+
     if (secondsRemaining > 0) {
       const timer = setTimeout(() => {
         setSecondsRemaining(secondsRemaining - 1);
@@ -449,9 +451,7 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
           <Text style={styles.loginText}>DeviceId: {deviceID}</Text>
-          <View style={{ width: '80%' }}>
-            <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
-          </View>
+          <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
           <View style={[styles.row, { marginVertical: 15 }]}>
             <View style={[styles.textInputButton, { width: '28%' }]}>
               <Text style={styles.codeDetailText}>
@@ -459,13 +459,29 @@ const LoginScreen = ({ navigation }) => {
               </Text>
             </View>
 
-            <TouchableOpacity style={[styles.textInput, { width: '64%' }]} onPress={authenticates}>
+            {secondsRemaining === 0 ? <TouchableOpacity style={[styles.textInput, {
+              width: '64%',
+              backgroundColor: secondsRemaining === 0 ? COLORS.inputBox : COLORS.grey,
+            }]} onPress={authenticates}>
               <Text style={styles.buttonText}>
                 Resend Otp
               </Text>
             </TouchableOpacity>
+              : <View style={[styles.textInput, {
+                width: '64%',
+                backgroundColor: COLORS.grey,
+              }]}>
+                <Text style={styles.buttonText}>
+                  Resend Otp
+                </Text>
+              </View>}
+
+
           </View>
 
+          <TouchableOpacity style={[styles.button, { paddingHorizontal: 25, }]} onPress={onOtpHandler}>
+            <Text style={[styles.buttonText, { fontFamily: APP_FONTS.PoppinsBold }]}>OK</Text>
+          </TouchableOpacity>
         </KeyboardAwareScrollView>
       </View>}
 

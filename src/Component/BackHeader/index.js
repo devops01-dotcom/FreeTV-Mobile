@@ -4,6 +4,7 @@ import styles from './styles';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
 import DeviceInfo from 'react-native-device-info';
+import { COLORS } from '../../utils/color';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -29,6 +30,7 @@ const BackHeader = ({
                 {!onlyBack && <TextInput
                     name={name || ''}
                     placeholder={placeholder}
+                    placeholderTextColor={COLORS.white}
                     onChangeText={onChangeText}
                     style={styles.input} />}
             </View>
