@@ -59,9 +59,11 @@ export default StyleSheet.create({
 
     },
     backIcon: {
-        height: isTablet ? 40 : 25,
-        width: isTablet ? 40 : 25,
+        backgroundColor:COLORS.yellow,
+        height: isTablet ? 40 : 28,
+        width: isTablet ? 40 : 28,
         marginLeft: 5,
+        borderRadius:8
     },
     backText: {
         fontSize: FONTS.f14,

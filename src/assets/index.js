@@ -33,6 +33,9 @@ export const IMAGES = {
     zoomin: require('./images/zoomin.png'),
     zoomout: require('./images/zoomout.png'),
     movie: require('./images/movie.png'),
-    play: require('./images/play.png')
+    play: require('./images/play.png'),
+    help: require('./images/help.png'),
+    back: require('./images/back.png')
+
 
 }

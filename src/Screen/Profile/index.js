@@ -31,7 +31,7 @@ const ProfileScreen = ({ navigation }) => {
                 <CustomDrawerContent setShowDrawer={setShowDrawer} />
             ) : (
                 <>
-                    <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' />
+                    {/* <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' /> */}
 
                     <View style={styles.row}>
                         <View style={styles.leftSide}>

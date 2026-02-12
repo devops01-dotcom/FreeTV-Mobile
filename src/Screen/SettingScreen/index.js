@@ -48,12 +48,7 @@ const SettingScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
-
-            {showDrawer ? (
-                <CustomDrawerContent setShowDrawer={setShowDrawer} />
-            ) : (
-                <View>
+          <BackHeader onBackHandler={onBackHandler}  onlyBack={true}/>
 
                     <View style={styles.row}>
                         <View style={styles.leftSide}>
@@ -138,15 +133,7 @@ const SettingScreen = ({ navigation }) => {
                             <Text style={styles.Detail}>{userProfile?.packagestatus ? 'Active' : 'In Active'}</Text>
                         </View>
                     </View> */}
-
-                    <TouchableOpacity style={styles.backButton} onPress={onBackHandler}>
-                        <Text style={styles.buttonText}>Back</Text>
-                        <Image
-                            source={IMAGES.logout}
-                            style={styles.backIcon}
-                            resizeMode='contain'
-                        />
-                    </TouchableOpacity>
+                    <View style={styles.buttonstyle}>
 
                     <TouchableOpacity style={styles.ScreenButton} onPress={() => navigateTo('PrivacyPolicy')}>
                         <Image
@@ -157,18 +144,10 @@ const SettingScreen = ({ navigation }) => {
                         <Text style={styles.buttonText}>Privacy Policy</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.ScreenButton} onPress={() => navigateTo('Subscription')}>
-                        <Image
-                            source={IMAGES.subscription}
-                            style={styles.backIcon}
-                            resizeMode='contain'
-                        />
-                        <Text style={styles.buttonText}>Buy OTT</Text>
-                    </TouchableOpacity>
 
                     <TouchableOpacity style={styles.ScreenButton} onPress={() => navigateTo('HelpScreen')}>
                         <Image
-                            source={IMAGES.subscription}
+                            source={IMAGES.help}
                             style={styles.backIcon}
                             resizeMode='contain'
                         />
@@ -183,8 +162,8 @@ const SettingScreen = ({ navigation }) => {
                         />
                         <Text style={styles.buttonText}>Logout</Text>
                     </TouchableOpacity>
+                    </View>
 
-                </View>)}
         </SafeAreaView>
     )
 };

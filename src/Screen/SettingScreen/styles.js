@@ -89,6 +89,10 @@ export default StyleSheet.create({
         paddingRight:10,
         // borderTopLeftRadius: 20,
         // borderBottomRightRadius: 20
+    },
+    buttonstyle:{
+        flexDirection:'row',
+        justifyContent:'space-evenly'
     }
 
 })

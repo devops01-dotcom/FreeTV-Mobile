@@ -29,7 +29,7 @@ const BackHeader = ({
             <TouchableOpacity style={styles.header} onPress={onBackHandler}>
                 {/* <Text style={styles.backText}>Back</Text> */}
                 <FastImage
-                    source={IMAGES.logout}
+                    source={IMAGES.back}
                     style={styles.backIcon}
                     resizeMode={FastImage.resizeMode.contain}
                 />

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
@@ -11,6 +11,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
 import { IMAGES } from '../../assets';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -73,7 +75,7 @@ const MusicScreen = ({ navigation }) => {
 
     const onBackHandler = useCallback(() => {
         // navigation.navigate('Home');
-         navigation.goBack()
+        navigation.goBack()
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
@@ -187,18 +189,12 @@ const MusicScreen = ({ navigation }) => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}
-            >
-                <TouchableOpacity
-                    onPress={() => onLanguageHandler(item, index)}
-                    style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <Text style={[styles.channelName, selectLanguage === index && { color: COLORS.black }]}>{item.name}</Text>
-                </TouchableOpacity>
-            </LinearGradient>
+
+            <TouchableOpacity
+                onPress={() => onLanguageHandler(item, index)}
+                style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
+                <Text style={[styles.channelName, selectLanguage === index && { color: COLORS.black }]}>{item.name}</Text>
+            </TouchableOpacity>
         )
     }, [selectLanguage])
 
@@ -233,8 +229,8 @@ const MusicScreen = ({ navigation }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
+                    {/* <SlidingText text={item.name} style={styles.categoriesName} /> */}
                 </View>
             </TouchableOpacity>
         )
@@ -265,11 +261,11 @@ const MusicScreen = ({ navigation }) => {
                 :
                 <>
                     <View style={styles.adBox}>
-                            <FastImage
-                                source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
-                                style={styles.backgroundImage}
-                                resizeMode={FastImage.resizeMode.cover}
-                            />
+                        <FastImage
+                            source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
+                            style={styles.backgroundImage}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
                     </View>
 
 
@@ -279,9 +275,7 @@ const MusicScreen = ({ navigation }) => {
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
-                                {showCategories ?
-                                    <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
-                                    : null}
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={tvChannelLanguage}
@@ -319,7 +313,7 @@ const MusicScreen = ({ navigation }) => {
                                 onEndReached={loadMore}
                                 onEndReachedThreshold={0.5}
                                 ListFooterComponent={renderFooter}
-                                style={{ marginBottom: isTablet ? 82 : 57 }}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                             />
                         </View>
                     </View>
