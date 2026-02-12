@@ -13,7 +13,8 @@ const AxiosInstances = axios.create({
   transformRequest: [
     function (data, headers) {
       const getStore = store.getState();
-      const {token} = getStore?.AuthReducer?.loginData || ""
+      // const {token} = getStore?.AuthReducer?.loginData || ""
+         const token = getStore.AuthReducer?.loginData?.token
       // const token = 'a95a478cc9859d6acf751fded325946803f53436'
 
       if (token) {

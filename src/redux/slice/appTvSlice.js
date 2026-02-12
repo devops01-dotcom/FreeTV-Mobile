@@ -99,7 +99,6 @@ const onAppTvSlice = createSlice({
       })
       .addCase(fetchAppTvCategories.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        console.log('object appp tv cat-------------:', action.payload);
         state.AppTvData = action.payload?.data.results;
       })
       .addCase(fetchAppTvCategories.rejected, (state) => {
@@ -111,7 +110,8 @@ const onAppTvSlice = createSlice({
       .addCase(fetchAppTv.fulfilled, (state, action) => {
         state.loading = 'succeeded';
          const appTvList = action.payload?.data;
-       if (appTvList.current_page_number) {
+         console.log('object=====action.payload?.data;====:', action.payload?.data);
+      //  if (appTvList.current_page_number) {
           state.appTvCount = appTvList.count
           state.totalAppTvCount = appTvList.total_count
           if (state.appTvPage === appTvList.current_page_number) {
@@ -127,7 +127,7 @@ const onAppTvSlice = createSlice({
           if (!appTvList.next) {
             state.appTvNextPage = false
           }
-        }
+        // }
       })
         // const AppTvList = action.payload?.data;
         // if (AppTvList.current_page_number) {

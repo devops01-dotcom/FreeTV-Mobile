@@ -69,7 +69,7 @@ const AppTVScreen = () => {
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
-        navigation.navigate('MovieDetail', { item });
+        // navigation.navigate('MovieDetail', { item });
     }, [])
 
     const onSelectCategories = useCallback((id, index) => {

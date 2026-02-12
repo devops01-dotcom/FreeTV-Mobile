@@ -256,7 +256,6 @@ export const onMoviesSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        console.log('object====action .payloafd=======:', action.payload);
         // const movieList = action.payload?.data;
         // state.movieCount = movieList.count
         // state.totalMovieCount = movieList.movies_total_count
