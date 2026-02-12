@@ -14,7 +14,7 @@ export default StyleSheet.create({
     appIcon: {
         height: 150,
         width: 220,
-        marginTop: 70,
+        marginTop: 10,
         alignSelf: 'center'
     },
     row: {
@@ -101,6 +101,16 @@ export default StyleSheet.create({
         marginBottom: 5,
         // fontSize: FONTS.f27,
         fontSize: 20,
+        fontFamily: APP_FONTS.PoppinsBold,
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+
+    ActiveText: {
+        color: COLORS.white,
+        justifyContent: 'center',
+        marginBottom: 10,
+        fontSize: FONTS.f27,
         fontFamily: APP_FONTS.PoppinsBold,
         alignItems: 'center',
         textAlign: 'center'

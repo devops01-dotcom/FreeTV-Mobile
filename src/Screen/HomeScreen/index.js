@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
   const { devotional } = useAppSelector(DevotionalSelector) || [];
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
-  const { AppTvDataFilter, AppTvData,} = useAppSelector(AppTVSelector) || [];
+  const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,14 +69,14 @@ const HomeScreen = ({ navigation }) => {
   const onLiveTvHandler = useCallback(
     (item, index) => {
       if (progressing) return setShowAlert(true)
-       else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+      else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
     }, [progressing]
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
       if (progressing) return setShowAlert(true)
-      else  navigation.navigate(screenName);
+      else navigation.navigate(screenName);
     }, [progressing]
   );
 
@@ -150,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
                 data={section.data}
                 horizontal
                 renderItem={({ item, index }) =>
-                  section.type === 'LiveTVScreen'  || section.type === 'AppTVScreen'? (
+                  section.type === 'LiveTVScreen' || section.type === 'AppTVScreen' ? (
                     renderLiveTV({ item, index })
                   ) : (
                     <ChannelList data={[item]} type={section.type} progressing={progressing} setShowAlert={setShowAlert} />

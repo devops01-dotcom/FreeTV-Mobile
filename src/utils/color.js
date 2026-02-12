@@ -18,6 +18,7 @@ export const COLORS = {
     lightBlue: '#9CCFFF',
     lightPrimaryColor: '#D9D9D91A',
     drawerblue: '#1d4a79',
+    grey: '#758A93'
     // normalred:'#FB4141'
 
 }

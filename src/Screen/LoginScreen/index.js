@@ -74,8 +74,8 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     DeviceInfo.getUniqueId().then((uniqueId) => {
-      // setDeviceId('75fc1fc55e397a1a')
-      setDeviceId(uniqueId);
+      setDeviceId('75fc1fc55e397a1a')
+      // setDeviceId(uniqueId);
     });
   }, [])
   useEffect(() => {
@@ -310,8 +310,8 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.container}>
           <KeyboardAwareScrollView
             behavior={'height'}>
-            <Image source={IMAGES.appLogo} style={[styles.appIcon, { marginTop: 120 }]} resizeMode='contain' />
-            <Text style={styles.loginText}  > DeviceId : {deviceID}</Text>
+            <Image source={IMAGES.appLogo} style={[styles.appIcon, { marginTop: 20 }]} resizeMode='contain' />
+            <Text style={styles.ActiveText}  > Activate</Text>
             {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
               <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
             </View>}
@@ -327,7 +327,7 @@ const LoginScreen = ({ navigation }) => {
                     style={styles.textInput}
                     placeholder="Phone Number"
                     textAlignVertical='center'
-                    placeholderTextColor={COLORS.black}
+                    placeholderTextColor={COLORS.grey}
                     value={phone}
                     keyboardType='numeric'
                     onChangeText={setPhone}
@@ -355,6 +355,7 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Terms of Use.</Text>
               </Text>
             </View>
+            <Text style={styles.loginText}> DeviceId: {deviceID}</Text>
             {/* {phone.length === 10 &&  */}
             {(validNumber && !errorMsg) &&
               <TouchableOpacity style={styles.button} onPress={authenticates}>
@@ -369,8 +370,7 @@ const LoginScreen = ({ navigation }) => {
         <KeyboardAwareScrollView
           behavior={'height'}>
           <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
-          {/* <Text style={styles.loginText}  > Activate</Text> */}
-          <Text style={styles.loginText}  > DeviceId : {deviceID}</Text>
+          <Text style={styles.ActiveText}>Phone No: {phone}</Text>
           {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
             <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
           </View>}
@@ -384,9 +384,9 @@ const LoginScreen = ({ navigation }) => {
                 <TextInput
                   ref={pinCodeRef}
                   style={[styles.textInput, { width: '64%' }]}
-                  placeholder="Pin Code"
+                  placeholder="110001"
                   textAlignVertical='center'
-                  placeholderTextColor={COLORS.black}
+                  placeholderTextColor={COLORS.grey}
                   value={pinCode}
                   maxLength={6}
                   keyboardType='numeric'
@@ -425,8 +425,7 @@ const LoginScreen = ({ navigation }) => {
         <KeyboardAwareScrollView
           behavior={'height'}>
           <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
-          {/* <Text style={styles.loginText}> Activate</Text> */}
-          <Text style={styles.loginText}  > DeviceId : {deviceID}</Text>
+          <Text style={styles.ActiveText}>Phone No: {phone}</Text>
           {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
             <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
           </View>}
@@ -442,14 +441,14 @@ const LoginScreen = ({ navigation }) => {
               style={[styles.textInput, { width: '64%' }]}
               placeholder="OTP"
               keyboardType='numeric'
-              placeholderTextColor={COLORS.black}
+              placeholderTextColor={COLORS.grey}
               value={otp}
               maxLength={4}
               onChangeText={handleOtpChange}
-              onSubmitEditing={onOtpHandler}
-
+            // onSubmitEditing={onOtpHandler}
             />
           </View>
+          <Text style={styles.loginText}>DeviceId: {deviceID}</Text>
           <View style={{ width: '80%' }}>
             <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
           </View>
