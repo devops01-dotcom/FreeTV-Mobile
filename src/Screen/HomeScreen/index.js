@@ -21,6 +21,7 @@ import { BootupAdViewSelector } from '../../redux/slice/bootupadview';
 import { HEIGHT } from '../../utils/dimension';
 import CustomAlert from '../../Component/CustomAlert';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppTVSelector } from '../../redux/slice/appTvSlice';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
 
 const HomeScreen = ({ navigation }) => {
@@ -37,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
   const { devotional } = useAppSelector(DevotionalSelector) || [];
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
-
+  const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,14 +69,14 @@ const HomeScreen = ({ navigation }) => {
   const onLiveTvHandler = useCallback(
     (item, index) => {
       if (progressing) return setShowAlert(true)
-       else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+      else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
     }, [progressing]
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
       if (progressing) return setShowAlert(true)
-      else  navigation.navigate(screenName);
+      else navigation.navigate(screenName);
     }, [progressing]
   );
 
@@ -107,11 +108,12 @@ const HomeScreen = ({ navigation }) => {
 
   const sections = [
     { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'LiveTVScreen' },
-    { title: 'FreeTV Cinema', data: cinemaData || [], type: 'CinemaScreen' },
-    { title: 'FreeTV Movie', data: movieData || [], type: 'MovieScreen' },
-    { title: 'FreeTV Music', data: musicFilterData || [], type: 'MusicScreen' },
-    { title: 'Devotional', data: devotional || [], type: 'DevotionalScreen' },
-    { title: 'Education', data: educational || [], type: 'EducationScreen' },
+    { title: 'App TV', data: AppTvDataFilter?.slice(0, 20) || [], type: 'AppTVScreen' },
+    { title: 'FreeTV Cinema', data: cinemaData?.slice(0, 20) || [], type: 'CinemaScreen' },
+    { title: 'FreeTV Movie', data: movieData?.slice(0, 20) || [], type: 'MovieScreen' },
+    { title: 'FreeTV Music', data: musicFilterData?.slice(0, 20) || [], type: 'MusicScreen' },
+    { title: 'Devotional', data: devotional?.slice(0, 20) || [], type: 'DevotionalScreen' },
+    { title: 'Education', data: educational?.slice(0, 20) || [], type: 'EducationScreen' },
   ];
 
   return (
@@ -148,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
                 data={section.data}
                 horizontal
                 renderItem={({ item, index }) =>
-                  section.type === 'LiveTVScreen' ? (
+                  section.type === 'LiveTVScreen' || section.type === 'AppTVScreen' ? (
                     renderLiveTV({ item, index })
                   ) : (
                     <ChannelList data={[item]} type={section.type} progressing={progressing} setShowAlert={setShowAlert} />

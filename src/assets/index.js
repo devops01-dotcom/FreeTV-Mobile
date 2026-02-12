@@ -35,7 +35,7 @@ export const IMAGES = {
     movie: require('./images/movie.png'),
     play: require('./images/play.png'),
     help: require('./images/help.png'),
-    back: require('./images/back.png')
-
+    back: require('./images/back.png'),
+    square: require('./images/square.png')
 
 }

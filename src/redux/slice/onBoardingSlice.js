@@ -37,6 +37,18 @@ export const fetchLoginWithMacid = createAsyncThunk('LoginwithmacidSlice', async
   }
 });
 
+
+export const fetchLoginWithPin = createAsyncThunk('LoginWithPinSlice', async (data, thunkAPI) => {
+  try {
+    const response = await Request.post(ApiConstant.LoginWithPin, data);
+    return { data: response };
+    // return { data: response } as { data: any };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('Login failed');
+  }
+},
+);
+
 export const fetchOtp = createAsyncThunk('OtpSlice', async (data, thunkAPI) => {
   try {
     thunkAPI.dispatch(showLoader());
@@ -82,6 +94,27 @@ export const onLoginSlice = createSlice({
         state.loading = 'failed';
         state.error = action.error.message || 'Login failed';
       })
+
+      .addCase(fetchLoginWithPin.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchLoginWithPin.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const userinfo = action.payload.data.data
+        if (userinfo.success) {
+          state.loginData = userinfo
+          state.isLogedIn = true
+          setTimeout(() => {
+            resetNavigation('Home')
+          }, 1000)
+        }
+      })
+      .addCase(fetchLoginWithPin.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message ?? 'Login failed';
+      })
+
+
       .addCase(fetchLoginWithMacid.pending, (state) => {
         state.loading = 'pending';
       })
@@ -122,4 +155,5 @@ export const onLoginSlice = createSlice({
 });
 
 export const { LoginAction, AutoLoginData } = onLoginSlice.actions;
+export const AuthSelector = (state) => state.AuthReducer;
 export default onLoginSlice.reducer;

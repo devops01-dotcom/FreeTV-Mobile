@@ -20,20 +20,19 @@ import EducationScreen from "../../Screen/Education";
 import FavouriteScreen from "../../Screen/FavouriteScreen";
 import SettingScreen from "../../Screen/SettingScreen";
 import HelpScreen from "../../Screen/HelpScreen";
-
-// import { useAppSelector } from "../redux/hooks";
-// import { AuthSelector } from "../redux/slice/onBoardingSlice";
+import { useAppSelector } from "../../redux/hooks";
+import { AuthSelector } from "../../redux/slice/onBoardingSlice";
 
 const Stack = createNativeStackNavigator();
 
 const RouteStack = () => {
      const getStore = store.getState();
-     const {token} = getStore?.AuthReducer?.loginData || ""
-    // const {isLogedIn} = useAppSelector(AuthSelector);
+    //  const {token} = getStore?.AuthReducer?.loginData || ""
+      const {loginData} = useAppSelector(AuthSelector);
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
-                initialRouteName={token ? 'Home' : "Login"}
+                initialRouteName={loginData?.token ? 'Home' : "Login"}
                 // initialRouteName="Home"
                 screenOptions={{
                     headerShown: false

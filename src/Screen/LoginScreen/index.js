@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { AutoLoginData, fetchLogin, fetchLoginWithMacid, fetchOtp } from '../../redux/slice/onBoardingSlice';
+import { AutoLoginData, fetchLogin, fetchLoginWithMacid, fetchLoginWithPin, fetchOtp } from '../../redux/slice/onBoardingSlice';
 import { COLORS } from '../../utils/color';
 import DeviceInfo from 'react-native-device-info';
 import { formatCountdownTime } from '../../utils/timeformat';
@@ -22,8 +22,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import { APP_FONTS } from '../../utils/fontFamily';
 import { navigateTo } from '../../utils/navigateTo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import FastImage from 'react-native-fast-image';
+import BackHeader from '../../Component/BackHeader';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const phoneRef = useRef(null);
   const pinCodeRef = useRef(null);
@@ -36,6 +38,12 @@ const LoginScreen = () => {
   const [errorMsg, setErrorMessage] = useState(null)
   const [secondsRemaining, setSecondsRemaining] = useState(180);
   const [showExitAppModal, setShowExitAppModal] = useState(false)
+  const [isPhone, setIsPhone] = useState(true);
+  const [isPincode, setIsPincode] = useState(false);
+  const [isOtp, setIsOtp] = useState(false);
+  const [validNumber, setValidNumber] = useState(false);
+  const [validPinCode, setValidPinCode] = useState(false);
+  const [validOTP, setValidOTP] = useState(false);
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -77,7 +85,6 @@ const LoginScreen = () => {
     };
   }, []);
 
-
   useEffect(() => {
     if (secondsRemaining > 0) {
       const timer = setTimeout(() => {
@@ -88,48 +95,136 @@ const LoginScreen = () => {
     }
   }, [secondsRemaining]);
 
+  useEffect(() => {
+    if (phone.length === 10) return setValidNumber(true)
+    else return setValidNumber(false)
+  }, [phone])
+
+  useEffect(() => {
+    if (pinCode.length === 6) return setValidPinCode(true)
+    else return setValidPinCode(false)
+  }, [pinCode])
+
+  useEffect(() => {
+    if (otp.length === 4) return setValidOTP(true)
+    else return setValidOTP(false)
+  }, [otp])
+
+
+  // const authenticates = useCallback(() => {
+  //   setErrorMessage(null)
+  //   let data = {
+  //     phone,
+  //     macId: deviceID,
+  //     deviceId: deviceID,
+  //     app_type: 'FREETVMOB'
+  //   }
+  //   dispatch(fetchLogin(data)).then((res) => {
+  //     if (res.payload.data.data.msg === 'Otp Sent Successfully' && !res.payload.data.data.success) {
+  //       setSecondsRemaining(180)
+  //       setShowOtp(true)
+  //       setTimeout(() => {
+  //         otpRef.current?.focus()
+  //       }, 500)
+  //       return
+  //     }
+  //     if (!res.payload.data.data.success) {
+  //       setErrorMessage(res.payload.data.data.msg)
+  //       return
+  //     }
+  //   })
+  // }, [dispatch, phone]);
+
   const authenticates = useCallback(() => {
-    setErrorMessage(null)
-    let data = {
+    setErrorMessage(null);
+    const data = {
       phone,
-      macId: deviceID,
+      macId: macID ? macID : deviceID,
       deviceId: deviceID,
-      app_type: 'FREETVMOB'
-    }
+      app_type: 'FREETVMOB',
+    };
     dispatch(fetchLogin(data)).then((res) => {
-      if (res.payload.data.data.msg === 'Otp Sent Successfully' && !res.payload.data.data.success) {
-        setSecondsRemaining(180)
-        setShowOtp(true)
-        setTimeout(() => {
-          otpRef.current?.focus()
-        }, 500)
+      const result = res.payload?.data?.data;
+      if (result.error_code === 105) {
+        setIsPhone(false)
+        setIsPincode(true)
+        setPincode('')
         return
       }
-      if (!res.payload.data.data.success) {
-        setErrorMessage(res.payload.data.data.msg)
-        return
+      else {
+        setErrorMessage(result?.msg);
       }
-    })
-  }, [dispatch, phone]);
+    });
+  }, [dispatch, isPhone, validNumber]);
 
 
-  const onOtpHandler = useCallback((text) => {
-    setErrorMessage(null)
-    let data = {
+  const authenticatePinCode = useCallback(() => {
+    setErrorMessage(null);
+    // ✅ Pincode validation (6 digits, only numbers)
+    const pincodeRegex = /^[0-9]{6}$/;
+    if (!pincodeRegex.test(pinCode)) {
+      setErrorMessage("Please enter a valid 6-digit pincode");
+      return;
+    }
+    const data = {
       phone,
-      macId: deviceID,
+      pincode: pinCode,
+      macId: macID ? macID : deviceID,
+      deviceId: deviceID,
+      app_type: 'FREETVMOB',
+    };
+    dispatch(fetchLoginWithPin(data)).then((res) => {
+      const result = res.payload?.data?.data;
+      if (result.msg === 'Otp Sent Successfully') {
+        setSecondsRemaining(180);
+        setIsPhone(false)
+        setIsPincode(false)
+        setIsOtp(true)
+        setOtp('')
+      }
+      else {
+        setErrorMessage(result?.msg);
+      }
+    });
+  }, [dispatch, isPincode, pinCode]);
+
+  const onOtpHandler = useCallback(() => {
+    setErrorMessage(null);
+    const data = {
+      phone,
+      macId: macID ? macID : deviceID,
       deviceId: deviceID,
       pincode: pinCode,
-      otp: text,
-      app_type: 'FREETVMOB'
-    }
+      otp: otp,
+      app_type: 'FREETVMOB',
+    };
     dispatch(fetchOtp(data)).then((res) => {
       if (!res.payload.data.data.success) {
-        setErrorMessage(res.payload.data.data.msg)
-        return
+        setErrorMessage(res.payload.data.data.msg);
       }
-    })
-  }, [dispatch, otp, pinCode]);
+    });
+  }, [dispatch, macID, deviceID, setIsOtp, phone, isPincode, otp]);
+
+
+
+
+  // const onOtpHandler = useCallback((text) => {
+  //   setErrorMessage(null)
+  //   let data = {
+  //     phone,
+  //     macId: deviceID,
+  //     deviceId: deviceID,
+  //     pincode: pinCode,
+  //     otp: text,
+  //     app_type: 'FREETVMOB'
+  //   }
+  //   dispatch(fetchOtp(data)).then((res) => {
+  //     if (!res.payload.data.data.success) {
+  //       setErrorMessage(res.payload.data.data.msg)
+  //       return
+  //     }
+  //   })
+  // }, [dispatch, otp, pinCode]);
 
   useEffect(() => {
     if (showOtp) {
@@ -147,20 +242,19 @@ const LoginScreen = () => {
     if (text.length === 4) {
       onOtpHandler(text)
       Keyboard.dismiss()
-
     }
   }, [otp]);
 
-  const handlePhoneChange = (text) => {
-    setPhone(text);
-    if (text.length === 10) {
-      pinCodeRef.current?.focus();
-    }
-    // if (pinCode.length === 6) {
-    //   Keyboard.dismiss()
-    //   // pinCodeRef.current?.focus();
-    // }
-  };
+  // const handlePhoneChange = (text) => {
+  //   setPhone(text);
+  //   if (text.length === 10) {
+  //     pinCodeRef.current?.focus();
+  //   }
+  //   // if (pinCode.length === 6) {
+  //   //   Keyboard.dismiss()
+  //   //   // pinCodeRef.current?.focus();
+  //   // }
+  // };
 
   // const handlePhoneChange = () => {
   //   setErrorMessage(null)
@@ -171,7 +265,6 @@ const LoginScreen = () => {
     if (pinCode.length === 6) {
       Keyboard.dismiss()
       setErrorMessage(null)
-
     }
   };
 
@@ -192,16 +285,33 @@ const LoginScreen = () => {
     }, [deviceID, dispatch])
   );
 
+  const goGackToLogin = useCallback(() => {
+    setIsPincode(false)
+    setPincode('')
+    setIsPhone(true)
+    setErrorMessage(null)
+  }, [])
+
+
+  const goGackToPinCode = useCallback(() => {
+    setIsOtp(false)
+    setOtp('')
+    setIsPhone(false)
+    setIsPincode(true)
+    setErrorMessage(null)
+
+  }, [])
 
 
   return (
     <>
-      {!showOtp ?
+      {/* {!showOtp ? */}
+      {isPhone &&
         <View style={styles.container}>
           <KeyboardAwareScrollView
             behavior={'height'}>
-            <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
-            <Text style={styles.loginText}  > Activate</Text>
+            <Image source={IMAGES.appLogo} style={[styles.appIcon, { marginTop: 20 }]} resizeMode='contain' />
+            <Text style={styles.ActiveText}  > Activate</Text>
             {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
               <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
             </View>}
@@ -217,12 +327,11 @@ const LoginScreen = () => {
                     style={styles.textInput}
                     placeholder="Phone Number"
                     textAlignVertical='center'
-                    placeholderTextColor={COLORS.black}
+                    placeholderTextColor={COLORS.grey}
                     value={phone}
                     keyboardType='numeric'
-                    // onChangeText={setPhone}
-                    onChangeText={handlePhoneChange}
-
+                    onChangeText={setPhone}
+                    // onChangeText={handlePhoneChange}
                     // onSubmitEditing={handlePhoneChange}
                     maxLength={10}
                   />
@@ -234,100 +343,133 @@ const LoginScreen = () => {
               </View>
             </View>
 
-            <View style={{ marginVertical: 30 }}>
-              <View style={{ alignItems: 'center' }}>
-                <View style={styles.row}>
-                  <View style={[styles.textInputButton, { width: '28%' }]}>
-                    <Text style={styles.codeDetailText}>Pin Code</Text>
-                  </View>
-                  <TextInput
-                    ref={pinCodeRef}
-                    style={[styles.textInput, { width: '64%' }]}
-                    placeholder="Pin Code"
-                    textAlignVertical='center'
-                    placeholderTextColor={COLORS.black}
-                    value={pinCode}
-                    maxLength={6}
-                    keyboardType='numeric'
-                    onChangeText={setPincode} // Call the handler
-                    onSubmitEditing={handlePinChange} // Call the handler
-
-                  />
-                </View>
-
-                <View style={{ width: '80%' }}>
-                  <Text style={styles.otpInstruction}>{`*Please enter your Area pin code number\n*अपने एरीया का पिन कोड दर्ज करें.`}</Text>
-                </View>
-              </View>
-            </View>
-
             <View style={styles.textContainer}>
               <Text style={styles.termsAndCondition}>
                 By proceeding, you confirm that you are at least 18 years old and{' '}
                 <View style={styles.inline}>
                   {/* <Ionicons name="checkbox" size={18} color={COLORS.white} /> */}
+                  <FastImage source={IMAGES.square} style={{ height: 15, width: 15 }} />
                 </View>{' '}agree
                 to our
                 <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Privacy Policy</Text> and
                 <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Terms of Use.</Text>
               </Text>
             </View>
-            {pinCode.length === 6 && phone.length === 10 && <TouchableOpacity style={styles.button} onPress={authenticates}>
-              <Text style={[styles.buttonText, { fontFamily: APP_FONTS.PoppinsBold }]}>Get OTP</Text>
-            </TouchableOpacity>}
+            <Text style={styles.loginText}> DeviceId: {deviceID}</Text>
+            {/* {phone.length === 10 &&  */}
+            {(validNumber && !errorMsg) &&
+              <TouchableOpacity style={styles.button} onPress={authenticates}>
+                <Text style={[styles.buttonText, { fontFamily: APP_FONTS.PoppinsBold }]}>Next</Text>
+              </TouchableOpacity>}
           </KeyboardAwareScrollView>
-        </View>
+        </View>}
 
-        :
-        <View style={styles.container}>
-          <KeyboardAwareScrollView
-            behavior={'height'}>
-            <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
-            <Text style={styles.loginText}> Activate</Text>
-            {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
-              <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
-            </View>}
 
-            <View style={[styles.row, { marginBottom: 5 }]}>
-              <View style={[styles.textInputButton, { width: '28%' }]}>
-                <Text style={styles.codeDetailText}>
-                  OTP
-                </Text>
+      {isPincode && <View style={styles.container}>
+        <BackHeader onBackHandler={goGackToLogin} onlyBack={true} />
+        <KeyboardAwareScrollView
+          behavior={'height'}>
+          <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
+          <Text style={styles.ActiveText}>Phone No: {phone}</Text>
+          {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
+            <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
+          </View>}
+
+          <View>
+            <View style={{ alignItems: 'center' }}>
+              <View style={styles.row}>
+                <View style={[styles.textInputButton, { width: '28%' }]}>
+                  <Text style={styles.codeDetailText}>Pin Code</Text>
+                </View>
+                <TextInput
+                  ref={pinCodeRef}
+                  style={[styles.textInput, { width: '64%' }]}
+                  placeholder="110001"
+                  textAlignVertical='center'
+                  placeholderTextColor={COLORS.grey}
+                  value={pinCode}
+                  maxLength={6}
+                  keyboardType='numeric'
+                  onChangeText={setPincode} // Call the handler
+                  onSubmitEditing={handlePinChange} // Call the handler
+
+                />
               </View>
-              <TextInput
-                ref={otpRef}
-                style={[styles.textInput, { width: '64%' }]}
-                placeholder="OTP"
-                keyboardType='numeric'
-                placeholderTextColor={COLORS.black}
-                value={otp}
-                maxLength={4}
-                onChangeText={handleOtpChange}
-              // onSubmitEditing={handleOtpChange}
-
-              />
-            </View>
-            <View style={{ width: '80%' }}>
-              <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
-            </View>
-            <View style={[styles.row, { marginVertical: 15 }]}>
-              <View style={[styles.textInputButton, { width: '28%' }]}>
-                <Text style={styles.codeDetailText}>
-                  {formatCountdownTime(secondsRemaining)}
-                </Text>
+              <View style={{ width: '80%' }}>
+                <Text style={styles.otpInstruction}>{`*Please enter your Area pin code number\n*अपने एरीया का पिन कोड दर्ज करें.`}</Text>
               </View>
+            </View>
+          </View>
 
-              <TouchableOpacity style={[styles.textInput, { width: '64%' }]} onPress={authenticates}>
-                <Text style={styles.buttonText}>
-                  Resend Otp
-                </Text>
-              </TouchableOpacity>
+          <View style={styles.textContainer}>
+            <Text style={styles.termsAndCondition}>
+              By proceeding, you confirm that you are at least 18 years old and{' '}
+              <View style={styles.inline}>
+                {/* <Ionicons name="checkbox" size={18} color={COLORS.white} /> */}
+                <FastImage source={IMAGES.square} style={{ height: 15, width: 15 }} />
+              </View>{' '}agree
+              to our
+              <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Privacy Policy</Text> and
+              <Text style={styles.bold} onPress={() => navigateTo('PrivacyPolicy')}> Terms of Use.</Text>
+            </Text>
+          </View>
+          {pinCode.length === 6 && phone.length === 10 && <TouchableOpacity style={styles.button} onPress={authenticatePinCode}>
+            <Text style={[styles.buttonText, { fontFamily: APP_FONTS.PoppinsBold }]}>Get OTP</Text>
+          </TouchableOpacity>}
+        </KeyboardAwareScrollView>
+      </View>}
+
+
+      {isOtp && <View style={styles.container}>
+        <BackHeader onBackHandler={goGackToPinCode} onlyBack={true} />
+        <KeyboardAwareScrollView
+          behavior={'height'}>
+          <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
+          <Text style={styles.ActiveText}>Phone No: {phone}</Text>
+          {errorMsg && <View style={{ width: '90%', alignSelf: 'center' }}>
+            <Text style={[styles.otpInstruction, { color: COLORS.red, paddingBottom: 10 }]}>{errorMsg}</Text>
+          </View>}
+
+          <View style={[styles.row, { marginBottom: 5 }]}>
+            <View style={[styles.textInputButton, { width: '28%' }]}>
+              <Text style={styles.codeDetailText}>
+                OTP
+              </Text>
+            </View>
+            <TextInput
+              ref={otpRef}
+              style={[styles.textInput, { width: '64%' }]}
+              placeholder="OTP"
+              keyboardType='numeric'
+              placeholderTextColor={COLORS.grey}
+              value={otp}
+              maxLength={4}
+              onChangeText={handleOtpChange}
+            // onSubmitEditing={onOtpHandler}
+            />
+          </View>
+          <Text style={styles.loginText}>DeviceId: {deviceID}</Text>
+          <View style={{ width: '80%' }}>
+            <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
+          </View>
+          <View style={[styles.row, { marginVertical: 15 }]}>
+            <View style={[styles.textInputButton, { width: '28%' }]}>
+              <Text style={styles.codeDetailText}>
+                {formatCountdownTime(secondsRemaining)}
+              </Text>
             </View>
 
-          </KeyboardAwareScrollView>
-        </View>
+            <TouchableOpacity style={[styles.textInput, { width: '64%' }]} onPress={authenticates}>
+              <Text style={styles.buttonText}>
+                Resend Otp
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-      }
+        </KeyboardAwareScrollView>
+      </View>}
+
+
     </>
 
   );

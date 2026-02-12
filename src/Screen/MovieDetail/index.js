@@ -65,17 +65,18 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>{movieDetail?.year}</Text>
                         </View>
                     </View>}
-                    {movieDetail?.language?.length > 0 && <View style={styles.row}>
-                        <View style={styles.movieHeadingBox}>
-                            <Text style={styles.movieDetail}>Language</Text>
-                        </View>
-                        <View style={styles.centerView}>
-                            <Text style={styles.movieDetail}>: </Text>
-                        </View>
-                        <View style={styles.movieTitleBox}>
-                            <Text style={styles.movieDetail}>{movieDetail?.language?.map((lang) => lang.name).join(', ')}</Text>
-                        </View>
-                    </View>}
+                    {movieDetail?.language?.length > 0 &&
+                        <View style={styles.row}>
+                            <View style={styles.movieHeadingBox}>
+                                <Text style={styles.movieDetail}>Language</Text>
+                            </View>
+                            <View style={styles.centerView}>
+                                <Text style={styles.movieDetail}>: </Text>
+                            </View>
+                            <View style={styles.movieTitleBox}>
+                                <Text style={styles.movieDetail}>{movieDetail?.language?.map((lang) => lang.name).join(', ')}</Text>
+                            </View>
+                        </View>}
                     {movieDetail?.director && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Director</Text>

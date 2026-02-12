@@ -34,8 +34,6 @@ export default function useHomeData() {
 
     dispatch(fetchMoviesCategories()).then((res) => {
       const id = res.payload.data.results[0].id;
-      console.log('object=====movie cat id:', id);
-
       dispatch(setSelectedCategoriesId(id))
       // dispatch(fetchGenreCategories(id));
       const detail = {
@@ -48,6 +46,8 @@ export default function useHomeData() {
 
       dispatch(fetchAppTvCategories()).then((res) => {
       const id = res.payload.data.results[0].id;
+      console.log('object===================id=========:', id);
+
       dispatch(setSelectedAppTVCategoriesId(id))
       const detail = {
             id: id,
