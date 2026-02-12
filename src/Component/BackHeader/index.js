@@ -19,12 +19,13 @@ const BackHeader = ({
         <View style={styles.container}>
             <TouchableOpacity style={styles.leftSide} onPress={onBackHandler}>
                 {/* <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' /> */}
-                
+                <View style={styles.leftLogo}>
                   <FastImage
                     source={IMAGES.back}
                     style={styles.backIcon}
                     resizeMode={FastImage.resizeMode.contain}
                 />
+                </View>
             </TouchableOpacity>
             <View style={styles.centerView}>
                 {!onlyBack && <TextInput
@@ -36,13 +37,13 @@ const BackHeader = ({
             </View>
 
                 {/* <Text style={styles.backText}>Back</Text> */}
-            {/* <TouchableOpacity style={styles.header} onPress={onBackHandler}>
+            <View style={styles.header} onPress={onBackHandler}>
                 <FastImage
-                    source={IMAGES.back}
-                    style={styles.backIcon}
+                    source={IMAGES.freeTV}
+                    style={styles.logo}
                     resizeMode={FastImage.resizeMode.contain}
                 /> 
-            </TouchableOpacity> */}
+            </View>
         </View>
     )
 };

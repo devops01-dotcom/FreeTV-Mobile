@@ -74,8 +74,8 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     DeviceInfo.getUniqueId().then((uniqueId) => {
-      // setDeviceId('75fc1fc55e397a1a')
-      setDeviceId(uniqueId);
+      setDeviceId('75fc1fc55e397a1a222')
+      // setDeviceId(uniqueId);
     });
   }, [])
   useEffect(() => {
@@ -136,6 +136,30 @@ const LoginScreen = ({ navigation }) => {
   //     }
   //   })
   // }, [dispatch, phone]);
+
+  const resendOtp = useCallback(() => {
+    setErrorMessage(null);
+    const data = {
+      phone,
+      macId: macID ? macID : deviceID,
+      deviceId: deviceID,
+      app_type: 'FREETVMOB',
+    };
+    dispatch(fetchLogin(data))
+    // .then((res) => {
+    //   const result = res.payload?.data?.data;
+    //   if (result.error_code === 105) {
+    //     setIsPhone(false)
+    //     setIsPincode(true)
+    //     setPincode('')
+    //     return
+    //   }
+    //   else {
+    //     setErrorMessage(result?.msg);
+    //   }
+    // });
+  }, []);
+
 
   const authenticates = useCallback(() => {
     setErrorMessage(null);
@@ -462,7 +486,7 @@ const LoginScreen = ({ navigation }) => {
             {secondsRemaining === 0 ? <TouchableOpacity style={[styles.textInput, {
               width: '64%',
               backgroundColor: secondsRemaining === 0 ? COLORS.inputBox : COLORS.grey,
-            }]} onPress={authenticates}>
+            }]} onPress={resendOtp}>
               <Text style={styles.buttonText}>
                 Resend Otp
               </Text>

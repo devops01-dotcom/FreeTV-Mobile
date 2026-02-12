@@ -22,14 +22,13 @@ export default StyleSheet.create({
 
     },
     leftSide: {
-        width:'15%',// 28,
+        width: '12%',// 28,
         height: '65%',// 28,
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: COLORS.yellow,
-        borderRadius: 20,
-        marginLeft:14,
-        marginTop:12
+        // borderRadius: 20,
+        // marginLeft:14,
+        // marginTop:12
     },
     logo: {
         // paddingBottom: 40,
@@ -38,7 +37,7 @@ export default StyleSheet.create({
         marginLeft: isTablet ? 10 : 5
     },
     centerView: {
-        width: '60%',
+        width: '66%',
         // height: '85%',
         justifyContent: 'center',
         // alignItems: 'center',
@@ -56,17 +55,27 @@ export default StyleSheet.create({
     },
     header: {
         height: '85%',
-        width: '10%',
+        width: '15%',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
+    leftLogo: {
+        backgroundColor: COLORS.yellow,
+         height: isTablet ? 52 : 26,
+        width: isTablet ? 52 : 26,
+        borderRadius: isTablet ? 26 : 13,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+        // marginLeft:14,
+        // marginTop:12 
+    },
     backIcon: {
-
         height: isTablet ? 40 : 18,
         width: isTablet ? 40 : 18,
         justifyContent: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
         // marginLeft: 5,
         // padding:10,
         // borderRadius:8
