@@ -15,7 +15,6 @@ export default StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         aspectRatio: 16 / 9,
-        marginVertical: 10,
     },
     fullvideoBox: {
         flex: 1,
@@ -27,34 +26,32 @@ export default StyleSheet.create({
         alignItems: 'stretch'
     },
     languageBox: {
-        marginBottom: 5,
-        height: isTablet ? 70 : HEIGHT.h07,
-        padding: 5,
-        marginTop: isTablet ? 20 : 10
-    },
-    gradientBorder: {
-        padding: 1, // stroke width
-        borderRadius: 9,
-        marginRight: isTablet ? 20 : 10,
-
-        // backgroundColor: 'red'
-    },
-    languageBoxView: {
-        backgroundColor: COLORS.lightPrimaryColor,
-        height: '98%',
-        minWidth: isTablet ? 120 : 90,
+        height: '10%',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 10,
-        borderRadius: 8,
-        // shadowColor: 'red',
-        // marginBlock: 1,
-        // shadowOffset: { width: 4, height: 2 },
-        // shadowOpacity: 0.5, // 25% opacity
-        // elevation: 2, // Required for Android shadow
-
-
     },
+    // gradientBorder: {
+    //     padding: 1, // stroke width
+    //     borderRadius: 9,
+    //     marginRight: isTablet ? 20 : 10,
+
+    //     // backgroundColor: 'red'
+    // },
+      languageBoxView: {
+           backgroundColor: COLORS.drawerblue,
+           height: '85%',
+           minWidth: isTablet ? 120 : 90,
+           alignItems: 'center',
+           justifyContent: 'center',
+           marginRight: 10,
+           paddingHorizontal: 10,
+           borderRadius: 8,
+           shadowColor: COLORS.black,
+           shadowOffset: { width: 0, height: 4 },
+           shadowOpacity: 0.25, // 25% opacity
+           shadowRadius: 4, // blur
+           elevation: 4, // Required for Android shadow
+       },
     channelListView: {
         flex: 1,
     },

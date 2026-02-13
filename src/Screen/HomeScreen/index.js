@@ -111,6 +111,7 @@ const HomeScreen = ({ navigation }) => {
     { title: 'App TV', data: AppTvDataFilter?.slice(0, 20) || [], type: 'AppTVScreen' },
     { title: 'FreeTV Cinema', data: cinemaData?.slice(0, 20) || [], type: 'CinemaScreen' },
     { title: 'FreeTV Movie', data: movieData?.slice(0, 20) || [], type: 'MovieScreen' },
+    { title: 'FreeTv Series', data: movieData?.slice(0, 20) || [], type: 'SeriesScreen' },
     { title: 'FreeTV Music', data: musicFilterData?.slice(0, 20) || [], type: 'MusicScreen' },
     { title: 'Devotional', data: devotional?.slice(0, 20) || [], type: 'DevotionalScreen' },
     { title: 'Education', data: educational?.slice(0, 20) || [], type: 'EducationScreen' },

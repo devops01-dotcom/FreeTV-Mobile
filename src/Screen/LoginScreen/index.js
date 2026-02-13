@@ -24,6 +24,7 @@ import { navigateTo } from '../../utils/navigateTo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FastImage from 'react-native-fast-image';
 import BackHeader from '../../Component/BackHeader';
+import { logger } from 'react-native-reanimated/lib/typescript/common';
 
 const LoginScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
@@ -45,6 +46,8 @@ const LoginScreen = ({ navigation }) => {
   const [validPinCode, setValidPinCode] = useState(false);
   const [validOTP, setValidOTP] = useState(false);
   const dispatch = useAppDispatch()
+  const inputRefs = useRef([]);
+
 
   useEffect(() => {
     const fetchMacAddress = async () => {
@@ -86,7 +89,6 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    console.log("sec-------", secondsRemaining);
 
     if (secondsRemaining > 0) {
       const timer = setTimeout(() => {
@@ -146,18 +148,20 @@ const LoginScreen = ({ navigation }) => {
       app_type: 'FREETVMOB',
     };
     dispatch(fetchLogin(data))
-    // .then((res) => {
-    //   const result = res.payload?.data?.data;
-    //   if (result.error_code === 105) {
-    //     setIsPhone(false)
-    //     setIsPincode(true)
-    //     setPincode('')
-    //     return
-    //   }
-    //   else {
-    //     setErrorMessage(result?.msg);
-    //   }
-    // });
+    .then((res) => {
+      const result = res.payload?.data?.data;
+      console.log("data---",result);
+      
+      // if (result.error_code === 105) {
+      //   setIsPhone(false)
+      //   setIsPincode(true)
+      //   setPincode('')
+      //   return
+      // }
+      // else {
+      //   setErrorMessage(result?.msg);
+      // }
+    });
   }, []);
 
 
@@ -263,13 +267,30 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [showOtp, otpRef, showExitAppModal, setShowOtp])
 
-  const handleOtpChange = useCallback((text) => {
-    setOtp(text);
-    if (text.length === 4) {
-      onOtpHandler(text)
-      Keyboard.dismiss()
+  const handleOtpChange = useCallback((text, index) => {
+    const newOtp = otp.split('');
+    newOtp[index] = text;
+    const finalOtp = newOtp.join('');
+    setOtp(finalOtp);
+
+    // Move to next input
+    if (text && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+
+    // If last digit entered
+    if (finalOtp.length === 4 && !finalOtp.includes('')) {
+      onOtpHandler(finalOtp);
+      Keyboard.dismiss();
     }
   }, [otp]);
+
+  const handleKeyPress = (e, index) => {
+    if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
 
   // const handlePhoneChange = (text) => {
   //   setPhone(text);
@@ -462,17 +483,21 @@ const LoginScreen = ({ navigation }) => {
                 OTP
               </Text>
             </View>
-            <TextInput
-              ref={otpRef}
-              style={[styles.textInput, { width: '64%' }]}
-              placeholder="OTP"
-              keyboardType='numeric'
-              placeholderTextColor={COLORS.grey}
-              value={otp}
-              maxLength={4}
-              onChangeText={handleOtpChange}
-            // onSubmitEditing={onOtpHandler}
-            />
+            <View style={styles.otpContainer}>
+              {[0, 1, 2, 3].map((index) => (
+                <TextInput
+                  key={index}
+                  ref={(ref) => (inputRefs.current[index] = ref)}
+                  style={styles.otpInput}
+                  keyboardType="numeric"
+                  maxLength={1}
+                  value={otp[index] || ''}
+                  onChangeText={(text) => handleOtpChange(text, index)}
+                  onKeyPress={(e) => handleKeyPress(e, index)}
+                />
+              ))}
+            </View>
+
           </View>
           <Text style={styles.loginText}>DeviceId: {deviceID}</Text>
           <Text style={styles.otpInstruction}>{`*Please enter OTP received on your Mobile.\n *मोबाईल पर प्राप्त OTP को दर्ज करें.`}</Text>
@@ -483,14 +508,12 @@ const LoginScreen = ({ navigation }) => {
               </Text>
             </View>
 
-            {secondsRemaining === 0 ? <TouchableOpacity style={[styles.textInput, {
-              width: '64%',
-              backgroundColor: secondsRemaining === 0 ? COLORS.inputBox : COLORS.grey,
-            }]} onPress={resendOtp}>
-              <Text style={styles.buttonText}>
-                Resend Otp
-              </Text>
-            </TouchableOpacity>
+            {secondsRemaining === 0 ?
+              <TouchableOpacity style={[styles.textInput, { width: '64%', }]} onPress={authenticatePinCode}>
+                <Text style={styles.buttonText}>
+                  Resend Otp
+                </Text>
+              </TouchableOpacity>
               : <View style={[styles.textInput, {
                 width: '64%',
                 backgroundColor: COLORS.grey,

@@ -175,18 +175,12 @@ const EducationScreen = ({ route }) => {
 
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectCategoriesIndex === index
-        return (<LinearGradient
-            colors={[COLORS.lightPrimaryColor, COLORS.black]}
-            start={{ x: 0, y: 1 }}
-            end={{ x: 3, y: 0 }}
-            style={styles.gradientBorder}
-        >
+        return (
             <TouchableOpacity
                 onPress={() => onSelectCategories(item.id, index)}
                 style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                 <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
             </TouchableOpacity>
-        </LinearGradient>
         )
     }, [selectCategoriesIndex, selectedEducationCategoriesId])
 
@@ -224,8 +218,8 @@ const EducationScreen = ({ route }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSubSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
+                    {/* <SlidingText text={item.name} style={styles.categoriesName} /> */}
 
                 </View>
             </TouchableOpacity>
@@ -297,7 +291,7 @@ const EducationScreen = ({ route }) => {
                                 extraData={educationalChannelData}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                 style={{marginBottom: isTablet ? 82 : 57}}
+                                //  style={{marginBottom: isTablet ? 82 : 57}}
                                 contentContainerStyle={{ paddingBottom: 80 }}
                                 initialNumToRender={8}
                                 maxToRenderPerBatch={8}

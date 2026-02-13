@@ -22,7 +22,7 @@ export default StyleSheet.create({
 
     },
     leftSide: {
-        width: '12%',// 28,
+        width: '14%',// 28,
         height: '65%',// 28,
         justifyContent: 'center',
         alignContent: 'center',
@@ -34,10 +34,10 @@ export default StyleSheet.create({
         // paddingBottom: 40,
         height: isTablet ? '70%' : '95%',
         width: '90%',
-        marginLeft: isTablet ? 10 : 5
+        // marginLeft: isTablet ? 10 : 5
     },
     centerView: {
-        width: '66%',
+        width: '60%',
         // height: '85%',
         justifyContent: 'center',
         // alignItems: 'center',
@@ -55,7 +55,7 @@ export default StyleSheet.create({
     },
     header: {
         height: '85%',
-        width: '15%',
+        width: '27%',
         alignItems: 'center',
         justifyContent: 'center',
 

@@ -322,17 +322,11 @@ const LiveTVScreen = ({ route }) => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index;
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}>
                 <TouchableOpacity
                     onPress={() => selectLanguageHandler(item, index)}
                     style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                     <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
                 </TouchableOpacity>
-            </LinearGradient>
         );
     }, [selectLanguage, selectLanguageHandler]);
 
@@ -341,7 +335,10 @@ const LiveTVScreen = ({ route }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategoriesHandler(item, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    {/* <SlidingText text={item.name} style={styles.categoriesName} /> */}
+               
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
+
                 </View>
             </TouchableOpacity>
         );

@@ -20,6 +20,7 @@ import EducationScreen from "../../Screen/Education";
 import FavouriteScreen from "../../Screen/FavouriteScreen";
 import SettingScreen from "../../Screen/SettingScreen";
 import HelpScreen from "../../Screen/HelpScreen";
+import SeriesScreen from "../../Screen/SeriesScreen";
 import { useAppSelector } from "../../redux/hooks";
 import { AuthSelector } from "../../redux/slice/onBoardingSlice";
 
@@ -51,6 +52,7 @@ const RouteStack = () => {
                 <Stack.Screen name="AppTVScreen" component={AppTVScreen} />
                 <Stack.Screen name="CinemaScreen" component={CinemaScreen} />
                 <Stack.Screen name="MovieScreen" component={MovieScreen} />
+                <Stack.Screen name="SeriesScreen" component={SeriesScreen} />
                 <Stack.Screen name="MusicScreen" component={MusicScreen} />
                 <Stack.Screen name="DevotionalScreen" component={DevotionalScreen} />
                 <Stack.Screen name="EducationScreen" component={EducationScreen} />

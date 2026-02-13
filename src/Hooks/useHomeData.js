@@ -5,6 +5,7 @@ import { AddlaunchSelector, fetchAddlaunch } from '../redux/slice/addlaunch';
 import { CategoriesSelector, fetchFilterChannels, fetchLiveTvCategories } from '../redux/slice/liveTvCategories';
 import { fetchCinema, fetchCinemaCategories, fetchGenreCinemaCategories, MoviesSelector } from '../redux/slice/moviesSlice';
 import { fetchMovies, fetchMoviesCategories, fetchGenreCategories, MoviesSelectors } from '../redux/slice/moviesSlice';
+import { fetchFreeTvSeries, fetchFreeTvSeriesCategories, fetchGenreCategories, FreeTvSeriesSelector } from '../redux/slice/freeTvSeriesSlice';
 import { fetchMusic, fetchMusicCategories, MusicSelector } from '../redux/slice/musicSlice';
 import { DevotionalSelector, fetchDevotionalCategories, fetchDevotionallivecontent, fetchDevotionalSubCategories } from '../redux/slice/devotionalSlice';
 import { EducationSelector, fetchEducationalCategories, fetchEducationalcontent, fetchEducationalSubCategories } from '../redux/slice/educationSlice';
@@ -41,6 +42,17 @@ export default function useHomeData() {
             page: 1
         }
       dispatch(fetchMovies(detail))
+    });
+
+    dispatch(fetchFreeTvSeries()).then((res) => {
+      const id = res.payload.data.results[0].id;
+      dispatch(setSelectedCategoriesId(id))
+      // dispatch(fetchGenreCategories(id));
+      const detail = {
+            id: id,
+            page: 1
+        }
+      dispatch(fetchFreeTvSeries(detail))
     });
 
 

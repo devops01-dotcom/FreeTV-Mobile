@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
@@ -14,6 +14,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
 import { IMAGES } from '../../assets';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -78,7 +80,7 @@ const DevotionalSceen = ({ route }) => {
 
     const onBackHandler = useCallback(() => {
         // navigation.navigate('Home');
-         navigation.goBack()
+        navigation.goBack()
     }, [])
     useEffect(() => {
         dispatch(fetchBootupDevotionalAdView())
@@ -169,17 +171,10 @@ const DevotionalSceen = ({ route }) => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectCategoriesIndex === index
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}
-            >
-                <TouchableOpacity style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}
-                    onPress={() => onSelectCategories(item.id, index)}>
-                    <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
-                </TouchableOpacity>
-            </LinearGradient>
+            <TouchableOpacity style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}
+                onPress={() => onSelectCategories(item.id, index)}>
+                <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
+            </TouchableOpacity>
         )
     }, [selectCategoriesIndex, selectedDevotionalCategoriesId])
 
@@ -217,7 +212,7 @@ const DevotionalSceen = ({ route }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectSubCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -244,10 +239,10 @@ const DevotionalSceen = ({ route }) => {
                 :
                 <>
                     <View style={styles.adBox}>
-                        <View style={styles.videoBox}>
+                        {/* <View style={styles.videoBox}> */}
                             <BootupWithoutSkipAdds bootupData={bootupDevotionalData} isPlaying={isPlaying} />
 
-                        </View>
+                        {/* </View> */}
                     </View>
                     <View style={styles.mainBox}>
                         <View style={styles.languageBox}>
@@ -255,7 +250,7 @@ const DevotionalSceen = ({ route }) => {
                                 onPress={openDrawer}>
                                 {/* {!showCategories ? <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> : null} */}
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
-                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={devotional}
@@ -270,7 +265,7 @@ const DevotionalSceen = ({ route }) => {
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
-                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={devotionalSubcategories}
@@ -289,7 +284,7 @@ const DevotionalSceen = ({ route }) => {
                                 numColumns={isTablet ? 3 : 2}
                                 extraData={devotionalChannelData}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{marginBottom: isTablet ? 82 : 57}}
+                                // style={{marginBottom: isTablet ? 82 : 57}}
                                 contentContainerStyle={{ paddingBottom: 80 }}
                                 showsVerticalScrollIndicator={false}
                                 onEndReached={loadMore}

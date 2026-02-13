@@ -59,7 +59,7 @@ export default StyleSheet.create({
     },
     button: {
         // width: 200,
-        paddingHorizontal:15,
+        paddingHorizontal: 15,
         height: HEIGHT.h05,
         alignItems: 'center',
         justifyContent: 'center',
@@ -142,8 +142,8 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     inline: {
-         height: 18,
-         paddingTop: 8,
+        height: 18,
+        paddingTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -152,6 +152,23 @@ export default StyleSheet.create({
     bold: {
         fontFamily: APP_FONTS.PoppinsBold,
     },
+    otpContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '64%',
+    },
+
+    otpInput: {
+        width: 45,
+        height: 50,
+        borderWidth: 2,
+        borderColor: COLORS.white,
+        borderRadius: 8,
+        textAlign: 'center',
+        fontSize: 18,
+        color: COLORS.white,
+    },
+
 })
 
 

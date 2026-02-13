@@ -36,7 +36,7 @@ export default StyleSheet.create({
         height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
     },
     languageBoxView: {
         backgroundColor: COLORS.drawerblue,

@@ -72,7 +72,6 @@ export default StyleSheet.create({
     columnWrapper: {
         justifyContent: 'space-between', // Space between columns
         marginHorizontal: 10,
-        marginTop: 5
     },
     movieDetailBox: {
         height: isTablet ? 150 : HEIGHT.h13,

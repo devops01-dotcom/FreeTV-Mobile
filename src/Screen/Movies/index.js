@@ -318,7 +318,7 @@ const MovieScreen = () => {
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{ marginBottom: isTablet ? 82 : 57 }}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                                 ListFooterComponent={renderFooter}
                                 onScrollBeginDrag={() => setHasScrolled(true)} // Set true on user scroll
                                 onEndReached={loadMore}

@@ -144,4 +144,5 @@ export const onFreeTvSeriesSlice = createSlice({
 });
 
 export const { FreeTvSeriesAction, clearSeriesData, clearSearchSeriesData } = onFreeTvSeriesSlice.actions;
+export const FreeTvSeriesSelector = ((state) => state.FreeTvSeriesReducer)
 export default onFreeTvSeriesSlice.reducer;
