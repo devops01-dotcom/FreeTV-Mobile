@@ -22,6 +22,7 @@ import { HEIGHT } from '../../utils/dimension';
 import CustomAlert from '../../Component/CustomAlert';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppTVSelector } from '../../redux/slice/appTvSlice';
+import { FreeTvSeriesSelector } from '../../redux/slice/freeTvSeriesSlice';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
 
 const HomeScreen = ({ navigation }) => {
@@ -39,6 +40,8 @@ const HomeScreen = ({ navigation }) => {
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
   const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
+  const {seriesData} = useAppSelector(FreeTvSeriesSelector)
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -111,7 +114,7 @@ const HomeScreen = ({ navigation }) => {
     { title: 'App TV', data: AppTvDataFilter?.slice(0, 20) || [], type: 'AppTVScreen' },
     { title: 'FreeTV Cinema', data: cinemaData?.slice(0, 20) || [], type: 'CinemaScreen' },
     { title: 'FreeTV Movie', data: movieData?.slice(0, 20) || [], type: 'MovieScreen' },
-    { title: 'FreeTv Series', data: movieData?.slice(0, 20) || [], type: 'SeriesScreen' },
+    { title: 'FreeTv Series', data: seriesData?.slice(0, 20) || [], type: 'SeriesScreen' },
     { title: 'FreeTV Music', data: musicFilterData?.slice(0, 20) || [], type: 'MusicScreen' },
     { title: 'Devotional', data: devotional?.slice(0, 20) || [], type: 'DevotionalScreen' },
     { title: 'Education', data: educational?.slice(0, 20) || [], type: 'EducationScreen' },

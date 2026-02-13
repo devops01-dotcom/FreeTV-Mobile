@@ -110,7 +110,6 @@ const onAppTvSlice = createSlice({
       .addCase(fetchAppTv.fulfilled, (state, action) => {
         state.loading = 'succeeded';
          const appTvList = action.payload?.data;
-         console.log('object=====action.payload?.data;====:', action.payload?.data);
       //  if (appTvList.current_page_number) {
           state.appTvCount = appTvList.count
           state.totalAppTvCount = appTvList.total_count

@@ -41,17 +41,17 @@ export const fetchFreeTvSeries = createAsyncThunk(
   }
 );
 
-export const fetchFreeTvSeriesEpisode = createAsyncThunk(
-  'FreeTvSeriessEpisodeSlice',
-  async (id, thunkAPI) => {
-    try {
-      const response = await Request.get(ApiConstant.FreeTvSeriesEpisode + id);
-      return { data: response };
-    } catch (error) {
-      return thunkAPI.rejectWithValue('failed');
-    }
-  }
-);
+// export const fetchFreeTvSeriesEpisode = createAsyncThunk(
+//   'FreeTvSeriessEpisodeSlice',
+//   async (id, thunkAPI) => {
+//     try {
+//       const response = await Request.get(ApiConstant.FreeTvSeriesEpisode + id);
+//       return { data: response };
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue('failed');
+//     }
+//   }
+// );
 
 export const fetchSearchSeries = createAsyncThunk(
   'SearchSeriesSlice',
@@ -116,17 +116,17 @@ export const onFreeTvSeriesSlice = createSlice({
         state.loading = 'failed';
         state.error = action.error.message || 'Request failed';
       })
-      .addCase(fetchFreeTvSeriesEpisode.pending, (state) => {
-        state.loading = 'pending';
-      })
-      .addCase(fetchFreeTvSeriesEpisode.fulfilled, (state, action) => {
-        state.loading = 'succeeded';
-        state.freeTvEpisode = action.payload?.data.results;
-      })
-      .addCase(fetchFreeTvSeriesEpisode.rejected, (state, action) => {
-        state.loading = 'failed';
-        state.error = action.error.message || 'Request failed';
-      })
+      // .addCase(fetchFreeTvSeriesEpisode.pending, (state) => {
+      //   state.loading = 'pending';
+      // })
+      // .addCase(fetchFreeTvSeriesEpisode.fulfilled, (state, action) => {
+      //   state.loading = 'succeeded';
+      //   state.freeTvEpisode = action.payload?.data.results;
+      // })
+      // .addCase(fetchFreeTvSeriesEpisode.rejected, (state, action) => {
+      //   state.loading = 'failed';
+      //   state.error = action.error.message || 'Request failed';
+      // })
       .addCase(fetchSearchSeries.pending, (state) => {
         state.loading = 'pending';
       })

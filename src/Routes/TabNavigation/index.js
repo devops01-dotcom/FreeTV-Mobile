@@ -122,8 +122,8 @@ const CustomTabBar = ({ state, descriptors, navigation, orientation }) => {
             activeOpacity={0.8}
           >
             <Image
-              source={getIcon(label, isFocused)}  
-              style={[styles.iconStyle,{ tintColor: getIconColor()}
+              source={getIcon(label, isFocused)}
+              style={[styles.iconStyle, { tintColor: getIconColor() }
               ]} />
             <Text
               style={[

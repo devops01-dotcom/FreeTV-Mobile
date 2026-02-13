@@ -150,7 +150,6 @@ const LoginScreen = ({ navigation }) => {
     dispatch(fetchLogin(data))
     .then((res) => {
       const result = res.payload?.data?.data;
-      console.log("data---",result);
       
       // if (result.error_code === 105) {
       //   setIsPhone(false)
