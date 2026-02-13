@@ -248,7 +248,7 @@ const MusicScreen = ({ navigation }) => {
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchMusicData}
-                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `musicSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         showsVerticalScrollIndicator={false}
@@ -280,7 +280,7 @@ const MusicScreen = ({ navigation }) => {
                             <FlatList
                                 data={tvChannelLanguage}
                                 horizontal
-                                keyExtractor={(item, index) => `language-${index.toString()}`}
+                                keyExtractor={(item, index) => `musiclanguage-${index.toString()}`}
                                 extraData={selectLanguage}
                                 renderItem={renderLanguage}
                             />
@@ -293,7 +293,7 @@ const MusicScreen = ({ navigation }) => {
                             </TouchableOpacity>
                             <FlatList
                                 data={musicData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `musicCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -303,7 +303,7 @@ const MusicScreen = ({ navigation }) => {
                             <FlatList
                                 ref={flatListRef}
                                 data={musicFilterData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `music-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}

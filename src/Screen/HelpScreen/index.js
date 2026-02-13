@@ -258,7 +258,7 @@ const HelpScreen = () => {
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchCinemaData}
-                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `helpSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         columnWrapperStyle={styles.columnWrapper}
@@ -287,7 +287,7 @@ const HelpScreen = () => {
                             <FlatList
                                 data={combinegenreCategories}
                                 horizontal
-                                keyExtractor={(item, index) => `language-${index.toString()}`}
+                                keyExtractor={(item, index) => `helplanguage-${index.toString()}`}
                                 renderItem={renderLanguage}
                                 showsHorizontalScrollIndicator={false}
                             />
@@ -300,7 +300,7 @@ const HelpScreen = () => {
                             </TouchableOpacity>
                             <FlatList
                                 data={cinemaCategoriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `helpCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -310,7 +310,7 @@ const HelpScreen = () => {
                             <FlatList
                                 ref={flatListRef}
                                 data={cinemaData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `help-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}

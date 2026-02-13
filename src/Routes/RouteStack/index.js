@@ -33,7 +33,7 @@ const RouteStack = () => {
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
-                initialRouteName={loginData?.token ? 'SeriesScreen' : "Login"}
+                initialRouteName={loginData?.token ? 'Home' : "Login"}
                 // initialRouteName="Home"
                 screenOptions={{
                     headerShown: false

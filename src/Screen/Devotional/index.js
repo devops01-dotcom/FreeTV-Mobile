@@ -279,7 +279,7 @@ const DevotionalSceen = ({ route }) => {
                             <FlatList
                                 ref={flatListRef}
                                 data={devotionalChannelData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `devotional-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 extraData={devotionalChannelData}

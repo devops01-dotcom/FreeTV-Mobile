@@ -140,6 +140,12 @@ export default StyleSheet.create({
     },
     searchModal: {
         flex: 1,
-    }
+    },
+    dropdownCloseMenu: {
+        height: HEIGHT.h07 - 10,
+        width: isTablet ? 100 : 70,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 
 })

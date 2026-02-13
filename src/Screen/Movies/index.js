@@ -260,7 +260,7 @@ const MovieScreen = () => {
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchMovieData}
-                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `moviesSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         columnWrapperStyle={styles.columnWrapper}
@@ -303,7 +303,7 @@ const MovieScreen = () => {
                             </TouchableOpacity>
                             <FlatList
                                 data={moviesCategoriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `moviesCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -313,7 +313,7 @@ const MovieScreen = () => {
                             <FlatList
                                 ref={flatListRef}
                                 data={movieData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `movies-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}

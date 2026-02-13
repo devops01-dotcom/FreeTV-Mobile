@@ -300,7 +300,7 @@ const CinemaScreen = () => {
                             </TouchableOpacity>
                             <FlatList
                                 data={cinemaCategoriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `cinemaCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />

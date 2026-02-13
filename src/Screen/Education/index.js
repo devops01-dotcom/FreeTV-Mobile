@@ -237,7 +237,7 @@ const EducationScreen = ({ route }) => {
                 <View style={styles.searchModal}>
                     <FlatList
                         data={educationalSearchData}
-                        keyExtractor={(item, index) => `devotionalSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `educationSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         columnWrapperStyle={styles.columnWrapper}

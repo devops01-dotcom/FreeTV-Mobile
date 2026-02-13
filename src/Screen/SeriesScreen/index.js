@@ -1,11 +1,11 @@
 // SeriesScreen
 
-import React, { useCallback, useEffect,useState, useRef } from "react";
-import { ActivityIndicator,Keyboard,View,TouchableOpacity, FlatList, Text } from 'react-native'
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { ActivityIndicator, Keyboard, View, TouchableOpacity, FlatList, Text } from 'react-native'
 import styles from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackHeader from "../../Component/BackHeader";
-import { clearSeriesData,clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector, FreeTvSeriesAction } from "../../redux/slice/freeTvSeriesSlice";
+import { clearSeriesData, clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector } from "../../redux/slice/freeTvSeriesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import DeviceInfo from "react-native-device-info";
 import { COLORS } from "../../utils/color";
@@ -24,7 +24,7 @@ const SeriesScreen = () => {
     const [selectLanguage, setSelectLanguage] = useState(0);
     const [selectCategoriesIndex, setSelectCategoriesIndex] = useState(0);
     const [showCategories, setShowCategories] = useState(false);
-    const { seriesData, searchSeriesData, SeriesNextPage, SeriesPage,FreeTvSeriesData } = useAppSelector(FreeTvSeriesSelector)
+    const { seriesData, searchSeriesData, SeriesNextPage, SeriesPage, FreeTvSeriesData } = useAppSelector(FreeTvSeriesSelector)
     const { selectedCategoriesId, selectedGenreId } = useAppSelector((State) => State.commonReducer);
     const languageData = [{ name: "All" }]
     const flatListRef = useRef(null);
@@ -32,7 +32,18 @@ const SeriesScreen = () => {
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
-    
+
+    useEffect(() => {
+        dispatch(fetchFreeTvSeriesCategories()).then((res) => {
+            dispatch(clearSeriesData())
+            const id = res.payload.data.results[0].id
+            const data = {
+                id,
+                page: 1
+            }
+            dispatch(fetchFreeTvSeries(data))
+        })
+    }, [])
 
 
     const onMovieDetailHandler = useCallback((item) => {
@@ -79,18 +90,18 @@ const SeriesScreen = () => {
             color={COLORS.yellow} />;
     };
 
-     const loadMore = useCallback(() => {
-      if (!hasScrolled || loading || !SeriesNextPage) return;
-      setLoading(true);
-      const detail = {
-        id: selectedCategoriesId,
-        page: SeriesPage
-      };
-    
-      dispatch(fetchFreeTvSeries(detail)).finally(() => {
-        setLoading(false);
-        setHasScrolled(false); // ✅ Reset scroll trigger after API call
-      });
+    const loadMore = useCallback(() => {
+        if (!hasScrolled || loading || !SeriesNextPage) return;
+        setLoading(true);
+        const detail = {
+            id: selectedCategoriesId,
+            page: SeriesPage
+        };
+
+        dispatch(fetchFreeTvSeries(detail)).finally(() => {
+            setLoading(false);
+            setHasScrolled(false); // ✅ Reset scroll trigger after API call
+        });
     }, [hasScrolled, loading, SeriesNextPage, selectedCategoriesId, SeriesPage]);
 
     const onBackHandler = useCallback(() => {
@@ -102,34 +113,33 @@ const SeriesScreen = () => {
     }, [selectLanguage, selectCategoriesIndex]);
 
     useEffect(() => {
-            const showSubscription = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-            const hideSubscription = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
-            return () => {
-                showSubscription.remove();
-                hideSubscription.remove();
-            };
-        }, []);
-    
-        useEffect(() => {
-            if (search?.length >= 3) {
-                const detail = {
-                    name: search,
-                    page: 1,
-                    cid: selectedCategoriesId,
-                    gid: selectedGenreId ? selectedGenreId : 0
-                }
-                dispatch(fetchFreeTvSeries(detail))
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (search?.length >= 3) {
+            const detail = {
+                name: search,
+                page: 1,
+                cid: selectedCategoriesId,
+                gid: selectedGenreId ? selectedGenreId : 0
             }
-            else {
-                dispatch(clearSearchSeriesData())
-            }
-        }, [search])
+            dispatch(fetchFreeTvSeries(detail))
+        }
+        else {
+            dispatch(clearSearchSeriesData())
+        }
+    }, [search])
 
     const onSelectCategories = useCallback((id, index) => {
         // dispatch(setSelectedCategoriesId(null))
         setSelectCategoriesIndex(index)
         setSelectLanguage(0)
-        dispatch(clearGenreDetail())
         if (flatListRef.current) {
             flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
         }
@@ -194,11 +204,11 @@ const SeriesScreen = () => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-                <TouchableOpacity
-                    onPress={() => onLanguageHandler(item, index)}
-                    style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
-                </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => onLanguageHandler(item, index)}
+                style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
+                <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
+            </TouchableOpacity>
         )
     }, [selectLanguage])
 
@@ -206,7 +216,7 @@ const SeriesScreen = () => {
         return (
             <TouchableOpacity onPress={() => onMovieDetailHandler(item)} style={styles.movieDetailBox}>
                 <FastImage
-                    source={{ uri: item.content_image }}
+                    source={{ uri: item.content_image_url || item.content_image }}
                     style={styles.movieImage}
                     resizeMode={FastImage.resizeMode.cover}
                 />
@@ -238,7 +248,7 @@ const SeriesScreen = () => {
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchSeriesData}
-                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `SeriesSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         columnWrapperStyle={styles.columnWrapper}
@@ -279,7 +289,7 @@ const SeriesScreen = () => {
                             </TouchableOpacity>
                             <FlatList
                                 data={FreeTvSeriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `series-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -289,7 +299,7 @@ const SeriesScreen = () => {
                             <FlatList
                                 ref={flatListRef}
                                 data={seriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `series-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
