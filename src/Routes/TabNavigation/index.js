@@ -34,9 +34,12 @@ const TabNavigation = () => {
         lazy: false,
       }}
       tabBar={(props) => (
-        !showHomeAds ? (
-          <CustomTabBar {...props} />
-        ) : null
+
+        <CustomTabBar {...props} />
+        
+        // !showHomeAds ? (
+        //   <CustomTabBar {...props} />
+        // ) : null
         // tabBar={(props) => (
         //   <ScrollableTabBar {...props} orientation={orientation} />
       )}

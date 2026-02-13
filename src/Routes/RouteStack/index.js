@@ -21,19 +21,18 @@ import FavouriteScreen from "../../Screen/FavouriteScreen";
 import SettingScreen from "../../Screen/SettingScreen";
 import HelpScreen from "../../Screen/HelpScreen";
 import SeriesScreen from "../../Screen/SeriesScreen";
-import { useAppSelector } from "../../redux/hooks";
-import { AuthSelector } from "../../redux/slice/onBoardingSlice";
+import  MobAdScreen from "../../Screen/MobAdScreen";
 
 const Stack = createNativeStackNavigator();
 
 const RouteStack = () => {
-     const getStore = store.getState();
+    const getStore = store.getState();
     //  const {token} = getStore?.AuthReducer?.loginData || ""
-      const {loginData} = useAppSelector(AuthSelector);
+    // const { loginData } = useAppSelector(AuthSelector);
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
-                initialRouteName={loginData?.token ? 'Home' : "Login"}
+                initialRouteName= 'MobAdScreen'//{loginData?.token ? 'Home' : "Login"} 
                 // initialRouteName="Home"
                 screenOptions={{
                     headerShown: false
@@ -59,6 +58,8 @@ const RouteStack = () => {
                 <Stack.Screen name="FavouriteScreen" component={FavouriteScreen} />
                 <Stack.Screen name="SettingScreen" component={SettingScreen} />
                 <Stack.Screen name="HelpScreen" component={HelpScreen} />
+                <Stack.Screen name="MobAdScreen" component={MobAdScreen} />
+
 
 
 

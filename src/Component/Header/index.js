@@ -9,18 +9,18 @@ import FastImage from 'react-native-fast-image';
 const isTablet = DeviceInfo.isTablet();
 
 const Header = ({
-    showHeader,
+    // showHeader,
     setShowDrawer,
-    setShowAlert
+    // setShowAlert
 }) => {
 
     const onShowHeader = () => {
-        if (showHeader) {
-            return setShowAlert(true)
-        }
-        else {
+        // if (showHeader) {
+        //     return setShowAlert(true)
+        // }
+        // else {
             setShowDrawer(true)
-        }
+        // }
     }
     return (
         <View style={styles.container}>

@@ -134,11 +134,6 @@ const HomeScreen = ({ navigation }) => {
           renderItem={() => null} // ignore vertical renderItem
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
-            (progressing && bootupData?.ad_url) ?
-              <View style={{ height: HEIGHT.h25, marginBottom: 20 }}>
-                <BootupAds setProgressing={setProgressing} bootupData={bootupData} />
-              </View>
-              :
               <View style={{ marginBottom: 20 }}>
                 <CarouselView images={addLaunch} />
               </View>
