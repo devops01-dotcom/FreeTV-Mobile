@@ -249,11 +249,7 @@ const CinemaScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <BackHeader onBackHandler={onBackHandler}
-                name={search}
-                placeholder='Search'
-                onChangeText={setSearch}
-            />
+            <BackHeader onBackHandler={onBackHandler} onlyBack={true}/>
             {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
