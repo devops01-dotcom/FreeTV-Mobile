@@ -26,28 +26,27 @@ export function withChannelLogic(Wrapped) {
     // Handlers
     const onPlayVideo = useCallback(
       (item) => {
-        if (progressing) setShowAlert(true);
-        else navigateTo('MovieDetail', { item });
+        // if (progressing) setShowAlert(true);
+         navigateTo('MovieDetail', { item });
       },
-      [progressing, setShowAlert]
+      []
     );
 
    const onEducationHandler = useCallback(
   (selectedId) => {
-    if (progressing) return setShowAlert(true);
+    // if (progressing) return setShowAlert(true);
     dispatch(resetEducationData());
     navigateTo('Education', { selectedCategory: selectedId });
   },
-  [dispatch, progressing, setShowAlert]
+  [dispatch]
 );
 
 const onDevotionalHandler = useCallback(
   (selectedId) => {
-    if (progressing) return setShowAlert(true);
     dispatch(resetDevotionalData());
     navigateTo('Devotional', { selectedCategory: selectedId });
   },
-  [dispatch, progressing, setShowAlert]
+  [dispatch]
 );
     // Render item
     const renderItem = useCallback(
