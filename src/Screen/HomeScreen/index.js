@@ -141,7 +141,7 @@ const HomeScreen = ({ navigation }) => {
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
             <View >
-              <View style={{ alignItems: 'center', marginVertical: 5 }}>
+              {/* <View style={{ alignItems: 'center', marginVertical: 5 }}>
                 <BannerAd
                   unitId={TestIds.BANNER}
                   size={BannerAdSize.BANNER}
@@ -152,8 +152,8 @@ const HomeScreen = ({ navigation }) => {
                     setLoaded(false);
                   }}
                 />
-              </View>
-              {/* {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
+              </View> */}
+              {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
               <BannerAd
                 unitId="/23338335975/FreeTVMob_Home_Banner"
                 size={BannerAdSize.BANNER}
@@ -164,7 +164,7 @@ const HomeScreen = ({ navigation }) => {
                   setLoaded(false);
                 }}
               />
-              </View>)} */}
+              </View>)}
 
               {/* Keeps layout stable */}
               {!loaded && (
