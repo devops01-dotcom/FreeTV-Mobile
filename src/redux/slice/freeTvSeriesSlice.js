@@ -181,7 +181,6 @@ export const onFreeTvSeriesSlice = createSlice({
       .addCase(fetchSerialLanguageFilterData.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         const serialList = action.payload?.data;
-        console.log('object======sweries data==={:', serialList);
         // state.searchMusicData = serialList.results;
         // state.musicCount = serialList.count;
         // state.totalMusicCount = serialList.total_count;
