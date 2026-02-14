@@ -20,12 +20,14 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-na
 import { PanGestureHandler, GestureHandlerRootView } from "react-native-gesture-handler";
 import BackHeader from '../../Component/BackHeader';
 import { useFocusEffect } from '@react-navigation/native';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 
 
 const FavouriteScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const dispatch = useAppDispatch();
+      const [loaded, setLoaded] = useState(false);
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
   const { filterData, data, FavChannelListData } = useAppSelector(CategoriesSelector) || []
   const { cinemaData } = useAppSelector(MoviesSelector) || []
@@ -140,7 +142,35 @@ const FavouriteScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <BackHeader onBackHandler={onBackHandler}  onlyBack={true}/>
-      <CarouselView images={addLaunch} />
+      <View style={{ alignItems: 'center', marginVertical: 5 }}>
+                    <BannerAd
+                        unitId={TestIds.BANNER}
+                        size={BannerAdSize.BANNER}
+                        onAdLoaded={() => {
+                            setLoaded(true);
+                        }}
+                        onAdFailedToLoad={(e) => {
+                            setLoaded(false);
+                        }}
+                    />
+                </View>
+                {/* {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
+                              <BannerAd
+                                unitId="/23338335975/FreeTVMob_Home_Banner"
+                                size={BannerAdSize.BANNER}
+                                onAdLoaded={() => {
+                                  setLoaded(true);
+                                }}
+                                onAdFailedToLoad={(e) => {
+                                  setLoaded(false);
+                                }}
+                              />
+                              </View>)} */}
+
+                {/* Keeps layout stable */}
+                {!loaded && (
+                    <CarouselView images={addLaunch} />
+                )}
 
       <ScrollView contentContainerStyle={{ paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
         <View style={styles.liveTVCategoriesBox}>

@@ -29,7 +29,7 @@ const AppTVScreen = () => {
     const { selectedAppTVCategoriesId, searchQuery, selectedGenreId } = useAppSelector((state) => state.commonReducer);
     const flatListRef = useRef(null);
     // const combinegenreCategories = [...languageData, ...genreCategories]
-     const tvChannelLanguage = [
+    const tvChannelLanguage = [
         ...(languageData ?? []),
         ...(AppTVLanguageList ?? []),
     ];
@@ -39,9 +39,9 @@ const AppTVScreen = () => {
         setHasScrolled(false);
     }, [selectLanguage, selectCategoriesIndex]);
 
-        useEffect(() => {
-            dispatch(fetchAppTvLanguage())
-        }, [])
+    useEffect(() => {
+        dispatch(fetchAppTvLanguage())
+    }, [])
 
     //  Keyboard Listener
     useEffect(() => {
@@ -199,11 +199,11 @@ const AppTVScreen = () => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-                <TouchableOpacity
-                    onPress={() => onLanguageHandler(item, index)}
-                    style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
-                </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => onLanguageHandler(item, index)}
+                style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
+                <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
+            </TouchableOpacity>
         )
     }, [selectLanguage])
 
@@ -270,18 +270,18 @@ const AppTVScreen = () => {
                 :
                 <>
                     <View style={styles.adBox}>
-                            <FastImage
-                                source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
-                                style={styles.backgroundImage}
-                                resizeMode={FastImage.resizeMode.cover}
-                            />
+                        <FastImage
+                            source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
+                            style={styles.backgroundImage}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
                     </View>
                     <View style={styles.mainBox}>
 
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={tvChannelLanguage}
@@ -295,7 +295,7 @@ const AppTVScreen = () => {
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
                                 {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
-                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={AppTvData}

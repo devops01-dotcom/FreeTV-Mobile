@@ -10,7 +10,7 @@ export async function makeRequest(method, api, data) {
             data,
         });
 
-    //    console.log('object api res---:', response)
+       console.log('object api res---:', response)
         if (response.status === 200 || response.status === 201) {
             return response.data;
         }

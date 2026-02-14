@@ -24,9 +24,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppTVSelector } from '../../redux/slice/appTvSlice';
 import { FreeTvSeriesSelector } from '../../redux/slice/freeTvSeriesSlice';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const HomeScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   // const [progressing, setProgressing] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const dispatch = useAppDispatch()
@@ -40,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
   const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
-  const {seriesData} = useAppSelector(FreeTvSeriesSelector)
+  const { seriesData } = useAppSelector(FreeTvSeriesSelector)
 
 
   // useEffect(() => {
@@ -72,14 +74,14 @@ const HomeScreen = ({ navigation }) => {
   const onLiveTvHandler = useCallback(
     (item, index) => {
       // if (progressing) return setShowAlert(true)
-       navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+      navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
     }, []
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
       // if (progressing) return setShowAlert(true)
-       navigation.navigate(screenName);
+      navigation.navigate(screenName);
     }, []
   );
 
@@ -123,10 +125,10 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {!showDrawer && <Header
-       setShowDrawer={setShowDrawer} 
+        setShowDrawer={setShowDrawer}
       //  showHeader={progressing} 
       //  setShowAlert={setShowAlert}
-        />}
+      />}
 
       {showDrawer ? (
         <CustomDrawerContent setShowDrawer={setShowDrawer} />
@@ -138,13 +140,55 @@ const HomeScreen = ({ navigation }) => {
           renderItem={() => null} // ignore vertical renderItem
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
-              <View style={{ marginBottom: 20 }}>
-                <CarouselView images={addLaunch} />
+            <View >
+             <View style={{ alignItems: 'center', marginVertical: 5 }}>
+              <BannerAd
+                unitId={TestIds.BANNER}
+                size={BannerAdSize.BANNER}
+                onAdLoaded={() => {
+                  setLoaded(true);
+                }}
+                onAdFailedToLoad={(e) => {
+                  setLoaded(false);
+                }}
+              />
               </View>
+              {/* {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
+              <BannerAd
+                unitId="/23338335975/FreeTVMob_Home_Banner"
+                size={BannerAdSize.BANNER}
+                onAdLoaded={() => {
+                  setLoaded(true);
+                }}
+                onAdFailedToLoad={(e) => {
+                  setLoaded(false);
+                }}
+              />
+              </View>)} */}
+
+              {/* Keeps layout stable */}
+              {!loaded && (
+                 <View style={{ marginBottom: 10 }}>
+                 <CarouselView images={addLaunch} />
+               </View>
+              )}
+            </View>
+            // <View style={{marginTop: 5 }}>
+            //   {loaded && (
+            //     <BannerAd
+            //       unitId="/23338335975/FreeTVMob_Home_Banner"
+            //       size={BannerAdSize.BANNER}
+            //       onAdLoaded={() => setLoaded(true)}
+            //       onAdFailedToLoad={() => setLoaded(false)}
+            //     />
+            //   )}
+            // </View>
           }
+
           contentContainerStyle={{ paddingBottom: 10 }}
           renderSectionHeader={({ section }) => (
             <View style={styles.sectionContainer}>
+
               <Section
                 title={section.title}
                 onPress={() => navigateToScreen(section.type)}
