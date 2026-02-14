@@ -77,6 +77,7 @@ const AppTVScreen = () => {
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
+        console.log('object==== item press-:::', item);
         // navigation.navigate('MovieDetail', { item });
     }, [])
 
@@ -183,7 +184,7 @@ const AppTVScreen = () => {
                 dispatch(fetchAppTvLanguageFilterData(detail))
             }
             else {
-                dispatch(fetchCinemaCategories()).then((res) => {
+                dispatch(fetchAppTvCategories()).then((res) => {
                     const detail = {
                         cid: res?.payload?.data?.results[0]?.id,
                         gid: item.id

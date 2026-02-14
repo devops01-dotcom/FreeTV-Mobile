@@ -12,18 +12,36 @@ import { COLORS } from './src/utils/color';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchBootupAdView } from './src/redux/slice/bootupadview';
+import BootSplash from "react-native-bootsplash";
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(true);
 
   const dispatch = useAppDispatch();
   const version = DeviceInfo.getVersion();
+  LogBox.ignoreAllLogs(true);
 
   useEffect(() => {
     LogBox.ignoreLogs(['Warning: ...']);
     LogBox.ignoreAllLogs();
     // setTimeout(() => SplashScreen.hide(), 2000);
     dispatch(fetchBootupAdView())
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      // …do multiple sync or async tasks
+    };
+
+    const start = async () => {
+      try {
+        await init();
+      } finally {
+        await delay(1500);
+        await BootSplash.hide({ fade: true });
+      }
+    };
+    start();
   }, []);
 
 
