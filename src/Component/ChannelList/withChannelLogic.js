@@ -9,9 +9,8 @@ import { resetEducationData } from '../../redux/slice/educationSlice';
 import { resetDevotionalData } from '../../redux/slice/devotionalSlice';
 
 export function withChannelLogic(Wrapped) {
-  return function ChannelListHOC({ data = [], type, progressing, setShowAlert }) {
+  return function ChannelListHOC({ data = [], type}) {
     const dispatch = useAppDispatch();
-
     // Preload images
     useEffect(() => {
       if (data.length) {
@@ -27,28 +26,25 @@ export function withChannelLogic(Wrapped) {
     // Handlers
     const onPlayVideo = useCallback(
       (item) => {
-        if (progressing) setShowAlert(true);
-        else navigateTo('MovieDetail', { item });
+         navigateTo('MovieDetail', { item });
       },
-      [progressing, setShowAlert]
+      []
     );
 
    const onEducationHandler = useCallback(
   (selectedId) => {
-    if (progressing) return setShowAlert(true);
     dispatch(resetEducationData());
     navigateTo('Education', { selectedCategory: selectedId });
   },
-  [dispatch, progressing, setShowAlert]
+  [dispatch]
 );
 
 const onDevotionalHandler = useCallback(
   (selectedId) => {
-    if (progressing) return setShowAlert(true);
     dispatch(resetDevotionalData());
     navigateTo('Devotional', { selectedCategory: selectedId });
   },
-  [dispatch, progressing, setShowAlert]
+  [dispatch]
 );
     // Render item
     const renderItem = useCallback(
@@ -57,16 +53,16 @@ const onDevotionalHandler = useCallback(
         let onPressHandler = () => { };
 
         switch (type) {
-          case 'Education':
+          case 'EducationScreen':
             imageUri = item.background_image || item.logo || '';
             onPressHandler = () => onEducationHandler(item.id);
             break;
-          case 'Devotional':
+          case 'DevotionalScreen':
             imageUri = item.mobile_image || '';
             onPressHandler = () => onDevotionalHandler(item.id);
             break;
           default:
-            imageUri = item.content_image || item.content_image_url || '';
+            imageUri = item.content_image || item.content_image_url ;
             onPressHandler = () => onPlayVideo(item);
             break;
         }
@@ -83,6 +79,7 @@ const onDevotionalHandler = useCallback(
               style={styles.image}
               resizeMode={FastImage.resizeMode.cover}
             />
+            {/* <Text>{item.name}</Text> */}
           </TouchableOpacity>
         );
       },

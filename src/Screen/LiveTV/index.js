@@ -24,14 +24,12 @@ import BackHeader from '../../Component/BackHeader';
 import { IMAGES } from '../../assets';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-// import { MaterialIcons } from '@react-native-vector-icons/material-icons';
-
 import DeviceInfo from 'react-native-device-info';
 import { useSharedValue, withTiming } from 'react-native-reanimated';
 import { ProfileSelector } from '../../redux/slice/profileSlice';
 import { fetchWatchVideoView } from '../../redux/slice/watchVideo';
 import BigList from "react-native-big-list";
+
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -199,7 +197,7 @@ const LiveTVScreen = ({ route }) => {
 
     /** 🔹 Search */
     useEffect(() => {
-        if (search.length > 1) {
+        if (search?.length > 1) {
             dispatch(fetchLiveTVChannelSearch(search));
         } else {
             if (route?.params?.selectedType) {
@@ -227,8 +225,8 @@ const LiveTVScreen = ({ route }) => {
     /** 🔹 Next/Prev */
     const onNextHandler = useCallback(() => {
         const ind = allChannelList.findIndex(x => x.cacheurl?.trim() === focusVideo?.trim());
-        if (allChannelList.length === 0) return;
-        const nextIndex = ind === -1 || ind === allChannelList.length - 1 ? 0 : ind + 1;
+        if (allChannelList?.length === 0) return;
+        const nextIndex = ind === -1 || ind === allChannelList?.length - 1 ? 0 : ind + 1;
         const nextVideo = allChannelList[nextIndex];
         setFocusVideo(nextVideo.cacheurl);
         setSelectedItem(nextVideo);
@@ -236,8 +234,8 @@ const LiveTVScreen = ({ route }) => {
 
     const onPreviousHandler = useCallback(() => {
         const ind = allChannelList.findIndex(x => x.cacheurl?.trim() === focusVideo?.trim());
-        if (allChannelList.length === 0) return;
-        const prevIndex = ind <= 0 ? allChannelList.length - 1 : ind - 1;
+        if (allChannelList?.length === 0) return;
+        const prevIndex = ind <= 0 ? allChannelList?.length - 1 : ind - 1;
         const prevVideo = allChannelList[prevIndex];
         setFocusVideo(prevVideo.cacheurl);
         setSelectedItem(prevVideo);
@@ -324,17 +322,11 @@ const LiveTVScreen = ({ route }) => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index;
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}>
                 <TouchableOpacity
                     onPress={() => selectLanguageHandler(item, index)}
                     style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                     <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
                 </TouchableOpacity>
-            </LinearGradient>
         );
     }, [selectLanguage, selectLanguageHandler]);
 
@@ -343,7 +335,10 @@ const LiveTVScreen = ({ route }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategoriesHandler(item, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    {/* <SlidingText text={item.name} style={styles.categoriesName} /> */}
+               
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
+
                 </View>
             </TouchableOpacity>
         );
@@ -351,7 +346,7 @@ const LiveTVScreen = ({ route }) => {
 
     const renderChannel = useCallback(({ item, index }) => {
         const activeIndex = selectChannelIndex === index;
-        const isLastItem = index === DrawerList.length - 1;
+        const isLastItem = index === DrawerList?.length - 1;
         const { channels, channel_image_url, channel_image, name } = item || {};
         return (
             <TouchableOpacity
@@ -436,10 +431,13 @@ const LiveTVScreen = ({ route }) => {
                     {(orientation === 'landscape' && showZoom) && (
                         <View style={{ position: 'absolute', bottom: 60, left: 20 }}>
                             <TouchableOpacity onPress={zoomIn} style={styles.zoomButton}>
-                                <Icon name="zoom-in" size={isTablet ? 50 : 30} color="white" />
+                                {/* <Icon name="zoom-in" size={isTablet ? 50 : 30} color="#fff" /> */}
+                                <Image source={IMAGES.zoomin} style={[styles.zoomin,{tintColor:COLORS.white}]}  />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={zoomOut} style={styles.zoomButton}>
-                                <Icon name="zoom-out" size={isTablet ? 50 : 30} color="white" />
+                                {/* <Icon name="zoom-out" size={isTablet ? 50 : 30} color="#fff" /> */}
+                                <Image source={IMAGES.zoomout} style={[styles.zoomout,{tintColor:COLORS.white}]} />
+
                             </TouchableOpacity>
                         </View>
                     )}

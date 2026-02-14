@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { LogBox, StatusBar, View } from 'react-native';
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
-import { setSignalStrength, setSignalType } from './src/redux/slice/loadingSlice';
 import FlashMessage from 'react-native-flash-message';
 import DeviceInfo from 'react-native-device-info';
 import RouteStack from './src/Routes/RouteStack';
@@ -105,7 +103,7 @@ const App = () => {
     <>
       {isConnected ? (
         <>
-          <SafeAreaView edges={['top', 'bottom']} style={{ flex: 1, backgroundColor: COLORS.primary }}>
+          <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }}>
             <StatusBar
               barStyle="light-content"
               backgroundColor='transparent'

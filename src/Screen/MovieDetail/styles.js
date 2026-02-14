@@ -2,7 +2,9 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../utils/color";
 import { FONTS, HEIGHT, SPACING, WIDTH } from "../../utils/dimension";
 import { APP_FONTS } from "../../utils/fontFamily";
+import DeviceInfo from "react-native-device-info";
 
+const isTablet = DeviceInfo.isTablet();
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -18,12 +20,17 @@ export default StyleSheet.create({
         paddingHorizontal: 15
     },
     videoBox: {
-        aspectRatio: 16 / 9
+        height: isTablet ? '40%' : '27%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5,
+        aspectRatio: 16 / 9,
+        backgroundColor: 'red'
     },
     backgroundImage: {
         height: '100%',
         width: '100%',
-        aspectRatio: 16 / 9
+        // aspectRatio: 16 / 9
     },
     movieDetailBox: {
         marginVertical: SPACING.sh05,
@@ -37,13 +44,14 @@ export default StyleSheet.create({
         // backgroundColor: 'rgba(0, 0, 0, 0.3)',
         // height: 60,
         // width: 60,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
+        // borderRadius: 5,
         position: 'absolute',
-        top: '50%',
-        left: '50%',
+        top: '60%',
+        left: '60%',
         transform: [{ translateX: -50 }, { translateY: -50 }],
+ 
     },
     addsBox: {
         // height: HEIGHT.h23,
@@ -68,7 +76,7 @@ export default StyleSheet.create({
     },
     descriptionText: {
         fontSize: FONTS.f14,
-         color: COLORS.white,
+        color: COLORS.white,
         fontFamily: APP_FONTS.PoppinsRegular,
         width: '100%',
     },

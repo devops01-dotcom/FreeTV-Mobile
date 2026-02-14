@@ -10,12 +10,11 @@ export default StyleSheet.create({
         flex: 1,
         // justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: HEIGHT.h100 * 0.08
     },
     appIcon: {
         height: 150,
         width: 220,
-        marginTop: 40,
+        marginTop: 10,
         alignSelf: 'center'
     },
     row: {
@@ -59,7 +58,8 @@ export default StyleSheet.create({
         borderBottomRightRadius: 20
     },
     button: {
-        width: 200,
+        // width: 200,
+        paddingHorizontal: 15,
         height: HEIGHT.h05,
         alignItems: 'center',
         justifyContent: 'center',
@@ -100,8 +100,18 @@ export default StyleSheet.create({
         color: COLORS.white,
         justifyContent: 'center',
         marginBottom: 5,
+        // fontSize: FONTS.f27,
+        fontSize: 20,
+        fontFamily: APP_FONTS.PoppinsBold,
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+
+    ActiveText: {
+        color: COLORS.white,
+        justifyContent: 'center',
+        marginBottom: 10,
         fontSize: FONTS.f27,
-        // fontSize: 30,
         fontFamily: APP_FONTS.PoppinsBold,
         alignItems: 'center',
         textAlign: 'center'
@@ -122,7 +132,7 @@ export default StyleSheet.create({
     },
 
     textContainer: {
-        padding: 16,
+        padding: 25,
     },
     termsAndCondition: {
         fontSize: FONTS.f14,
@@ -132,16 +142,33 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     inline: {
-         height: 18,
-         paddingTop: 3,
+        height: 18,
+        paddingTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center'
+        // textAlign: 'center',
     },
     bold: {
         fontFamily: APP_FONTS.PoppinsBold,
     },
+    otpContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '64%',
+    },
+
+    otpInput: {
+        width: 45,
+        height: 50,
+        borderWidth: 2,
+        borderColor: COLORS.white,
+        borderRadius: 8,
+        textAlign: 'center',
+        fontSize: 18,
+        color: COLORS.white,
+    },
+
 })
 
 

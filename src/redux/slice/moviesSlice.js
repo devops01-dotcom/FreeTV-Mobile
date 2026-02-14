@@ -13,6 +13,9 @@ const initialState = {
   movieNextPage: true,
   searchMovieData: [],
   searchMovieCount: 0,
+  searchMoviePage: 1,
+  totalSearchMovieCount: 1,
+  searchMovieNextPage: true,
   cinemaData: [],
   cinemaPage: 1,
   cinemaCount: 0,
@@ -24,7 +27,8 @@ const initialState = {
   SearchCinemaCount: 0,
   totalSearchCinemaCount: 1,
   searchCinemaNextPage: true,
-  genreCategories: [],
+  genreMovieCategories: [],
+  genreCinemaCategories: [],
   loading: 'idle',
   error: null,
 };
@@ -35,7 +39,8 @@ export const fetchCinemaCategories = createAsyncThunk('CineemaCategoriesSlice', 
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
 
 export const fetchMoviesCategories = createAsyncThunk('MoviesCategoriesSlice', async (_, thunkAPI) => {
   try {
@@ -43,7 +48,18 @@ export const fetchMoviesCategories = createAsyncThunk('MoviesCategoriesSlice', a
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
+
+export const fetchGenreMovieCategories = createAsyncThunk('GenreMovieCategoriesSlice', async (id, thunkAPI) => {
+  try {
+    const response = await Request.get(ApiConstant.genreMovie + id);
+    return { data: response };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('failed');
+  }
+},
+);
 
 export const fetchGenreCinemaCategories = createAsyncThunk('GenreCategoriesSlice', async (id, thunkAPI) => {
   try {
@@ -51,26 +67,28 @@ export const fetchGenreCinemaCategories = createAsyncThunk('GenreCategoriesSlice
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
 
 export const fetchGenreCategoriesData = createAsyncThunk('GenreCategoryDataSlice', async (detail, thunkAPI) => {
-  const { id, page } = detail
+  const { cid, gid, page } = detail
   try {
-    const response = await Request.get(`${ApiConstant.genereFilter + id}?page=${page}`);
+    const response = await Request.get(`${ApiConstant.SerachMovies}/${cid}/${gid}?page=${page}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
 
 export const fetchGenreCinemaCategoriesData = createAsyncThunk('GenreCinemaCategoryDataSlice', async (detail, thunkAPI) => {
   const { cid, gid, page } = detail
   try {
-    // const response = await Request.get(`${ApiConstant.generCinemaFilter}${cid}/${gid}?page=${page}`);
-    const response = await Request.get(`${ApiConstant.SerachCinema}/${cid}/${gid}`);
+    const response = await Request.get(`${ApiConstant.SerachCinema}/${cid}/${gid}?page=${page}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
 
 export const fetchMovies = createAsyncThunk('MoviesSlice', async (detail, thunkAPI) => {
   const { id, page } = detail
@@ -79,7 +97,8 @@ export const fetchMovies = createAsyncThunk('MoviesSlice', async (detail, thunkA
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }},);
+  }
+},);
 
 
 export const fetchCinema = createAsyncThunk('CinemaSlice', async (detail, thunkAPI) => {
@@ -89,12 +108,13 @@ export const fetchCinema = createAsyncThunk('CinemaSlice', async (detail, thunkA
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
-  }});
+  }
+});
 
 export const fetchSearchMovies = createAsyncThunk('SearchMoviesSlice', async (detail, thunkAPI) => {
-  const { name, page } = detail
+  const { name, page, cid, gid } = detail
   try {
-    const response = await Request.get(ApiConstant.SerachMovies + name);
+    const response = await Request.get(`${ApiConstant.SerachMovies}/${cid}/${gid}/?title=${name}&page=${page}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
@@ -139,13 +159,13 @@ export const onMoviesSlice = createSlice({
       state.searchMovieCount = 0
     },
     clearSearchData(state) {
-        state.searchCinemaData = [],
+      state.searchCinemaData = [],
         state.searchCinemaPage = 1,
         state.SearchCinemaCount = 0,
         state.totalSearchCinemaCount = 1,
         state.searchCinemaNextPage = true
+    },
   },
-},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCinemaCategories.pending, (state) => {
@@ -174,13 +194,27 @@ export const onMoviesSlice = createSlice({
         state.error = action.error.message ?? 'Login failed';
       })
 
+      .addCase(fetchGenreMovieCategories.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchGenreMovieCategories.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const movie = action.payload?.data;
+        state.genreMovieCategories = movie;
+      })
+      .addCase(fetchGenreMovieCategories.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message ?? 'Login failed';
+      })
+
+
       .addCase(fetchGenreCinemaCategories.pending, (state) => {
         state.loading = 'pending';
       })
       .addCase(fetchGenreCinemaCategories.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         const movie = action.payload?.data;
-        state.genreCategories = movie.results;
+        state.genreCinemaCategories = movie;
       })
       .addCase(fetchGenreCinemaCategories.rejected, (state, action) => {
         state.loading = 'failed';
@@ -192,13 +226,23 @@ export const onMoviesSlice = createSlice({
       })
       .addCase(fetchGenreCategoriesData.fulfilled, (state, action) => {
         state.loading = 'succeeded';
+        //   const movieList = action.payload?.data;
+        //   state.movieCount = movieList.count
+        //   state.totalMovieCount = movieList.movies_total_count
+        //   // state.movieData = [...state.movieData, ...movieList.results];
+        //   state.movieData = movieList.results;
+
+        //   // state.moviePage = movieList.current_page_number + 1;
+        //   if (!movieList.next) {
+        //     state.movieNextPage = false
+        //   }
+        // })
+
         const movieList = action.payload?.data;
         state.movieCount = movieList.count
         state.totalMovieCount = movieList.movies_total_count
-        // state.movieData = [...state.movieData, ...movieList.results];
-        state.movieData = movieList.results;
-
-        // state.moviePage = movieList.current_page_number + 1;
+        state.movieData = [...state.movieData, ...movieList.results];
+        state.moviePage = movieList.current_page_number + 1;
         if (!movieList.next) {
           state.movieNextPage = false
         }
@@ -235,17 +279,28 @@ export const onMoviesSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = 'succeeded';
+        // const movieList = action.payload?.data;
+        // state.movieCount = movieList.count
+        // state.totalMovieCount = movieList.movies_total_count
+        // // state.movieData = [...state.movieData, ...movieList.results];
+        // state.movieData = movieList.results;
+
+        // // state.moviePage = movieList.current_page_number + 1;
+        // if (!movieList.next) {
+        //   state.movieNextPage = false
+        // }
         const movieList = action.payload?.data;
         state.movieCount = movieList.count
         state.totalMovieCount = movieList.movies_total_count
-        // state.movieData = [...state.movieData, ...movieList.results];
-        state.movieData = movieList.results;
-
-        // state.moviePage = movieList.current_page_number + 1;
+        state.movieData = [...state.movieData, ...movieList.results];
+        state.moviePage = movieList.current_page_number + 1;
         if (!movieList.next) {
           state.movieNextPage = false
         }
       })
+
+
+      // })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message ?? 'Login failed';
@@ -279,17 +334,32 @@ export const onMoviesSlice = createSlice({
       })
       .addCase(fetchSearchMovies.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        const movieList = action.payload?.data;
-        state.searchMovieCount = movieList.count
-        state.searchMovieData = movieList.results;
+        const searchMovieList = action.payload?.data;
+        if (!searchMovieList) return;
+
+        state.searchMovieCount = searchMovieList.count;
+        state.totalMovieCount = searchMovieList.cinema_total_count;
+        state.searchMoviePage = searchMovieList.current_page_number + 1;
+        state.searchMovieNextPage = !!searchMovieList.next;
+
+        if (searchMovieList.current_page_number === 1) {
+          // First page, replace data
+          state.searchMovieData = searchMovieList.results;
+        } else {
+          // Next pages, append data
+          state.searchMovieData = [...state.searchCinemaData, ...searchMovieList.results];
+        }
       })
+      // state.searchMovieCount = movieList.count
+      // state.searchMovieData = movieList.results;
+      // })
       .addCase(fetchSearchMovies.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message ?? 'Login failed';
       })
 
 
-        .addCase(fetchSearchCinema.pending, (state) => {
+      .addCase(fetchSearchCinema.pending, (state) => {
         state.loading = 'pending';
       })
       .addCase(fetchSearchCinema.fulfilled, (state, action) => {
@@ -315,7 +385,7 @@ export const onMoviesSlice = createSlice({
       .addCase(fetchSearchCinema.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message ?? 'Login failed';
-       })
+      })
   },
 });
 

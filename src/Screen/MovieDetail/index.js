@@ -2,13 +2,15 @@ import React, { useCallback, useRef, useState } from 'react';
 import { FlatList, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { AddlaunchSelector } from '../../redux/slice/addlaunch';
 import { useAppSelector } from '../../redux/hooks';
 import CarouselView from '../../Component/Carousel';
 import commonStyle from '../../utils/commonStyle';
 import { COLORS } from '../../utils/color';
 import BackHeader from '../../Component/BackHeader';
+import { Image } from 'react-native-svg';
+import { IMAGES } from '../../assets';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MovieDetailScreen = ({ route, navigation }) => {
     const [search, setSearch] = useState('')
@@ -19,7 +21,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
     }, [])
 
     const onPlatVideo = useCallback(async () => {
-        const url = movieDetail.content_url;
+        const url = movieDetail?.content_url;
         const supported = await Linking.canOpenURL(url);
         if (supported) {
             await Linking.openURL(url);
@@ -27,10 +29,9 @@ const MovieDetailScreen = ({ route, navigation }) => {
             await Linking.openURL(url);
         }
     }, [])
-
     const movieDetail = route?.params?.item
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <BackHeader onBackHandler={onBackHandler}
                 name={search}
                 placeholder='Search'
@@ -40,12 +41,12 @@ const MovieDetailScreen = ({ route, navigation }) => {
             />
             <View style={styles.videoBox}>
                 <FastImage
-                    source={{ uri: movieDetail.content_image || movieDetail.content_image_url }}
+                    source={{ uri: movieDetail?.content_image || movieDetail?.content_image_url }}
                     style={styles.backgroundImage}
                     resizeMode={FastImage.resizeMode.cover}
                 />
                 <TouchableOpacity onPress={onPlatVideo} style={styles.platButton}>
-                    <Icon name="play" size={100} color={COLORS.yellow} />
+                    <FastImage source={IMAGES.play} style={{ height: 50, width: 50 }} resizeMode={FastImage.resizeMode.contain} />
                 </TouchableOpacity>
             </View>
 
@@ -64,18 +65,19 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>{movieDetail?.year}</Text>
                         </View>
                     </View>}
-                    {movieDetail?.language?.length > 0 && <View style={styles.row}>
-                        <View style={styles.movieHeadingBox}>
-                            <Text style={styles.movieDetail}>Language</Text>
-                        </View>
-                        <View style={styles.centerView}>
-                            <Text style={styles.movieDetail}>: </Text>
-                        </View>
-                        <View style={styles.movieTitleBox}>
-                            <Text style={styles.movieDetail}>{movieDetail?.language?.map((lang) => lang.name).join(', ')}</Text>
-                        </View>
-                    </View>}
-                    {movieDetail.director && <View style={styles.row}>
+                    {movieDetail?.language?.length > 0 &&
+                        <View style={styles.row}>
+                            <View style={styles.movieHeadingBox}>
+                                <Text style={styles.movieDetail}>Language</Text>
+                            </View>
+                            <View style={styles.centerView}>
+                                <Text style={styles.movieDetail}>: </Text>
+                            </View>
+                            <View style={styles.movieTitleBox}>
+                                <Text style={styles.movieDetail}>{movieDetail?.language?.map((lang) => lang.name).join(', ')}</Text>
+                            </View>
+                        </View>}
+                    {movieDetail?.director && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Director</Text>
                         </View>
@@ -83,10 +85,10 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>: </Text>
                         </View>
                         <View style={styles.movieTitleBox}>
-                            <Text style={styles.movieDetail}>{movieDetail.director}</Text>
+                            <Text style={styles.movieDetail}>{movieDetail?.director}</Text>
                         </View>
                     </View>}
-                    {movieDetail.cast && <View style={styles.row}>
+                    {movieDetail?.cast && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Stars</Text>
                         </View>
@@ -94,10 +96,10 @@ const MovieDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.movieDetail}>: </Text>
                         </View>
                         <View style={styles.movieTitleBox}>
-                            <Text style={styles.movieDetail}>{movieDetail.cast}</Text>
+                            <Text style={styles.movieDetail}>{movieDetail?.cast}</Text>
                         </View>
                     </View>}
-                    {movieDetail.rate && <View style={styles.row}>
+                    {movieDetail?.rate && <View style={styles.row}>
                         <View style={styles.movieHeadingBox}>
                             <Text style={styles.movieDetail}>Rating</Text>
                         </View>
@@ -106,14 +108,14 @@ const MovieDetailScreen = ({ route, navigation }) => {
                         </View>
                         <View style={styles.movieTitleBox}>
                             <Text style={styles.movieDetail}>
-                                {`${parseFloat(movieDetail.rate).toFixed(1)} / 10`}
+                                {`${parseFloat(movieDetail?.rate).toFixed(1)} / 10`}
                             </Text>
                         </View>
                     </View>}
                     {movieDetail?.description && <Text style={styles.movieDescription}>
                         <Text style={styles.movieDescriptionHeading}>Description - </Text>
-                        <Text style={styles.descriptionText}>{movieDetail.description}</Text>
-                        </Text>}
+                        <Text style={styles.descriptionText}>{movieDetail?.description}</Text>
+                    </Text>}
                 </ScrollView>
 
             </View>
@@ -122,7 +124,7 @@ const MovieDetailScreen = ({ route, navigation }) => {
                 <CarouselView images={addLaunch} />
             </View>
 
-        </View>
+        </SafeAreaView>
     )
 };
 

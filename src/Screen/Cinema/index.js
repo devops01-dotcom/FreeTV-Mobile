@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 import { clearCinemaData, clearSearchMoviesData, fetchCinema, fetchCinemaCategories, fetchGenreCategories, fetchGenreCinemaCategoriesData, fetchSearchCinema, MoviesSelector } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +12,7 @@ import BackHeader from '../../Component/BackHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const isTablet = DeviceInfo.isTablet();
 const CinemaScreen = () => {
@@ -25,11 +25,12 @@ const CinemaScreen = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    const { cinemaData, cinemaCategoriesData, genreCategories, searchCinemaData, cinemaNextPage, cinemaPage, cinemaCount, searchCinemaPage } = useAppSelector(MoviesSelector)
+    const { cinemaData, cinemaCategoriesData, genreCinemaCategories, searchCinemaData, cinemaNextPage, cinemaPage, cinemaCount, searchCinemaPage } = useAppSelector(MoviesSelector)
     const { selectedCategoriesId, searchQuery, selectedGenreId } = useAppSelector((state) => state.commonReducer);
     const flatListRef = useRef(null);
     // const combinegenreCategories = [...languageData, ...genreCategories]
-    const combinegenreCategories = [...(languageData || []), ...(genreCategories || [])
+    console.log('object===genreCinemaCategories=====:', genreCinemaCategories);
+    const combinegenreCategories = [...(languageData || []), ...(genreCinemaCategories || [])
 ];
     const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -55,7 +56,7 @@ const CinemaScreen = () => {
     }, []);
 
     useEffect(() => {
-        if (search.length >= 3) {
+        if (search?.length >= 3) {
             const detail = {
                 name: search,
                 page: 1,
@@ -74,7 +75,8 @@ const CinemaScreen = () => {
     }, [showCategories])
 
     const onBackHandler = useCallback(() => {
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
+        navigation.goBack()
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
@@ -201,18 +203,11 @@ const CinemaScreen = () => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}
-            >
                 <TouchableOpacity
                     onPress={() => onLanguageHandler(item, index)}
                     style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                     <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
                 </TouchableOpacity>
-            </LinearGradient>
         )
     }, [selectLanguage])
 
@@ -234,9 +229,7 @@ const CinemaScreen = () => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
-
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -257,12 +250,8 @@ const CinemaScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <BackHeader onBackHandler={onBackHandler}
-                name={search}
-                placeholder='Search'
-                onChangeText={setSearch}
-            />
-            {search.length >= 2 || keyboardVisible ?
+            <BackHeader onBackHandler={onBackHandler} onlyBack={true}/>
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchCinemaData}
@@ -279,19 +268,18 @@ const CinemaScreen = () => {
                 :
                 <>
                     <View style={styles.adBox}>
-                        <View style={styles.videoBox}>
                             <FastImage
                                 source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
                                 style={styles.backgroundImage}
+                                resizeMode={FastImage.resizeMode.cover}
                             />
-                        </View>
                     </View>
                     <View style={styles.mainBox}>
 
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} />
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
                             </TouchableOpacity>
                             <FlatList
                                 data={combinegenreCategories}
@@ -302,13 +290,14 @@ const CinemaScreen = () => {
                             />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
-                            <TouchableOpacity style={styles.dropdownCloseMenu}
+                            <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
                             </TouchableOpacity>
                             <FlatList
                                 data={cinemaCategoriesData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `cinemaCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -323,7 +312,7 @@ const CinemaScreen = () => {
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
                                 columnWrapperStyle={styles.columnWrapper}
-                                style={{ marginBottom: isTablet ? 82 : 57 }}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                                 ListFooterComponent={renderFooter}
                                 onScrollBeginDrag={() => setHasScrolled(true)} // Set true on user scroll
                                 onEndReached={loadMore}

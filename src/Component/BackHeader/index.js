@@ -4,6 +4,7 @@ import styles from './styles';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
 import DeviceInfo from 'react-native-device-info';
+import { COLORS } from '../../utils/color';
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -16,24 +17,33 @@ const BackHeader = ({
 }) => {
     return (
         <View style={styles.container}>
-            <View style={styles.leftSide}>
-                <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' />
-            </View>
+            <TouchableOpacity style={styles.leftSide} onPress={onBackHandler}>
+                {/* <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' /> */}
+                <View style={styles.leftLogo}>
+                  <FastImage
+                    source={IMAGES.back}
+                    style={styles.backIcon}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
+                </View>
+            </TouchableOpacity>
             <View style={styles.centerView}>
                 {!onlyBack && <TextInput
                     name={name || ''}
                     placeholder={placeholder}
+                    placeholderTextColor={COLORS.white}
                     onChangeText={onChangeText}
                     style={styles.input} />}
             </View>
-            <TouchableOpacity style={styles.header} onPress={onBackHandler}>
+
                 {/* <Text style={styles.backText}>Back</Text> */}
+            <View style={styles.header} onPress={onBackHandler}>
                 <FastImage
-                    source={IMAGES.logout}
-                    style={styles.backIcon}
+                    source={IMAGES.freeTV}
+                    style={styles.logo}
                     resizeMode={FastImage.resizeMode.contain}
-                />
-            </TouchableOpacity>
+                /> 
+            </View>
         </View>
     )
 };

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo, useEffect } from 'react';
-import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert, Text } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import CarouselView from '../../Component/Carousel';
 import FastImage from 'react-native-fast-image';
@@ -20,32 +20,36 @@ import { useFocusEffect } from '@react-navigation/native';
 import { BootupAdViewSelector } from '../../redux/slice/bootupadview';
 import { HEIGHT } from '../../utils/dimension';
 import CustomAlert from '../../Component/CustomAlert';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppTVSelector } from '../../redux/slice/appTvSlice';
+import { FreeTvSeriesSelector } from '../../redux/slice/freeTvSeriesSlice';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
-
 
 const HomeScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [progressing, setProgressing] = useState(true);
+  // const [progressing, setProgressing] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const dispatch = useAppDispatch()
 
   useHomeData();
   const { bootupData } = useAppSelector(BootupAdViewSelector);
   const { allChannelList } = useAppSelector(CategoriesSelector) || [];
-  const { cinemaData } = useAppSelector(MoviesSelector) || [];
+  const { cinemaData, movieData } = useAppSelector(MoviesSelector) || [];
   const { musicFilterData } = useAppSelector(MusicSelector) || [];
   const { devotional } = useAppSelector(DevotionalSelector) || [];
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
+  const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
+  const {seriesData} = useAppSelector(FreeTvSeriesSelector)
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setProgressing(false)
-      dispatch(setShowHomeAds(false))
-    }, 30000,);
-    return () => clearTimeout(timer); // cleanup timer
-  }, [bootupData]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setProgressing(false)
+  //     dispatch(setShowHomeAds(false))
+  //   }, 30000,);
+  //   return () => clearTimeout(timer); // cleanup timer
+  // }, [bootupData]);
 
   useFocusEffect(
     useCallback(() => {
@@ -67,16 +71,16 @@ const HomeScreen = ({ navigation }) => {
 
   const onLiveTvHandler = useCallback(
     (item, index) => {
-      if (progressing) return setShowAlert(true)
-       else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
-    }, [progressing]
+      // if (progressing) return setShowAlert(true)
+       navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+    }, []
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
-      if (progressing) return setShowAlert(true)
-      else  navigation.navigate(screenName);
-    }, [progressing]
+      // if (progressing) return setShowAlert(true)
+       navigation.navigate(screenName);
+    }, []
   );
 
   const renderLiveTV = useCallback(
@@ -106,31 +110,34 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const sections = [
-    { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'live' },
-    { title: 'Free TV Cinema', data: cinemaData || [], type: 'Cinema' },
-    { title: 'Free TV Music', data: musicFilterData || [], type: 'Music' },
-    { title: 'Devotional', data: devotional || [], type: 'Devotional' },
-    { title: 'Education', data: educational || [], type: 'Education' },
+    { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'LiveTVScreen' },
+    { title: 'App TV', data: AppTvDataFilter?.slice(0, 20) || [], type: 'AppTVScreen' },
+    { title: 'FreeTV Cinema', data: cinemaData?.slice(0, 20) || [], type: 'CinemaScreen' },
+    { title: 'FreeTV Movie', data: movieData?.slice(0, 20) || [], type: 'MovieScreen' },
+    { title: 'FreeTv Series', data: seriesData?.slice(0, 20) || [], type: 'SeriesScreen' },
+    { title: 'FreeTV Music', data: musicFilterData?.slice(0, 20) || [], type: 'MusicScreen' },
+    { title: 'Devotional', data: devotional?.slice(0, 20) || [], type: 'DevotionalScreen' },
+    { title: 'Education', data: educational?.slice(0, 20) || [], type: 'EducationScreen' },
   ];
 
   return (
-    <View style={styles.container}>
-      {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
+    <SafeAreaView style={styles.container}>
+      {!showDrawer && <Header
+       setShowDrawer={setShowDrawer} 
+      //  showHeader={progressing} 
+      //  setShowAlert={setShowAlert}
+        />}
 
       {showDrawer ? (
         <CustomDrawerContent setShowDrawer={setShowDrawer} />
       ) : (
         <SectionList
           sections={sections}
-          keyExtractor={(item, index) => item.id || index.toString()}
+          // keyExtractor={(item, index) => item.id || index.toString()}
+          keyExtractor={(item, index) => `section-item-${index}`}
           renderItem={() => null} // ignore vertical renderItem
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
-            (progressing && bootupData?.ad_url) ?
-              <View style={{ height: HEIGHT.h25, marginBottom: 20 }}>
-                <BootupAds setProgressing={setProgressing} bootupData={bootupData} />
-              </View>
-              :
               <View style={{ marginBottom: 20 }}>
                 <CarouselView images={addLaunch} />
               </View>
@@ -140,16 +147,16 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.sectionContainer}>
               <Section
                 title={section.title}
-                onPress={() => navigateToScreen(section.type === 'live' ? 'LiveTV' : section.type)}
+                onPress={() => navigateToScreen(section.type)}
               />
               <FlatList
                 data={section.data}
                 horizontal
                 renderItem={({ item, index }) =>
-                  section.type === 'live' ? (
+                  section.type === 'LiveTVScreen' || section.type === 'AppTVScreen' ? (
                     renderLiveTV({ item, index })
                   ) : (
-                    <ChannelList data={[item]} type={section.type} progressing={progressing} setShowAlert={setShowAlert} />
+                    <ChannelList data={[item]} type={section.type} />
                   )
                 }
                 keyExtractor={(item, index) => `${section.type}-${index}`}
@@ -165,7 +172,7 @@ const HomeScreen = ({ navigation }) => {
         showAlert={showAlert}
         setShowAlert={setShowAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

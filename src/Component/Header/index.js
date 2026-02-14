@@ -1,26 +1,26 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import styles from './styles';
-import Icon from '@react-native-vector-icons/ionicons';
 import { IMAGES } from '../../assets';
 import { COLORS } from '../../utils/color';
 import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 
 const isTablet = DeviceInfo.isTablet();
 
 const Header = ({
-    showHeader,
+    // showHeader,
     setShowDrawer,
-    setShowAlert
+    // setShowAlert
 }) => {
 
     const onShowHeader = () => {
-        if (showHeader) {
-            return setShowAlert(true)
-        }
-        else {
+        // if (showHeader) {
+        //     return setShowAlert(true)
+        // }
+        // else {
             setShowDrawer(true)
-        }
+        // }
     }
     return (
         <View style={styles.container}>
@@ -28,7 +28,8 @@ const Header = ({
                 style={[styles.button, { borderColor: COLORS.yellow }]}
                 onPress={onShowHeader}
             >
-                <Icon name='menu' size={isTablet ? 55 : 30} color={COLORS.white} />
+                {/* <Icon name='menu' size={isTablet ? 55 : 30} color={COLORS.white} /> */}
+            <FastImage source={IMAGES.menu}  resizeMode={FastImage.resizeMode.contain} style={styles.menubar}/>
             </TouchableOpacity>
             <View style={styles.centerView}>
                 <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' />

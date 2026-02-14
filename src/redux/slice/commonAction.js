@@ -8,11 +8,13 @@ const initialState = {
   searchQuery: '',
   modalVisible: false,
   selectedCategoriesId: '',
+  selectedCategoriesMoviesId: '',
   selectedDevotionalCategoriesId: '',
   selectedDevotionalSubCategoriesId: '',
   selectedEducationCategoriesId: '',
   selectedEducationSubCategoriesId: '',
   selectedMusicCategoriesId: '',
+  selectedSerialCategoriesId: '',
   selectedAppTVCategoriesId: '',
   selectedSubCategoriesId: '',
   selectedGenreName: 'GENRE',
@@ -50,6 +52,9 @@ const CommonActionSlice = createSlice({
     setSelectedCategoriesId: (state, action) => {
       state.selectedCategoriesId = action.payload;
     },
+     setSelectedMoviesCategoriesId: (state, action) => {
+      state.selectedCategoriesMoviesId = action.payload;
+    },
 
     setSelectedDevotionalCategoriesId: (state, action) => {
       state.selectedDevotionalCategoriesId = action.payload;
@@ -66,6 +71,10 @@ const CommonActionSlice = createSlice({
 
     setSelectedMusicCategoriesId: (state, action) => {
       state.selectedMusicCategoriesId = action.payload;
+    },
+
+    setSelectedSerialCategoriesId: (state, action) => {
+      state.selectedSerialCategoriesId = action.payload;
     },
 
       setSelectedAppTVCategoriesId: (state, action) => {
@@ -110,11 +119,14 @@ export const {
   setSearchQuery,
   setModalVisible,
   setSelectedCategoriesId,
+  setSelectedMoviesCategoriesId,
   setSelectedDevotionalCategoriesId,
   setSelectedDevotionalSubCategoriesId,
   setSelectedEducationCategoriesId,
   setSelectedEducationSubCategoriesId,
+  setSelectedSerialCategoriesId,
   setSelectedMusicCategoriesId,
+
   setSelectedAppTVCategoriesId,
   setSelectedSubCategoriesId,
   setSelectedGenreName,

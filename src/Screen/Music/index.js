@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
-import Icon from '@react-native-vector-icons/ionicons';
 import { clearMusicData, clearSearchMusicData, fetchMusic, fetchMusicCategories, fetchMusicLanguage, fetchMusicLanguageFilterData, fetchSearchMusic, MusicSelector } from '../../redux/slice/musicSlice';
 import BackHeader from '../../Component/BackHeader';
 import { setSelectedMusicCategoriesId } from '../../redux/slice/commonAction';
 import LinearGradient from 'react-native-linear-gradient';
 import SlidingText from '../../Component/SlideText';
 import DeviceInfo from 'react-native-device-info';
+import { IMAGES } from '../../assets';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const isTablet = DeviceInfo.isTablet();
 
@@ -54,7 +56,7 @@ const MusicScreen = ({ navigation }) => {
 
 
     useEffect(() => {
-        if (search.length >= 2) {
+        if (search?.length >= 2) {
             const detail = {
                 name: search,
                 page: 1,
@@ -72,7 +74,8 @@ const MusicScreen = ({ navigation }) => {
     }, [showCategories])
 
     const onBackHandler = useCallback(() => {
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
+        navigation.goBack()
     }, [])
 
     const onMovieDetailHandler = useCallback((item) => {
@@ -186,18 +189,12 @@ const MusicScreen = ({ navigation }) => {
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
-            <LinearGradient
-                colors={[COLORS.lightPrimaryColor, COLORS.black]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 3, y: 0 }}
-                style={styles.gradientBorder}
-            >
-                <TouchableOpacity
-                    onPress={() => onLanguageHandler(item, index)}
-                    style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    <Text style={[styles.channelName, selectLanguage === index && { color: COLORS.black }]}>{item.name}</Text>
-                </TouchableOpacity>
-            </LinearGradient>
+
+            <TouchableOpacity
+                onPress={() => onLanguageHandler(item, index)}
+                style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
+                <Text style={[styles.channelName, selectLanguage === index && { color: COLORS.black }]}>{item.name}</Text>
+            </TouchableOpacity>
         )
     }, [selectLanguage])
 
@@ -232,8 +229,7 @@ const MusicScreen = ({ navigation }) => {
         return (
             <TouchableOpacity style={styles.categoriesBoxView} onPress={() => onSelectCategories(item.id, index)}>
                 <View style={[styles.categoriesBoxListView, activeIndex && { backgroundColor: COLORS.yellow }]}>
-                    {/* <Text style={styles.categoriesName}>{item.name}</Text> */}
-                    <SlidingText text={item.name} style={styles.categoriesName} />
+                    <Text style={styles.categoriesName} numberOfLines={1}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -247,11 +243,11 @@ const MusicScreen = ({ navigation }) => {
                 placeholder='Search'
                 onChangeText={setSearch}
             />
-            {search.length >= 2 || keyboardVisible ?
+            {search?.length >= 2 || keyboardVisible ?
                 <View style={styles.searchModal}>
                     <FlatList
                         data={searchMusicData}
-                        keyExtractor={(item, index) => `cinemaSearch-${index.toString()}`}
+                        keyExtractor={(item, index) => `musicSearch-${index.toString()}`}
                         renderItem={renderSearchCinema}
                         numColumns={isTablet ? 3 : 2}
                         showsVerticalScrollIndicator={false}
@@ -264,12 +260,11 @@ const MusicScreen = ({ navigation }) => {
                 :
                 <>
                     <View style={styles.adBox}>
-                        <View style={styles.videoBox}>
-                            <FastImage
-                                source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
-                                style={styles.backgroundImage}
-                            />
-                        </View>
+                        <FastImage
+                            source={{ uri: 'https://media.istockphoto.com/id/2152960546/photo/young-woman-using-digital-tablet-at-home.jpg?s=1024x1024&w=is&k=20&c=27V7LRjvBh65_Zv0F5SNnHBh-_HAutLlkX-KXUgUmxk=' }}
+                            style={styles.backgroundImage}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
                     </View>
 
 
@@ -278,12 +273,13 @@ const MusicScreen = ({ navigation }) => {
                         <View style={styles.languageBox}>
                             <TouchableOpacity style={styles.dropdownMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={showCategories ? COLORS.transparent : COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={tvChannelLanguage}
                                 horizontal
-                                keyExtractor={(item, index) => `language-${index.toString()}`}
+                                keyExtractor={(item, index) => `musiclanguage-${index.toString()}`}
                                 extraData={selectLanguage}
                                 renderItem={renderLanguage}
                             />
@@ -291,11 +287,12 @@ const MusicScreen = ({ navigation }) => {
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownCloseMenu}
                                 onPress={openDrawer}>
-                                <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} />
+                                {/* <Icon name='menu' size={isTablet ? 45 : 30} color={COLORS.white} /> */}
+                                <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
                             <FlatList
                                 data={musicData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `musicCat-${index.toString()}`}
                                 renderItem={renderCategories}
                                 showsVerticalScrollIndicator={false}
                             />
@@ -305,7 +302,7 @@ const MusicScreen = ({ navigation }) => {
                             <FlatList
                                 ref={flatListRef}
                                 data={musicFilterData}
-                                keyExtractor={(item, index) => `cinema-${index.toString()}`}
+                                keyExtractor={(item, index) => `music-${index.toString()}`}
                                 renderItem={renderCinema}
                                 numColumns={isTablet ? 3 : 2}
                                 showsVerticalScrollIndicator={false}
@@ -315,7 +312,7 @@ const MusicScreen = ({ navigation }) => {
                                 onEndReached={loadMore}
                                 onEndReachedThreshold={0.5}
                                 ListFooterComponent={renderFooter}
-                                style={{marginBottom: isTablet ? 82 : 57}}
+                                // style={{ marginBottom: isTablet ? 82 : 57 }}
                             />
                         </View>
                     </View>

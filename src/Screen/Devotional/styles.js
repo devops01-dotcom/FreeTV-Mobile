@@ -11,17 +11,17 @@ export default StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     input: {
-        height: HEIGHT.h05,
-        backgroundColor: COLORS.lightCream,
+        backgroundColor: COLORS.drawerblue,
         width: '90%',
         alignSelf: 'center',
         marginVertical: 10,
         borderRadius: 10,
         paddingHorizontal: 15
     },
-      adBox: {
-        height: isTablet ? '40%' : '33%',
+    adBox: {
+         height: isTablet ? '40%' : '27%',
         justifyContent: 'center',
+        marginBottom: 5,
     },
     videoBox: {
         aspectRatio: 16 / 9
@@ -31,15 +31,16 @@ export default StyleSheet.create({
         width: '100%',
         aspectRatio: 16 / 9
     },
-      mainBox: {
+    mainBox: {
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
-        marginVertical: 10,
-        height: '9%',
-        paddingHorizontal: 5,
+        // marginVertical: 10,
+        height: '10%',
+        // paddingHorizontal: 5,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        // justifyContent: 'center',
     },
     gradientBorder: {
         padding: 1, // stroke width
@@ -47,26 +48,31 @@ export default StyleSheet.create({
         marginRight: 10,
     },
     languageBoxView: {
-        backgroundColor: COLORS.lightPrimaryColor,
-        height: '98%',
+        backgroundColor: COLORS.drawerblue,
+        height: '85%',
         minWidth: isTablet ? 120 : 90,
         alignItems: 'center',
         justifyContent: 'center',
-        // marginRight: 10,
+        marginRight: 10,
         paddingHorizontal: 10,
         borderRadius: 8,
-        // shadowColor: COLORS.black,
-        // shadowOffset: { width: 0, height: 4 },
-        // shadowOpacity: 0.25, // 25% opacity
-        // shadowRadius: 4, // blur
-        // elevation: 1, // Required for Android shadow
+        shadowColor: COLORS.black,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25, // 25% opacity
+        shadowRadius: 4, // blur
+        elevation: 4, // Required for Android shadow
     },
     dropdownMenu: {
         height: HEIGHT.h07 - 10,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 15,
-        paddingHorizontal: 15
+        width:45,
+        paddingHorizontal: 30
+    },
+    menubar: {
+        height: 35,
+        width: 35
     },
     dropdownCloseMenu: {
         height: HEIGHT.h07,
@@ -98,16 +104,16 @@ export default StyleSheet.create({
     },
     drawerMenu: {
         zIndex: 9,
-        backgroundColor: COLORS.lightCream,
-        borderRightWidth: 5,
+        backgroundColor: COLORS.primary,//COLORS.lightCream,
+        borderRightWidth: 4,
         borderTopEndRadius: 15,
         borderBottomEndRadius: 15,
         borderRightColor: COLORS.borderColor,
         width: isTablet ? '30%' : '45%',
-       height: isTablet ? '85%' : '90%',
+        height: isTablet ? '85%' : '90%',
         position: 'absolute',
         top: 0,
-        paddingBottom: 8
+        paddingBottom: 4
     },
     categoriesBoxView: {
         backgroundColor: COLORS.black,
@@ -115,10 +121,11 @@ export default StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: 4 },
+       shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.25, // 25% opacity
         shadowRadius: 1, // blur
         elevation: 1,
+        marginBottom: 15
     },
     categoriesBoxListView: {
         backgroundColor: COLORS.lightBlue,
@@ -135,7 +142,8 @@ export default StyleSheet.create({
     categoriesName: {
         fontSize: FONTS.f16,
         fontFamily: APP_FONTS.PoppinsBold,
-        color: COLORS.black
+        color: COLORS.black,
+        lineHeight:45
     },
     liveButton: {
         backgroundColor: COLORS.red,

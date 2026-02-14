@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { ProfileSelector } from '../../redux/slice/profileSlice';
@@ -6,81 +6,91 @@ import { useAppSelector } from '../../redux/hooks';
 import { IMAGES } from '../../assets';
 import { DateFormat } from '../../utils/timeformat';
 import DeviceInfo from 'react-native-device-info';
+import Header from '../../Component/Header';
+import CustomDrawerContent from '../../Component/DrawerScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomAlert from '../../Component/CustomAlert';
 
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
+    const [showDrawer, setShowDrawer] = useState(false);
     const { userProfile } = useAppSelector(ProfileSelector) || {}
-  const appVersion = DeviceInfo.getVersion();
-
+    const appVersion = DeviceInfo.getVersion();
 
     const onBackHandler = () => {
         navigation.goBack()
     }
+
     return (
-        <View style={styles.container}>
-            <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' />
+        <SafeAreaView style={styles.container}>
+            {!showDrawer && <Header setShowDrawer={setShowDrawer}/>}
+            {showDrawer ? (
+                <CustomDrawerContent setShowDrawer={setShowDrawer} />
+            ) : (
+                <>
+                    {/* <Image source={IMAGES.freeTV} style={styles.logo} resizeMode='contain' /> */}
 
-            <View style={styles.row}>
-                <View style={styles.leftSide}>
-                    <Text style={styles.Heading}>Mobile No</Text>
-                </View>
-                 <View style={styles.centerView}>
-                    <Text style={styles.Heading}>:</Text>
-                </View>
-                <View style={styles.rightSide}>
-                    <Text style={styles.Detail}>{userProfile?.mobile_number}</Text>
-                </View>
-            </View>
+                    <View style={styles.row}>
+                        <View style={styles.leftSide}>
+                            <Text style={styles.Heading}>Mobile No</Text>
+                        </View>
+                        <View style={styles.centerView}>
+                            <Text style={styles.Heading}>:</Text>
+                        </View>
+                        <View style={styles.rightSide}>
+                            <Text style={styles.Detail}>{userProfile?.mobile_number}</Text>
+                        </View>
+                    </View>
 
-            <View style={styles.row}>
-                <View style={styles.leftSide}>
-                    <Text style={styles.Heading}>Pincode</Text>
-                </View>
-                 <View style={styles.centerView}>
-                    <Text style={styles.Heading}>:</Text>
-                </View>
-                <View style={styles.rightSide}>
-                    <Text style={styles.Detail}>{userProfile?.pincode}</Text>
-                </View>
-            </View>
+                    <View style={styles.row}>
+                        <View style={styles.leftSide}>
+                            <Text style={styles.Heading}>Pincode</Text>
+                        </View>
+                        <View style={styles.centerView}>
+                            <Text style={styles.Heading}>:</Text>
+                        </View>
+                        <View style={styles.rightSide}>
+                            <Text style={styles.Detail}>{userProfile?.pincode}</Text>
+                        </View>
+                    </View>
 
-            <View style={styles.row}>
-                <View style={styles.leftSide}>
-                    <Text style={styles.Heading}>Device Id</Text>
-                </View>
-                 <View style={styles.centerView}>
-                    <Text style={styles.Heading}>:</Text>
-                </View>
-                <View style={styles.rightSide}>
-                    <Text style={styles.Detail}>{userProfile?.deviceId}</Text>
-                </View>
-            </View>
+                    <View style={styles.row}>
+                        <View style={styles.leftSide}>
+                            <Text style={styles.Heading}>Device Id</Text>
+                        </View>
+                        <View style={styles.centerView}>
+                            <Text style={styles.Heading}>:</Text>
+                        </View>
+                        <View style={styles.rightSide}>
+                            <Text style={styles.Detail}>{userProfile?.deviceId}</Text>
+                        </View>
+                    </View>
 
-            <View style={styles.row}>
-                <View style={styles.leftSide}>
-                    <Text style={styles.Heading}>Pack ExpiryDate</Text>
-                </View>
-                  <View style={styles.centerView}>
-                    <Text style={styles.Heading}>:</Text>
-                </View>
-                <View style={styles.rightSide}>
-                    <Text style={styles.Detail}>{DateFormat(userProfile?.PackExpiryDate)}</Text>
-                </View>
-            </View>
+                    <View style={styles.row}>
+                        <View style={styles.leftSide}>
+                            <Text style={styles.Heading}>Pack ExpiryDate</Text>
+                        </View>
+                        <View style={styles.centerView}>
+                            <Text style={styles.Heading}>:</Text>
+                        </View>
+                        <View style={styles.rightSide}>
+                            <Text style={styles.Detail}>{DateFormat(userProfile?.PackExpiryDate)}</Text>
+                        </View>
+                    </View>
 
-             <View style={styles.row}>
-                <View style={styles.leftSide}>
-                    <Text style={styles.Heading}>APP Version</Text>
-                </View>
-                  <View style={styles.centerView}>
-                    <Text style={styles.Heading}>:</Text>
-                </View>
-                <View style={styles.rightSide}>
-                    <Text style={styles.Detail}>{appVersion}</Text>
-                </View>
-            </View>
+                    <View style={styles.row}>
+                        <View style={styles.leftSide}>
+                            <Text style={styles.Heading}>APP Version</Text>
+                        </View>
+                        <View style={styles.centerView}>
+                            <Text style={styles.Heading}>:</Text>
+                        </View>
+                        <View style={styles.rightSide}>
+                            <Text style={styles.Detail}>{appVersion}</Text>
+                        </View>
+                    </View>
 
-            {/* <View style={styles.row}>
+                    {/* <View style={styles.row}>
                 <View style={styles.leftSide}>
                     <Text style={styles.Heading}>Privacy Policy:</Text>
                 </View>
@@ -96,15 +106,18 @@ const ProfileScreen = ({navigation}) => {
                     </Text>
                 </View>
             </View> */}
-     <TouchableOpacity style={styles.backButton} onPress={onBackHandler}>
-            <Text style={styles.buttonText}>Back</Text>
-            <Image
-                source={IMAGES.logout}
-                style={styles.backIcon}
-                resizeMode='contain'
-            />
-        </TouchableOpacity>
-        </View>
+                    <TouchableOpacity style={styles.backButton} onPress={onBackHandler}>
+                        <Text style={styles.buttonText}>Back</Text>
+                        <Image
+                            source={IMAGES.logout}
+                            style={styles.backIcon}
+                            resizeMode='contain'
+                        />
+                    </TouchableOpacity>
+                </>
+            )
+            }
+        </SafeAreaView>
     )
 };
 
