@@ -26,26 +26,30 @@ const ApiConstant = {
   // ContinueWatchView: `api/07890119/partner/continuelist/`, 
   Cimemacategories: 'api/07890119/vods/categories/',
   // SerachMovies: 'api/07890119/vods/moviescatgensearch/',  //  new search api
-    SerachMovies: `api/07890119/vods/moviescatgensearchapi/`,
+  SerachMovies: `api/07890119/vods/moviescatgensearchapi/`,
   // SerachCinema: 'api/07890119/vods/cinemacatgensearch/', //  new search api
-   SerachCinema: `api/07890119/vods/cinemacatgensearchapi/`, 
+  SerachCinema: `api/07890119/vods/cinemacatgensearchapi/`,
   moviescategories: 'api/07890119/vods/moviescategories/',
   MovieFilter: `api/07890119/vods/moviesfilter1/`,   // 'api/07890119/vods/categoryfilter/',
   // CinemaFilter: 'api/07890119/vods/categoryfilter/',
-   CinemaFilter: `api/07890119/vods/getcinemadetails/`, 
+  CinemaFilter: `api/07890119/vods/getcinemadetails/`,
   Music: 'api/07890119/radio/categories/',
   MusicFilter: 'api/07890119/radio/musiccontentfilter/',  //'api/07890119/radio/channels/', 
   SerachMusic: 'api/07890119/radio/musicsearchfilter/', //  new search api
   FreeTvSeries: 'api/07890119/tvserial/category/',
   // FreeTvSeriesFilter: 'api/07890119/tvserial/categoryfilter/',
-   FreeTvSeriesFilter: `api/07890119/tvserial/tvseriallist/`, 
+  FreeTvSeriesFilter: `api/07890119/tvserial/tvseriallist/`,
   // SearchSeries: 'api/07890119/tvserial/serialtitlefilter/', //  new search api
-   SearchSeries: `api/07890119/tvserial/tvserialserachlist/`,
+  SearchSeries: `api/07890119/tvserial/tvserialserachlist/`,
+  Seriallanguage: 'api/07890119/tvserial/tvseriallanguage/',
+  SerialLanguageFilter: 'api/07890119/tvserial/tvserialcatlanguage/',
   FreeTvSeriesEpisode: 'api/07890119/tvserial/episodelist/',
   AppTvCategories: 'api/07890119/livetv/apptvcategories/',
   addFavouriteAppTV: 'api/07890119/partner/apptvfavouriteslist/',
   AppTvFilter: 'api/07890119/livetv/apptvcontent/',
   SerachAppTv: 'api/07890119/livetv/apptvtitlefilter2/',
+  Apptvlanguges: 'api/07890119/livetv/apptvlanguges/',
+  AppTvLanguageFilter: 'api/07890119/livetv/apptvcatlanguges/',
   EducationCategories: 'api/07890119/education/educationcat/',
   EducationLanguage: 'api/07890119/education/educationlanguage/',
   educationBoard: 'api/07890119/education/educationboard/',
@@ -57,9 +61,15 @@ const ApiConstant = {
   devotionalSarchivecontent: 'api/07890119/devotional/devotionalarchivecontent/',
   searchDevotional: 'api/07890119/devotional/devotionaltitlefilter/',
   // genreCinema: 'api/07890119/vods/cinemagenrefilter1/',
-  genreCinema: `api/07890119/vods/cinemagenreottfilter/`,
-  genereFilter: 'api/07890119/vods/genrefilter/',
-  generCinemaFilter: 'api/07890119/vods/cinemagenrefilter/',
+  // genreCinema: `api/07890119/vods/cinemagenreottfilter/`,
+  // genereFilter: 'api/07890119/vods/genrefilter/',
+  // generCinemaFilter: 'api/07890119/vods/cinemagenrefilter/',
+
+  genreCinema: `api/07890119/vods/cinemagenreottfilter/`, //`api/07890119/vods/cinemagenrefilter1/`,
+  genreMovie: `api/07890119/vods/moviegenreottfilter/`, //`api/07890119/vods/moviegenrefilter1/`,
+  genereFilter: `api/07890119/vods/genrefilter/`,
+  generCinemaFilter: `api/07890119/vods/cinemagenrefilter/`,
+
   userProfile: 'api/07890119/auth/freetvprofileapi/',
   educational: 'api/07890119/education/categories/',
   educationalSubCategories: 'api/07890119/education/subcategories/',
@@ -78,12 +88,6 @@ const ApiConstant = {
   getfavouriteslist: 'api/07890119/partner/getfavouriteslist3/',
   usercacheclear: 'api/07890119/auth/usercacheclear/',
   buyOTT: `api/07890119/auth/buyott/`,
-
-
-
-
-
-
   // CategoriesAddS: `api/07890119/advertisement/NewAdvertisementView/`, //?app_type=FREETV&add_type=Education
   // HomeAddView: `api/07890119/advertisement/imagesadView/?app_type=FREETV`,
   // LivePreviewAddView: `api/07890119/advertisement/LivePreviewAddView/`,
@@ -95,7 +99,7 @@ const ApiConstant = {
   // ContinueWatchView: `api/07890119/partner/continuelist/`, //"api/07890119/livetv/newContinueWatchView2/", //`api/07890119/livetv/ContinueWatchView/`, // 
   // MovieFilter: `api/07890119/vods/moviesfilter/`,  // `api/07890119/vods/categoryfilter/`,
   // devotionalarchivecontent: `api/07890119/devotional/devotionalarchivecontent/`,
-  genreMovie: `api/07890119/vods/moviegenreottfilter/`, //`api/07890119/vods/moviegenrefilter1/`,
+  // genreMovie: `api/07890119/vods/moviegenreottfilter/`, //`api/07890119/vods/moviegenrefilter1/`,
   getfavouritesAppTVlist: `api/07890119/partner/getapptvfavouriteslist4/`, // staging erver
   getOTT_Token: `api/07890119/auth/getottoken/`,
   getFavOTT_Token: `api/07890119/auth/getfavottoken/`,

@@ -14,6 +14,7 @@ const initialState = {
   searchAppTvPage: 1,
   searchAppTvCount: 0,
   totalSearchAppTvCount: 1,
+  AppTVLanguageList: [],
   searchAppTvNextPage: true,
   selectedAppTVTabName: '',
   loading: 'idle',
@@ -39,7 +40,7 @@ export const fetchAppTv = createAsyncThunk('AppTvsSlice', async (detail, thunkAP
   }
 });
 
-export const fetchSearchAppTv = createAsyncThunk('SearchMusicSlice', async (detail, thunkAPI) => {
+export const fetchSearchAppTv = createAsyncThunk('SearchAppTvSlice', async (detail, thunkAPI) => {
   const { name } = detail;
   try {
     const response = await Request.get(ApiConstant.SerachAppTv + name);
@@ -61,6 +62,25 @@ export const fetchAddToFavouriteAppTV = createAsyncThunk('addTofavouriteAppTV', 
 export const fetchDeleteToFavouriteAppTV = createAsyncThunk('deleteTofavouriteAppTV', async (data, thunkAPI) => {
   try {
     const response = await Request.del(ApiConstant.addFavouriteAppTV, data);
+    return { data: response };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('failed');
+  }
+});
+
+export const fetchAppTvLanguage = createAsyncThunk('AppTvLanguageSlice', async (_, thunkAPI) => {
+  try {
+    const response = await Request.get(ApiConstant.Apptvlanguges);
+    return { data: response };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('failed');
+  }
+});
+
+export const fetchAppTvLanguageFilterData = createAsyncThunk('AppTvLanguageFilterDataSlice', async (data, thunkAPI) => {
+  const { cid, lid } = data
+  try {
+    const response = await Request.get(`${ApiConstant.AppTvLanguageFilter}${cid}/${lid}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
@@ -109,35 +129,35 @@ const onAppTvSlice = createSlice({
       })
       .addCase(fetchAppTv.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-         const appTvList = action.payload?.data;
-      //  if (appTvList.current_page_number) {
-          state.appTvCount = appTvList.count
-          state.totalAppTvCount = appTvList.total_count
-          if (state.appTvPage === appTvList.current_page_number) {
-            if (appTvList.results.favourite) {
-              state.AppTvDataFilter = [...state.AppTvDataFilter, ...appTvList.results.favourite.apptv_channels];
-            }
-            else {
-              state.AppTvDataFilter = [...state.AppTvDataFilter, ...appTvList.results.results];
-            }
-            // }
+        const appTvList = action.payload?.data;
+        //  if (appTvList.current_page_number) {
+        state.appTvCount = appTvList.count
+        state.totalAppTvCount = appTvList.total_count
+        if (state.appTvPage === appTvList.current_page_number) {
+          if (appTvList.results.favourite) {
+            state.AppTvDataFilter = [...state.AppTvDataFilter, ...appTvList.results.favourite.apptv_channels];
           }
-          state.appTvPage = appTvList.current_page_number + 1;
-          if (!appTvList.next) {
-            state.appTvNextPage = false
+          else {
+            state.AppTvDataFilter = [...state.AppTvDataFilter, ...appTvList.results.results];
           }
+          // }
+        }
+        state.appTvPage = appTvList.current_page_number + 1;
+        if (!appTvList.next) {
+          state.appTvNextPage = false
+        }
         // }
       })
-        // const AppTvList = action.payload?.data;
-        // if (AppTvList.current_page_number) {
-        //   state.appTvCount = AppTvList.count;
-        //   state.totalAppTvCount = AppTvList.total_count;
-        //   if (state.appTvPage === AppTvList.current_page_number) {
-        //     state.AppTvDataFilter = [...state.AppTvDataFilter, ...(AppTvList.results.favourite ? AppTvList.results.favourite.apptv_channels : AppTvList.results.results)];
-        //   }
-        //   state.appTvPage = AppTvList.current_page_number + 1;
-        //   state.appTvNextPage = !!AppTvList.next;
-        // }
+      // const AppTvList = action.payload?.data;
+      // if (AppTvList.current_page_number) {
+      //   state.appTvCount = AppTvList.count;
+      //   state.totalAppTvCount = AppTvList.total_count;
+      //   if (state.appTvPage === AppTvList.current_page_number) {
+      //     state.AppTvDataFilter = [...state.AppTvDataFilter, ...(AppTvList.results.favourite ? AppTvList.results.favourite.apptv_channels : AppTvList.results.results)];
+      //   }
+      //   state.appTvPage = AppTvList.current_page_number + 1;
+      //   state.appTvNextPage = !!AppTvList.next;
+      // }
       // })
       .addCase(fetchAppTv.rejected, (state, action) => {
         state.loading = 'failed';
@@ -177,6 +197,43 @@ const onAppTvSlice = createSlice({
       .addCase(fetchDeleteToFavouriteAppTV.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message || 'Channel failed';
+      })
+
+
+
+
+      .addCase(fetchAppTvLanguage.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchAppTvLanguage.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const appTVLangLisyt = action.payload?.data;
+        state.AppTVLanguageList = appTVLangLisyt.results;
+      })
+      .addCase(fetchAppTvLanguage.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message || 'Request failed';
+      })
+
+      .addCase(fetchAppTvLanguageFilterData.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchAppTvLanguageFilterData.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const appTVList = action.payload?.data;
+        console.log('object====appTVList:', appTVList);
+        // state.searchMusicData = appTVList.results;
+        // state.musicCount = appTVList.count;
+        // state.totalMusicCount = appTVList.total_count;
+        // state.musicFilterData = [...state.musicFilterData, ...appTVList.results];
+        state.AppTvDataFilter = appTVList.results;
+
+        // state.musicPage = musicList.current_page_number + 1;
+        // state.musicNextPage = !!musicList.next;
+      })
+      .addCase(fetchAppTvLanguageFilterData.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message || 'Request failed';
       });
   },
 });

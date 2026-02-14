@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { COLORS } from '../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
-import { clearMoviesData, clearSearchMoviesData, fetchMovies, fetchMoviesCategories, fetchGenreCategories, fetchGenreCategoriesData, fetchSearchMovies, MoviesSelector } from '../../redux/slice/moviesSlice';
+import { clearMoviesData, clearSearchMoviesData, fetchMovies, fetchMoviesCategories, fetchGenreCategories, fetchGenreCategoriesData, fetchSearchMovies, MoviesSelector, fetchGenreMovieCategories } from '../../redux/slice/moviesSlice';
 import { useNavigation } from '@react-navigation/native';
 import { clearGenreDetail, setselectedMovieDetail } from '../../redux/slice/commonAction';
 import BackHeader from '../../Component/BackHeader';
@@ -25,20 +25,21 @@ const MovieScreen = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    const { movieData, moviesCategoriesData, genreCategories, searchMovieData, movieNextPage, moviePage, movieCount, searchMoviePage } = useAppSelector(MoviesSelector)
+    const { movieData, moviesCategoriesData, genreCategories, searchMovieData, movieNextPage, moviePage, movieCount, searchMoviePage , genreMovieCategories} = useAppSelector(MoviesSelector)
     const { selectedCategoriesId, searchQuery, selectedGenreId } = useAppSelector((state) => state.commonReducer);
     const flatListRef = useRef(null);
     // const combinegenreCategories = [...languageData, ...genreCategories]
-    const combinegenreCategories = [...(languageData || []), ...(genreCategories || [])
+    console.log('object===genreMovieCategories====:', genreMovieCategories);
+    const combinegenreCategories = [...(languageData || []), ...(genreMovieCategories || [])
 ];
     const [hasScrolled, setHasScrolled] = useState(false);
 
-    // useEffect(() => {
-    //     dispatch(fetchCinemaCategories()).then((res) => {
-    //         const id = res.payload.data.results[0].id
-    //         dispatch(setSelectedCategoriesId(id))
-    //     })
-    // }, [])
+    useEffect(() => {
+        dispatch(fetchMoviesCategories()).then((res) => {
+            const id = res.payload.data.results[0].id
+            dispatch(fetchGenreMovieCategories(id))
+        })
+    }, [])
 
     useEffect(() => {
         setHasScrolled(false);

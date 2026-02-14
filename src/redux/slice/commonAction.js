@@ -14,6 +14,7 @@ const initialState = {
   selectedEducationCategoriesId: '',
   selectedEducationSubCategoriesId: '',
   selectedMusicCategoriesId: '',
+  selectedSerialCategoriesId: '',
   selectedAppTVCategoriesId: '',
   selectedSubCategoriesId: '',
   selectedGenreName: 'GENRE',
@@ -72,6 +73,10 @@ const CommonActionSlice = createSlice({
       state.selectedMusicCategoriesId = action.payload;
     },
 
+    setSelectedSerialCategoriesId: (state, action) => {
+      state.selectedSerialCategoriesId = action.payload;
+    },
+
       setSelectedAppTVCategoriesId: (state, action) => {
       state.selectedAppTVCategoriesId = action.payload;
     },
@@ -119,7 +124,9 @@ export const {
   setSelectedDevotionalSubCategoriesId,
   setSelectedEducationCategoriesId,
   setSelectedEducationSubCategoriesId,
+  setSelectedSerialCategoriesId,
   setSelectedMusicCategoriesId,
+
   setSelectedAppTVCategoriesId,
   setSelectedSubCategoriesId,
   setSelectedGenreName,

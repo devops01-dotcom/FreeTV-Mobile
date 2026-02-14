@@ -5,15 +5,16 @@ import { ActivityIndicator, Keyboard, View, TouchableOpacity, FlatList, Text } f
 import styles from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackHeader from "../../Component/BackHeader";
-import { clearSeriesData, clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector } from "../../redux/slice/freeTvSeriesSlice";
+import { clearSeriesData, clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector, fetchSerialLanguage } from "../../redux/slice/freeTvSeriesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import DeviceInfo from "react-native-device-info";
 import { COLORS } from "../../utils/color";
 import { State } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { setSelectedCategoriesId } from "../../redux/slice/commonAction";
+import { setSelectedSerialCategoriesId } from "../../redux/slice/commonAction";
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
+import { fetchAppTvLanguageFilterData } from "../../redux/slice/appTvSlice";
 
 
 const isTablet = DeviceInfo.isTablet();
@@ -24,14 +25,24 @@ const SeriesScreen = () => {
     const [selectLanguage, setSelectLanguage] = useState(0);
     const [selectCategoriesIndex, setSelectCategoriesIndex] = useState(0);
     const [showCategories, setShowCategories] = useState(false);
-    const { seriesData, searchSeriesData, SeriesNextPage, SeriesPage, FreeTvSeriesData } = useAppSelector(FreeTvSeriesSelector)
-    const { selectedCategoriesId, selectedGenreId } = useAppSelector((State) => State.commonReducer);
+    const { seriesData, searchSeriesData, SeriesNextPage, SeriesPage, FreeTvSeriesData, serialLanguageList } = useAppSelector(FreeTvSeriesSelector)
+    const { selectedSerialCategoriesId, selectedGenreId } = useAppSelector((State) => State.commonReducer);
     const languageData = [{ name: "All" }]
     const flatListRef = useRef(null);
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
+
+    const tvChannelLanguage = [
+        ...(languageData ?? []),
+        ...(serialLanguageList ?? []),
+    ];
+
+
+    useEffect(() => {
+        dispatch(fetchSerialLanguage())
+    }, [])
 
     useEffect(() => {
         dispatch(fetchFreeTvSeriesCategories()).then((res) => {
@@ -49,8 +60,6 @@ const SeriesScreen = () => {
     const onMovieDetailHandler = useCallback((item) => {
         navigation.navigate('MovieDetail', { item });
     }, [])
-    // const combinegenreCategories = [...languageData, ...FreeTvSeriesAction];
-
 
 
     const renderSearchCinema = useCallback(({ item, index }) => {
@@ -70,7 +79,7 @@ const SeriesScreen = () => {
         const detail = {
             name: search,
             page: SeriesPage,
-            cid: selectedCategoriesId,
+            cid: selectedSerialCategoriesId,
             gid: selectedGenreId ? selectedGenreId : 0
         }
         dispatch(fetchFreeTvSeries(detail)).finally(() => {
@@ -94,7 +103,7 @@ const SeriesScreen = () => {
         if (!hasScrolled || loading || !SeriesNextPage) return;
         setLoading(true);
         const detail = {
-            id: selectedCategoriesId,
+            id: selectedSerialCategoriesId,
             page: SeriesPage
         };
 
@@ -102,7 +111,7 @@ const SeriesScreen = () => {
             setLoading(false);
             setHasScrolled(false); // ✅ Reset scroll trigger after API call
         });
-    }, [hasScrolled, loading, SeriesNextPage, selectedCategoriesId, SeriesPage]);
+    }, [hasScrolled, loading, SeriesNextPage, selectedSerialCategoriesId, SeriesPage]);
 
     const onBackHandler = useCallback(() => {
         navigation.goBack()
@@ -126,7 +135,7 @@ const SeriesScreen = () => {
             const detail = {
                 name: search,
                 page: 1,
-                cid: selectedCategoriesId,
+                cid: selectedSerialCategoriesId,
                 gid: selectedGenreId ? selectedGenreId : 0
             }
             dispatch(fetchFreeTvSeries(detail))
@@ -137,7 +146,7 @@ const SeriesScreen = () => {
     }, [search])
 
     const onSelectCategories = useCallback((id, index) => {
-        // dispatch(setSelectedCategoriesId(null))
+        // dispatch(setSelectedSerialCategoriesId(null))
         setSelectCategoriesIndex(index)
         setSelectLanguage(0)
         if (flatListRef.current) {
@@ -146,7 +155,7 @@ const SeriesScreen = () => {
 
         if (selectCategoriesIndex !== index) {
             dispatch(clearSeriesData());
-            dispatch(setSelectedCategoriesId(id))
+            dispatch(setSelectedSerialCategoriesId(id))
             const detail = {
                 id: id,
                 page: 1
@@ -162,9 +171,9 @@ const SeriesScreen = () => {
         setSelectLanguage(index)
         dispatch(clearSeriesData())
         if (item.name === 'All') {
-            if (selectedCategoriesId) {
+            if (selectedSerialCategoriesId) {
                 const detail = {
-                    id: selectedCategoriesId,
+                    id: selectedSerialCategoriesId,
                     page: 1
                 };
                 dispatch(fetchFreeTvSeries(detail))
@@ -180,12 +189,12 @@ const SeriesScreen = () => {
             }
         }
         else {
-            if (selectedCategoriesId) {
+            if (selectedSerialCategoriesId) {
                 const detail = {
-                    cid: selectedCategoriesId,
+                    cid: selectedSerialCategoriesId,
                     gid: item.id
                 };
-                dispatch(fetchFreeTvSeriesCategories(detail))
+                dispatch(fetchAppTvLanguageFilterData(detail))
             }
             else {
                 dispatch(fetchFreeTvSeriesCategories()).then((res) => {
@@ -193,12 +202,12 @@ const SeriesScreen = () => {
                         cid: res?.payload?.data?.results[0]?.id,
                         gid: item.id
                     };
-                    dispatch(fetchFreeTvSeriesCategories(detail))
+                    dispatch(fetchAppTvLanguageFilterData(detail))
                 })
             }
 
         }
-    }, [selectLanguage, selectedCategoriesId])
+    }, [selectLanguage, selectedSerialCategoriesId])
 
 
     const renderLanguage = useCallback(({ item, index }) => {
@@ -273,13 +282,13 @@ const SeriesScreen = () => {
                                 onPress={openDrawer}>
                                 <FastImage source={IMAGES.menu} resizeMode={FastImage.resizeMode.contain} style={styles.menubar} />
                             </TouchableOpacity>
-                            {/* <FlatList
-                                data={combinegenreCategories}
+                            <FlatList
+                                data={tvChannelLanguage}
                                 horizontal
                                 keyExtractor={(item, index) => `language-${index.toString()}`}
                                 renderItem={renderLanguage}
                                 showsHorizontalScrollIndicator={false}
-                            /> */}
+                            />
                         </View>
                         {showCategories && <View style={styles.drawerMenu}>
                             <TouchableOpacity style={styles.dropdownMenu}

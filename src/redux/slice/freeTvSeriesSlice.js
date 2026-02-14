@@ -11,6 +11,7 @@ const initialState = {
   SeriesNextPage: true,
   searchSeriesData: [],
   searchSeriesCount: 0,
+  serialLanguageList: [],
   freeTvEpisode: [],
   loading: 'idle',
   error: null,
@@ -65,6 +66,25 @@ export const fetchSearchSeries = createAsyncThunk(
     }
   }
 );
+
+export const fetchSerialLanguage = createAsyncThunk('SerialLanguageSlice', async (_, thunkAPI) => {
+  try {
+    const response = await Request.get(ApiConstant.Seriallanguage);
+    return { data: response };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('failed');
+  }
+});
+
+export const fetchSerialLanguageFilterData = createAsyncThunk('SerialLanguageFilterDataSlice', async (data, thunkAPI) => {
+  const { cid, lid } = data
+  try {
+    const response = await Request.get(`${ApiConstant.SerialLanguageFilter}${cid}/${lid}`);
+    return { data: response };
+  } catch (error) {
+    return thunkAPI.rejectWithValue('failed');
+  }
+});
 
 export const onFreeTvSeriesSlice = createSlice({
   name: 'FreeTvSeriesSlice',
@@ -139,7 +159,42 @@ export const onFreeTvSeriesSlice = createSlice({
       .addCase(fetchSearchSeries.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message || 'Request failed';
+      })
+
+
+      .addCase(fetchSerialLanguage.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchSerialLanguage.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const musicList = action.payload?.data;
+        state.serialLanguageList = musicList.results;
+      })
+      .addCase(fetchSerialLanguage.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message || 'Request failed';
+      })
+
+      .addCase(fetchSerialLanguageFilterData.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchSerialLanguageFilterData.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        const serialList = action.payload?.data;
+        // state.searchMusicData = serialList.results;
+        // state.musicCount = serialList.count;
+        // state.totalMusicCount = serialList.total_count;
+        // state.musicFilterData = [...state.musicFilterData, ...serialList.results];
+        state.seriesData = serialList.results;
+
+        // state.musicPage = musicList.current_page_number + 1;
+        // state.musicNextPage = !!musicList.next;
+      })
+      .addCase(fetchSerialLanguageFilterData.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message || 'Request failed';
       });
+
   }
 });
 

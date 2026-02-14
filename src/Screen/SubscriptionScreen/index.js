@@ -16,8 +16,6 @@ import { fetchBuyOTT, fetchPartnerQr, PartnerDetailSelector } from '../../redux/
 const SubscriptionScreen = ({ navigation }) => {
     const [showDrawer, setShowDrawer] = useState(false);
     const { userProfile } = useAppSelector(ProfileSelector) || {}
-    const [showAlert, setShowAlert] = useState(false);
-    const [progressing, setProgressing] = useState(false);
     const appVersion = DeviceInfo.getVersion();
     const { partnerDetail, advertismentDetail, providerDetail, buyOttQrCode } = useAppSelector(PartnerDetailSelector)
     const dispatch = useAppDispatch()
@@ -32,7 +30,7 @@ const SubscriptionScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
+            {!showDrawer && <Header setShowDrawer={setShowDrawer}  />}
             {showDrawer ? (
                 <CustomDrawerContent setShowDrawer={setShowDrawer} />
             ) : (
@@ -51,11 +49,6 @@ const SubscriptionScreen = ({ navigation }) => {
                             resizeMode='contain'
                         />
                     </TouchableOpacity> */}
-
-                    <CustomAlert
-                        showAlert={showAlert}
-                        setShowAlert={setShowAlert}
-                    />
                 </>
             )
             }

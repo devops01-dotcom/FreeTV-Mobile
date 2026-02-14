@@ -27,7 +27,7 @@ const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
 
 const HomeScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [progressing, setProgressing] = useState(true);
+  // const [progressing, setProgressing] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const dispatch = useAppDispatch()
 
@@ -43,13 +43,13 @@ const HomeScreen = ({ navigation }) => {
   const {seriesData} = useAppSelector(FreeTvSeriesSelector)
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setProgressing(false)
-      dispatch(setShowHomeAds(false))
-    }, 30000,);
-    return () => clearTimeout(timer); // cleanup timer
-  }, [bootupData]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setProgressing(false)
+  //     dispatch(setShowHomeAds(false))
+  //   }, 30000,);
+  //   return () => clearTimeout(timer); // cleanup timer
+  // }, [bootupData]);
 
   useFocusEffect(
     useCallback(() => {
@@ -71,16 +71,16 @@ const HomeScreen = ({ navigation }) => {
 
   const onLiveTvHandler = useCallback(
     (item, index) => {
-      if (progressing) return setShowAlert(true)
-      else navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
-    }, [progressing]
+      // if (progressing) return setShowAlert(true)
+       navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+    }, []
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
-      if (progressing) return setShowAlert(true)
-      else navigation.navigate(screenName);
-    }, [progressing]
+      // if (progressing) return setShowAlert(true)
+       navigation.navigate(screenName);
+    }, []
   );
 
   const renderLiveTV = useCallback(
@@ -122,7 +122,11 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
+      {!showDrawer && <Header
+       setShowDrawer={setShowDrawer} 
+      //  showHeader={progressing} 
+      //  setShowAlert={setShowAlert}
+        />}
 
       {showDrawer ? (
         <CustomDrawerContent setShowDrawer={setShowDrawer} />
@@ -152,7 +156,7 @@ const HomeScreen = ({ navigation }) => {
                   section.type === 'LiveTVScreen' || section.type === 'AppTVScreen' ? (
                     renderLiveTV({ item, index })
                   ) : (
-                    <ChannelList data={[item]} type={section.type} progressing={progressing} setShowAlert={setShowAlert} />
+                    <ChannelList data={[item]} type={section.type} />
                   )
                 }
                 keyExtractor={(item, index) => `${section.type}-${index}`}

@@ -18,9 +18,7 @@ const BaseChannelList = ({
         [],
     );
 
-
     const keyExtractor = keyExtractorProp || ((_, index) => `${type}-${index}`);
-
 
     return (
         <FlatList

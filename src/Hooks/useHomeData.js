@@ -1,15 +1,14 @@
 // hooks/useHomeData.js
 import { useEffect } from 'react';
 import { useAppDispatch } from '../redux/hooks';
-import { AddlaunchSelector, fetchAddlaunch } from '../redux/slice/addlaunch';
-import { CategoriesSelector, fetchFilterChannels, fetchLiveTvCategories } from '../redux/slice/liveTvCategories';
-import { fetchCinema, fetchCinemaCategories, fetchGenreCinemaCategories, MoviesSelector } from '../redux/slice/moviesSlice';
-import { fetchMovies, fetchMoviesCategories, fetchGenreCategories, MoviesSelectors } from '../redux/slice/moviesSlice';
+import { fetchAddlaunch } from '../redux/slice/addlaunch';
+import { fetchFilterChannels, fetchLiveTvCategories } from '../redux/slice/liveTvCategories';
+import { fetchMovies, fetchMoviesCategories, fetchCinema, fetchCinemaCategories, fetchGenreMovieCategories, fetchGenreCinemaCategories } from '../redux/slice/moviesSlice';
 import { clearSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories } from '../redux/slice/freeTvSeriesSlice';
 import { fetchMusic, fetchMusicCategories, MusicSelector } from '../redux/slice/musicSlice';
-import { DevotionalSelector, fetchDevotionalCategories, fetchDevotionallivecontent, fetchDevotionalSubCategories } from '../redux/slice/devotionalSlice';
-import { EducationSelector, fetchEducationalCategories, fetchEducationalcontent, fetchEducationalSubCategories } from '../redux/slice/educationSlice';
-import { setSelectedCategoriesId, setSelectedMusicCategoriesId, selectedAppTVCategoriesId, setSelectedAppTVCategoriesId } from '../redux/slice/commonAction';
+import { fetchDevotionalCategories, fetchDevotionallivecontent, fetchDevotionalSubCategories } from '../redux/slice/devotionalSlice';
+import { fetchEducationalCategories, fetchEducationalcontent, fetchEducationalSubCategories } from '../redux/slice/educationSlice';
+import { setSelectedCategoriesId, setSelectedMusicCategoriesId, setSelectedAppTVCategoriesId, setSelectedSerialCategoriesId } from '../redux/slice/commonAction';
 import { fetchAppTv, fetchAppTvCategories } from '../redux/slice/appTvSlice';
 
 export default function useHomeData() {
@@ -36,7 +35,7 @@ export default function useHomeData() {
     dispatch(fetchMoviesCategories()).then((res) => {
       const id = res.payload.data.results[0].id;
       dispatch(setSelectedCategoriesId(id))
-      // dispatch(fetchGenreCategories(id));
+      dispatch(fetchGenreMovieCategories(id));
       const detail = {
         id: id,
         page: 1
@@ -47,6 +46,7 @@ export default function useHomeData() {
     dispatch(fetchFreeTvSeriesCategories()).then((res) => {
       dispatch(clearSeriesData())
       const id = res.payload.data.results[0].id
+      dispatch(setSelectedSerialCategoriesId(id))
       const data = {
         id,
         page: 1

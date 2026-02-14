@@ -9,7 +9,7 @@ import { resetEducationData } from '../../redux/slice/educationSlice';
 import { resetDevotionalData } from '../../redux/slice/devotionalSlice';
 
 export function withChannelLogic(Wrapped) {
-  return function ChannelListHOC({ data = [], type, progressing, setShowAlert }) {
+  return function ChannelListHOC({ data = [], type}) {
     const dispatch = useAppDispatch();
     // Preload images
     useEffect(() => {
@@ -26,7 +26,6 @@ export function withChannelLogic(Wrapped) {
     // Handlers
     const onPlayVideo = useCallback(
       (item) => {
-        // if (progressing) setShowAlert(true);
          navigateTo('MovieDetail', { item });
       },
       []
@@ -34,7 +33,6 @@ export function withChannelLogic(Wrapped) {
 
    const onEducationHandler = useCallback(
   (selectedId) => {
-    // if (progressing) return setShowAlert(true);
     dispatch(resetEducationData());
     navigateTo('Education', { selectedCategory: selectedId });
   },

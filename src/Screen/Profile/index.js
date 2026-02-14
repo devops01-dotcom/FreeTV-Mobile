@@ -15,10 +15,7 @@ import CustomAlert from '../../Component/CustomAlert';
 const ProfileScreen = ({ navigation }) => {
     const [showDrawer, setShowDrawer] = useState(false);
     const { userProfile } = useAppSelector(ProfileSelector) || {}
-    const [showAlert, setShowAlert] = useState(false);
-    const [progressing, setProgressing] = useState(false);
     const appVersion = DeviceInfo.getVersion();
-
 
     const onBackHandler = () => {
         navigation.goBack()
@@ -26,7 +23,7 @@ const ProfileScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {!showDrawer && <Header setShowDrawer={setShowDrawer} showHeader={progressing} setShowAlert={setShowAlert} />}
+            {!showDrawer && <Header setShowDrawer={setShowDrawer}/>}
             {showDrawer ? (
                 <CustomDrawerContent setShowDrawer={setShowDrawer} />
             ) : (
@@ -117,11 +114,6 @@ const ProfileScreen = ({ navigation }) => {
                             resizeMode='contain'
                         />
                     </TouchableOpacity>
-
-                    <CustomAlert
-                        showAlert={showAlert}
-                        setShowAlert={setShowAlert}
-                    />
                 </>
             )
             }

@@ -25,11 +25,12 @@ const CinemaScreen = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    const { cinemaData, cinemaCategoriesData, genreCategories, searchCinemaData, cinemaNextPage, cinemaPage, cinemaCount, searchCinemaPage } = useAppSelector(MoviesSelector)
+    const { cinemaData, cinemaCategoriesData, genreCinemaCategories, searchCinemaData, cinemaNextPage, cinemaPage, cinemaCount, searchCinemaPage } = useAppSelector(MoviesSelector)
     const { selectedCategoriesId, searchQuery, selectedGenreId } = useAppSelector((state) => state.commonReducer);
     const flatListRef = useRef(null);
     // const combinegenreCategories = [...languageData, ...genreCategories]
-    const combinegenreCategories = [...(languageData || []), ...(genreCategories || [])
+    console.log('object===genreCinemaCategories=====:', genreCinemaCategories);
+    const combinegenreCategories = [...(languageData || []), ...(genreCinemaCategories || [])
 ];
     const [hasScrolled, setHasScrolled] = useState(false);
 
