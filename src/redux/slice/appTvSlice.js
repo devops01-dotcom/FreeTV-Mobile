@@ -78,9 +78,9 @@ export const fetchAppTvLanguage = createAsyncThunk('AppTvLanguageSlice', async (
 });
 
 export const fetchAppTvLanguageFilterData = createAsyncThunk('AppTvLanguageFilterDataSlice', async (data, thunkAPI) => {
-  const { cid, lid } = data
+  const { cid, gid } = data
   try {
-    const response = await Request.get(`${ApiConstant.AppTvLanguageFilter}${cid}/${lid}`);
+    const response = await Request.get(`${ApiConstant.AppTvLanguageFilter}${cid}/${gid}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');
@@ -226,7 +226,7 @@ const onAppTvSlice = createSlice({
         // state.musicCount = appTVList.count;
         // state.totalMusicCount = appTVList.total_count;
         // state.musicFilterData = [...state.musicFilterData, ...appTVList.results];
-        state.AppTvDataFilter = appTVList.results;
+        state.AppTvDataFilter = appTVList.results.results;
 
         // state.musicPage = musicList.current_page_number + 1;
         // state.musicNextPage = !!musicList.next;

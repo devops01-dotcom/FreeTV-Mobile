@@ -1,4 +1,7 @@
 {
   "name": "FreeTV_Mob",
-  "displayName": "FreeTV_Mob"
+  "displayName": "FreeTV_Mob",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-2201957328643385~9325303558"
+  }
 }

@@ -60,6 +60,12 @@ export default StyleSheet.create({
         width: 45,
         paddingHorizontal: 30,
     },
+    dropdownCloseMenu: {
+            height: HEIGHT.h07 -10,
+            width: isTablet ? 100 : 70,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
     menubar: {
         height: 35,
         width: 35

@@ -11,6 +11,9 @@
     android:usesCleartextTraffic="${usesCleartextTraffic}"
     android:enableOnBackInvokedCallback="false"
     android:supportsRtl="true">
+    <meta-data
+    android:name="com.google.android.gms.ads.APPLICATION_ID"
+    android:value="ca-app-pub-2201957328643385~9325303558"/>
     <activity
       android:name=".MainActivity"
       android:label="@string/app_name"

@@ -83,7 +83,7 @@ export const fetchGenreCategoriesData = createAsyncThunk('GenreCategoryDataSlice
 export const fetchGenreCinemaCategoriesData = createAsyncThunk('GenreCinemaCategoryDataSlice', async (detail, thunkAPI) => {
   const { cid, gid, page } = detail
   try {
-    const response = await Request.get(`${ApiConstant.SerachCinema}/${cid}/${gid}?page=${page}`);
+      const response = await Request.get(`${ApiConstant.SerachCinema}/${cid}/${gid}?page=${page}`);
     return { data: response };
   } catch (error) {
     return thunkAPI.rejectWithValue('failed');

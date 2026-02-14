@@ -28,6 +28,7 @@
     "react-native-fast-image": "^8.6.3",
     "react-native-flash-message": "^0.4.2",
     "react-native-gesture-handler": "^2.30.0",
+    "react-native-google-mobile-ads": "^16.0.3",
     "react-native-htmlview": "^0.17.0",
     "react-native-indicators": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

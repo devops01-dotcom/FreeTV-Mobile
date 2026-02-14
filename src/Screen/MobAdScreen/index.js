@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Image, View } from 'react-native';
 import styles from './styles';
 import { IMAGES } from '../../assets';
@@ -9,7 +9,6 @@ import { BootupAdViewSelector } from '../../redux/slice/bootupadview';
 import { AuthSelector } from "../../redux/slice/onBoardingSlice";
 import { useAppSelector } from "../../redux/hooks";
 import Video from 'react-native-video';
-
 
 const MobAdScreen = () => {
     const { bootupData } = useAppSelector(BootupAdViewSelector);
@@ -43,19 +42,19 @@ const MobAdScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Image source={IMAGES.appLogo} style={styles.appIcon} resizeMode='contain' />
-            {/* <View style={{ flex: 1 }}> */}
-                <Video
-                    source={{ uri: bootupData?.ad_url }}
-                    style={styles.video}
-                    onEnd={handleVideoEnd}
-                    // repeat
-                    onError={(er) => {
-                        // console.log('object video err', er)
-                        handleVideoError
-                    }}
-                    adTagUrl={bootupData?.googlead_url}
-                />
-            {/* </View> */}
+            <View style={{ flex: 1 }}>
+            <Video
+                source={{ uri: bootupData?.ad_url }}
+                style={styles.video}
+                onEnd={handleVideoEnd}
+                // repeat
+                onError={(er) => {
+                    // console.log('object video err', er)
+                    handleVideoError
+                }}
+                adTagUrl={bootupData?.googlead_url}
+            />
+            </View>
         </SafeAreaView>
     )
 };

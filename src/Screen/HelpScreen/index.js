@@ -155,55 +155,55 @@ const HelpScreen = () => {
     };
 
 
-    const onLanguageHandler = useCallback((item, index) => {
-        setShowCategories(false)
-        setSelectLanguage(index)
-        dispatch(clearCinemaData())
-        if (item.name === 'All') {
-            if (selectedCategoriesId) {
-                const detail = {
-                    id: selectedCategoriesId,
-                    page: 1
-                };
-                dispatch(fetchCinema(detail))
-            }
-            else {
-                dispatch(fetchCinemaCategories()).then((res) => {
-                    const detail = {
-                        id: res?.payload?.data?.results[0]?.id,
-                        page: 1
-                    };
-                    dispatch(fetchCinema(detail))
-                })
-            }
-        }
-        else {
-            if (selectedCategoriesId) {
-                const detail = {
-                    cid: selectedCategoriesId,
-                    gid: item.id
-                };
-                dispatch(fetchGenreCinemaCategoriesData(detail))
-            }
-            else {
-                dispatch(fetchCinemaCategories()).then((res) => {
-                    const detail = {
-                        cid: res?.payload?.data?.results[0]?.id,
-                        gid: item.id
-                    };
-                    dispatch(fetchGenreCinemaCategoriesData(detail))
-                })
-            }
+    // const onLanguageHandler = useCallback((item, index) => {
+    //     setShowCategories(false)
+    //     setSelectLanguage(index)
+    //     dispatch(clearCinemaData())
+    //     if (item.name === 'All') {
+    //         if (selectedCategoriesId) {
+    //             const detail = {
+    //                 id: selectedCategoriesId,
+    //                 page: 1
+    //             };
+    //             dispatch(fetchCinema(detail))
+    //         }
+    //         else {
+    //             dispatch(fetchCinemaCategories()).then((res) => {
+    //                 const detail = {
+    //                     id: res?.payload?.data?.results[0]?.id,
+    //                     page: 1
+    //                 };
+    //                 dispatch(fetchCinema(detail))
+    //             })
+    //         }
+    //     }
+    //     else {
+    //         if (selectedCategoriesId) {
+    //             const detail = {
+    //                 cid: selectedCategoriesId,
+    //                 gid: item.id
+    //             };
+    //             dispatch(fetchGenreCinemaCategoriesData(detail))
+    //         }
+    //         else {
+    //             dispatch(fetchCinemaCategories()).then((res) => {
+    //                 const detail = {
+    //                     cid: res?.payload?.data?.results[0]?.id,
+    //                     gid: item.id
+    //                 };
+    //                 dispatch(fetchGenreCinemaCategoriesData(detail))
+    //             })
+    //         }
 
-        }
-    }, [selectLanguage, selectedCategoriesId])
+    //     }
+    // }, [selectLanguage, selectedCategoriesId])
 
 
     const renderLanguage = useCallback(({ item, index }) => {
         const activeIndex = selectLanguage === index
         return (
                 <TouchableOpacity
-                    onPress={() => onLanguageHandler(item, index)}
+                    // onPress={() => onLanguageHandler(item, index)}
                     style={[styles.languageBoxView, activeIndex && { backgroundColor: COLORS.yellow }]}>
                     <Text style={[styles.channelName, activeIndex && { color: COLORS.black }]}>{item.name}</Text>
                 </TouchableOpacity>

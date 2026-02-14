@@ -182,7 +182,8 @@ const MovieScreen = () => {
             if (selectedCategoriesId) {
                 const detail = {
                     cid: selectedCategoriesId,
-                    gid: item.id
+                    gid: item.id,
+                    page: 1
                 };
                 dispatch(fetchGenreCategoriesData(detail))
             }
@@ -190,7 +191,8 @@ const MovieScreen = () => {
                 dispatch(fetchMoviesCategories()).then((res) => {
                     const detail = {
                         cid: res?.payload?.data?.results[0]?.id,
-                        gid: item.id
+                        gid: item.id,
+                        page: 1
                     };
                     dispatch(fetchGenreCategoriesData(detail))
                 })

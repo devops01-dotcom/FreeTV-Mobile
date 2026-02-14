@@ -181,11 +181,12 @@ export const onFreeTvSeriesSlice = createSlice({
       .addCase(fetchSerialLanguageFilterData.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         const serialList = action.payload?.data;
+        console.log('object======sweries data==={:', serialList);
         // state.searchMusicData = serialList.results;
         // state.musicCount = serialList.count;
         // state.totalMusicCount = serialList.total_count;
         // state.musicFilterData = [...state.musicFilterData, ...serialList.results];
-        state.seriesData = serialList.results;
+        state.seriesData = serialList.results.results;
 
         // state.musicPage = musicList.current_page_number + 1;
         // state.musicNextPage = !!musicList.next;

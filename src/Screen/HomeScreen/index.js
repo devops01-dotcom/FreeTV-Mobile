@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo, useEffect } from 'react';
-import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert, Text } from 'react-native';
+import { View, SectionList, FlatList, TouchableOpacity, BackHandler, Alert, Text, Linking } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import CarouselView from '../../Component/Carousel';
 import FastImage from 'react-native-fast-image';
@@ -24,9 +24,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppTVSelector } from '../../redux/slice/appTvSlice';
 import { FreeTvSeriesSelector } from '../../redux/slice/freeTvSeriesSlice';
 const BootupAds = React.lazy(() => import('../../Component/bootupAd'));
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const HomeScreen = ({ navigation }) => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   // const [progressing, setProgressing] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const dispatch = useAppDispatch()
@@ -40,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
   const { educational } = useAppSelector(EducationSelector) || [];
   const addLaunch = useAppSelector(AddlaunchSelector)?.data || [];
   const { AppTvDataFilter, AppTvData, } = useAppSelector(AppTVSelector) || [];
-  const {seriesData} = useAppSelector(FreeTvSeriesSelector)
+  const { seriesData } = useAppSelector(FreeTvSeriesSelector)
 
 
   // useEffect(() => {
@@ -70,16 +72,16 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const onLiveTvHandler = useCallback(
-    (item, index) => {
-      // if (progressing) return setShowAlert(true)
-       navigation.navigate('LiveTV', { url: item?.cacheurl, selectedindex: index });
+    async (item, index) => {
+      if (item.urltype === 'AppTV') return await Linking.openURL(item.channel_url)
+      else return navigation.navigate('LiveTVScreen', { url: item?.cacheurl, selectedindex: index });
     }, []
   );
 
   const navigateToScreen = useCallback(
     (screenName) => {
       // if (progressing) return setShowAlert(true)
-       navigation.navigate(screenName);
+      navigation.navigate(screenName);
     }, []
   );
 
@@ -111,22 +113,22 @@ const HomeScreen = ({ navigation }) => {
 
   const sections = [
     { title: 'Live TV', data: allChannelList?.slice(0, 20) || [], type: 'LiveTVScreen' },
-    { title: 'App TV', data: AppTvDataFilter?.slice(0, 20) || [], type: 'AppTVScreen' },
-    { title: 'FreeTV Cinema', data: cinemaData?.slice(0, 20) || [], type: 'CinemaScreen' },
-    { title: 'FreeTV Movie', data: movieData?.slice(0, 20) || [], type: 'MovieScreen' },
-    { title: 'FreeTv Series', data: seriesData?.slice(0, 20) || [], type: 'SeriesScreen' },
-    { title: 'FreeTV Music', data: musicFilterData?.slice(0, 20) || [], type: 'MusicScreen' },
-    { title: 'Devotional', data: devotional?.slice(0, 20) || [], type: 'DevotionalScreen' },
-    { title: 'Education', data: educational?.slice(0, 20) || [], type: 'EducationScreen' },
+    { title: 'App TV', data: AppTvDataFilter || [], type: 'AppTVScreen' },
+    { title: 'FreeTV Cinema', data: cinemaData || [], type: 'CinemaScreen' },
+    { title: 'FreeTV Movie', data: movieData || [], type: 'MovieScreen' },
+    { title: 'FreeTv Series', data: seriesData || [], type: 'SeriesScreen' },
+    { title: 'FreeTV Music', data: musicFilterData || [], type: 'MusicScreen' },
+    { title: 'Devotional', data: devotional || [], type: 'DevotionalScreen' },
+    { title: 'Education', data: educational || [], type: 'EducationScreen' },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
       {!showDrawer && <Header
-       setShowDrawer={setShowDrawer} 
+        setShowDrawer={setShowDrawer}
       //  showHeader={progressing} 
       //  setShowAlert={setShowAlert}
-        />}
+      />}
 
       {showDrawer ? (
         <CustomDrawerContent setShowDrawer={setShowDrawer} />
@@ -138,13 +140,55 @@ const HomeScreen = ({ navigation }) => {
           renderItem={() => null} // ignore vertical renderItem
           stickySectionHeadersEnabled={false}
           ListHeaderComponent={
-              <View style={{ marginBottom: 20 }}>
-                <CarouselView images={addLaunch} />
+            <View >
+              <View style={{ alignItems: 'center', marginVertical: 5 }}>
+                <BannerAd
+                  unitId={TestIds.BANNER}
+                  size={BannerAdSize.BANNER}
+                  onAdLoaded={() => {
+                    setLoaded(true);
+                  }}
+                  onAdFailedToLoad={(e) => {
+                    setLoaded(false);
+                  }}
+                />
               </View>
+              {/* {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
+              <BannerAd
+                unitId="/23338335975/FreeTVMob_Home_Banner"
+                size={BannerAdSize.BANNER}
+                onAdLoaded={() => {
+                  setLoaded(true);
+                }}
+                onAdFailedToLoad={(e) => {
+                  setLoaded(false);
+                }}
+              />
+              </View>)} */}
+
+              {/* Keeps layout stable */}
+              {!loaded && (
+                <View style={{ marginBottom: 10 }}>
+                  <CarouselView images={addLaunch} />
+                </View>
+              )}
+            </View>
+            // <View style={{marginTop: 5 }}>
+            //   {loaded && (
+            //     <BannerAd
+            //       unitId="/23338335975/FreeTVMob_Home_Banner"
+            //       size={BannerAdSize.BANNER}
+            //       onAdLoaded={() => setLoaded(true)}
+            //       onAdFailedToLoad={() => setLoaded(false)}
+            //     />
+            //   )}
+            // </View>
           }
+
           contentContainerStyle={{ paddingBottom: 10 }}
           renderSectionHeader={({ section }) => (
             <View style={styles.sectionContainer}>
+
               <Section
                 title={section.title}
                 onPress={() => navigateToScreen(section.type)}

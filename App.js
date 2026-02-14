@@ -13,6 +13,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchBootupAdView } from './src/redux/slice/bootupadview';
 import BootSplash from "react-native-bootsplash";
+import mobileAds from 'react-native-google-mobile-ads';
+
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(true);
@@ -42,6 +44,11 @@ const App = () => {
       }
     };
     start();
+    mobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.log('Ads initialized----------');
+      });
   }, []);
 
 

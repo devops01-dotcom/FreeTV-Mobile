@@ -5,7 +5,7 @@ import { ActivityIndicator, Keyboard, View, TouchableOpacity, FlatList, Text } f
 import styles from "./styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackHeader from "../../Component/BackHeader";
-import { clearSeriesData, clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector, fetchSerialLanguage } from "../../redux/slice/freeTvSeriesSlice";
+import { clearSeriesData, clearSearchSeriesData, fetchFreeTvSeries, fetchFreeTvSeriesCategories, FreeTvSeriesSelector, fetchSerialLanguage, fetchSerialLanguageFilterData } from "../../redux/slice/freeTvSeriesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import DeviceInfo from "react-native-device-info";
 import { COLORS } from "../../utils/color";
@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { setSelectedSerialCategoriesId } from "../../redux/slice/commonAction";
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '../../assets';
-import { fetchAppTvLanguageFilterData } from "../../redux/slice/appTvSlice";
+
 
 
 const isTablet = DeviceInfo.isTablet();
@@ -192,17 +192,18 @@ const SeriesScreen = () => {
             if (selectedSerialCategoriesId) {
                 const detail = {
                     cid: selectedSerialCategoriesId,
-                    gid: item.id
+                    lid: item.id
                 };
-                dispatch(fetchAppTvLanguageFilterData(detail))
+                dispatch(fetchSerialLanguageFilterData(detail))
+
             }
             else {
                 dispatch(fetchFreeTvSeriesCategories()).then((res) => {
                     const detail = {
                         cid: res?.payload?.data?.results[0]?.id,
-                        gid: item.id
+                        lid: item.id
                     };
-                    dispatch(fetchAppTvLanguageFilterData(detail))
+                    dispatch(fetchSerialLanguageFilterData(detail))
                 })
             }
 

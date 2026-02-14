@@ -11,9 +11,12 @@ import BackHeader from '../../Component/BackHeader';
 import { Image } from 'react-native-svg';
 import { IMAGES } from '../../assets';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
 
 const MovieDetailScreen = ({ route, navigation }) => {
     const [search, setSearch] = useState('')
+    const [loaded, setLoaded] = useState(false);
     const addLaunch = useAppSelector(AddlaunchSelector)?.data || {};
 
     const onBackHandler = useCallback(() => {
@@ -121,10 +124,38 @@ const MovieDetailScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.addsBox}>
-                <CarouselView images={addLaunch} />
+                <View style={{ alignItems: 'center', marginVertical: 5 }}>
+                    <BannerAd
+                        unitId={TestIds.BANNER}
+                        size={BannerAdSize.BANNER}
+                        onAdLoaded={() => {
+                            setLoaded(true);
+                        }}
+                        onAdFailedToLoad={(e) => {
+                            setLoaded(false);
+                        }}
+                    />
+                </View>
+                {/* {loaded && ( <View style={{ alignItems: 'center', marginVertical: 5 }}>
+                              <BannerAd
+                                unitId="/23338335975/FreeTVMob_Home_Banner"
+                                size={BannerAdSize.BANNER}
+                                onAdLoaded={() => {
+                                  setLoaded(true);
+                                }}
+                                onAdFailedToLoad={(e) => {
+                                  setLoaded(false);
+                                }}
+                              />
+                              </View>)} */}
+
+                {/* Keeps layout stable */}
+                {!loaded && (
+                    <CarouselView images={addLaunch} />
+                )}
             </View>
 
-        </SafeAreaView>
+        </SafeAreaView >
     )
 };
 

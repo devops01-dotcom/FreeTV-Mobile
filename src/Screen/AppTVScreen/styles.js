@@ -35,7 +35,7 @@ export default StyleSheet.create({
         height: isTablet ? '60%' : '67%',
     },
     languageBox: {
-        height: '10s%',
+        height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
         // justifyContent: 'center'
@@ -61,10 +61,10 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginRight: 15,
         paddingHorizontal: 30,
-        width:45
+        width: 45
     },
     dropdownCloseMenu: {
-        height: HEIGHT.h07 -10,
+        height: HEIGHT.h07 - 10,
         width: isTablet ? 100 : 70,
         alignItems: 'center',
         justifyContent: 'center',
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         borderTopEndRadius: 15,
         borderBottomEndRadius: 15,
         borderRightColor: COLORS.borderColor,
-        width: isTablet ? '30%' : '45%',
+        width: isTablet ? '30%' : '40%',
         // height: isTablet ? HEIGHT.h100 * 0.46 : HEIGHT.h100 * 0.56,
         height: isTablet ? '85%' : '90%',
         position: 'absolute',
@@ -123,7 +123,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.25, // 25% opacity
         shadowRadius: 1, // blur
         elevation: 1,
-        marginBottom:15
+        marginBottom: 15
     },
     categoriesBoxListView: {
         backgroundColor: COLORS.lightBlue,
@@ -141,7 +141,7 @@ export default StyleSheet.create({
         fontSize: FONTS.f16,
         fontFamily: APP_FONTS.PoppinsBold,
         color: COLORS.black,
-        lineHeight:45
+        lineHeight: 45
     },
     channelName: {
         fontSize: FONTS.f18,
