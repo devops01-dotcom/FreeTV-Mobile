@@ -14,6 +14,8 @@ import { COLORS } from './src/utils/color';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchBootupAdView } from './src/redux/slice/bootupadview';
+import mobileAds from 'react-native-google-mobile-ads';
+
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(true);
@@ -26,6 +28,14 @@ const App = () => {
     LogBox.ignoreAllLogs();
     // setTimeout(() => SplashScreen.hide(), 2000);
     dispatch(fetchBootupAdView())
+  }, []);
+
+  useEffect(() => {
+    mobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.log('Ads initialized----------');
+      });
   }, []);
 
 
