@@ -77,8 +77,8 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     DeviceInfo.getUniqueId().then((uniqueId) => {
-      setDeviceId('75fc1fc55e397a1a222')
-      // setDeviceId(uniqueId);
+      // setDeviceId('75fc1fc55e397a1a222')
+      setDeviceId(uniqueId);
     });
   }, [])
   useEffect(() => {
